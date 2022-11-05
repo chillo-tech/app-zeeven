@@ -1,6 +1,5 @@
 import Link from 'next/link';
 import React, {useContext} from 'react'
-import Layout from '../../../containers/opened';
 import {NewCampainContext} from '../context/NewCampainContext';
 
 function Nav() {

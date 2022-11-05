@@ -13,22 +13,22 @@ function NavBar() {
         <nav>
           <ul className='flex'>
             <li>
-            <Link href="/create-campain" className={`bg-yellow-500 text-blue-900 border-yellow-500 !font-extrabold text-lg py-2 rounded-lg px-5`}>
+            <Link href="/create-campain" className={`bg-yellow-500 text-blue-900 border-yellow-500 text-lg py-2 rounded-lg px-5`}>
               Envoyer un message
             </Link>
             </li>
           </ul>
         </nav>
-        <nav>
+        <nav className='hidden md:inline'>
           <ul className='flex'>
             <li>
-            <Link href="/" className={`font-normal text-white text-lg py-1 px-5`}>
+            <Link href="https://chillo.tech/nos-postes" target="_blank" className={`font-normal text-white text-lg py-1 px-5`}>
               Nous recrutons
             </Link>
             </li>
             <li>
-            <Link href="/" className={`font-normal bg-yellow-500 text-blue-800 text-lg py-1 border border-yellow-500 rounded-lg px-5`}>
-              Contact
+            <Link href="/contact-us" className={`font-normal bg-yellow-500 text-blue-800 text-lg py-1 border border-yellow-500 rounded-lg px-5`}>
+              Contactez nous
             </Link>
             </li>
           </ul>
