@@ -31,7 +31,7 @@ function Description() {
               onLoadingComplete={() => setLoading(false)}
             />
           </div>
-          <div className="text-2xl ml-6 py-4">
+          <div className="text-2xl py-4">
             <h6 className={`${oswald.className} text-blue-800 font-extrabold text-2xl text-center`}>{description.title}</h6>
           </div>
         </article>

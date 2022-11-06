@@ -11,10 +11,10 @@ function Hero() {
     return src;
   }
   return (
-    <section className={`py-10 bg-gradient-to-r from-blue-900 to-blue-700 md:via-blue-800 md:to-blue-50 font-light`}>
+    <section className={`py-32 bg-gradient-to-r from-blue-900 to-blue-700 md:via-blue-800 md:to-blue-50 font-light`}>
       <div className="container mx-auto grid md:grid-cols-2">
         <div className="flex flex-col items-start px-3">
-          <h1 className='text-white text-3xl md:text-5xl flex flex-col font-extrabold'>
+          <h1 className='text-white md:text-5xl flex flex-col font-extrabold'>
             <span className='pb-4'>Informez vos contacts.</span>
             <span>Ils apprécient votre affection.</span>
           </h1>

@@ -1,7 +1,7 @@
 import Link from 'next/link'
 import React from 'react'
 import { Oswald } from '@next/font/google'
-import { FaFacebook, FaFacebookF, FaFacebookSquare, FaInstagram, FaLinkedinIn, FaWhatsapp } from 'react-icons/fa';
+import { FaFacebookSquare,  FaLinkedinIn, FaWhatsapp } from 'react-icons/fa';
 
 const oswald = Oswald({weight:'700'});
 function Footer() {
@@ -14,13 +14,16 @@ function Footer() {
             <p className='pb-2'>Ils adorent votre affection.</p>
           </div>
           <div className="logo flex flex-col text-xl">
-            <h3 className='text-white pb-4'>Fonctionnalités</h3>
-            <Link href="/contactez-nous" className='text-slate-300 hover:text-white'>Envoi des messages</Link>
-          </div>
-          <div className="logo flex flex-col text-xl">
             <h3 className='text-white pb-4'>Entreprise</h3>
             <Link href="/contactez-nous" className='text-slate-300 hover:text-white'>Contactez nous</Link>
             <Link href="/" className='py-2 text-slate-300 hover:text-white'>Grille des prix</Link>
+            <Link href="https://chillo.tech/nos-postes" target="_blank" className={`text-slate-300 hover:text-white`}>
+              Nous recrutons
+            </Link>
+          </div>
+          <div className="logo flex flex-col text-xl">
+            <h3 className='text-white pb-4'>Fonctionnalités</h3>
+            <Link href="/contactez-nous" className='text-slate-300 hover:text-white'>Envoi des messages</Link>
           </div>
           <div className="logo flex flex-col text-xl">
             <h3 className='text-white pb-4'>Suivez nous</h3>
