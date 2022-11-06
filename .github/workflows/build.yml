@@ -1,7 +1,7 @@
 on:
   push:
     branches:
-      - authentication
+      - send-messages
   workflow_dispatch:
 
 env:
