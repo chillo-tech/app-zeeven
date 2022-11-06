@@ -2,7 +2,7 @@ import React, {useContext} from 'react'
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from "yup";
-import { NewCampainContext } from '../context/NewCampainContext';
+import { NewCampainContext } from '../../../context/NewCampainContext';
 import Image from 'next/image';
 import BottomBar from './BottomBar';
 type FormValues = {

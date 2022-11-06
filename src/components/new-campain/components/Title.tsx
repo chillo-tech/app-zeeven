@@ -3,7 +3,7 @@ import {useForm} from 'react-hook-form';
 import {yupResolver} from '@hookform/resolvers/yup';
 import * as yup from "yup";
 import  BottomBar  from './BottomBar'
-import {NewCampainContext} from '../context/NewCampainContext';
+import {NewCampainContext} from '../../../context/NewCampainContext';
 type FormValues = {
   nom: string;
 };
@@ -28,7 +28,7 @@ function Title() {
 			<form noValidate className="block space-y-6" onSubmit={handleSubmit(onSubmit)}>
 				<div className="block">
 					<label htmlFor="name" className="w-full flex flex-col justify-between mb-2 text-md lg:text-xl">
-						<span className='text-blue-800 font-semibold'>Un nom s'il vous plait ...</span>
+						<span className='text-blue-800 font-semibold'>Un nom s&apos;il vous plait ...</span>
             <span className="text-gray-500 text-sm">Il nous permet de référencer votre évènément</span>
 					</label>
 					<input type="text" id="name"

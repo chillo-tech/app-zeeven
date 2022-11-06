@@ -1,6 +1,6 @@
 import React, { useContext,useState } from 'react'
 import  BottomBar  from '../BottomBar';
-import { NewCampainContext } from '../../context/NewCampainContext';
+import { NewCampainContext } from '../../../../context/NewCampainContext';
 import { PlusCircleOutlined, UserAddOutlined } from '@ant-design/icons';
 import GuestEdit from './GuestEdit';
 import GuestList from './GuestList';

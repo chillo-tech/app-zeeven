@@ -3,7 +3,7 @@ import {useForm} from 'react-hook-form';
 import {yupResolver} from '@hookform/resolvers/yup';
 import * as yup from "yup";
 import  BottomBar  from './BottomBar';
-import {NewCampainContext} from '../context/NewCampainContext';
+import {NewCampainContext} from '../../../context/NewCampainContext';
 import {BoldOutlined, ItalicOutlined} from '@ant-design/icons';
 import Preview from './Preview';
 

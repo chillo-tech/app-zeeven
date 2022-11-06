@@ -26,7 +26,7 @@ const getWeekNumber = (entry: Date) => {
 	// Get first day of year
 	const yearStart = new Date(Date.UTC(date.getUTCFullYear(), 0, 1));
 	// Calculate full weeks to nearest Thursday
-	return Math.ceil((((date - yearStart) / 86400000) + 1) / 7);
+	return Math.ceil((((Number(date) - Number(yearStart)) / 86400000) + 1) / 7);
 	// Return array of year and week number
 
 }

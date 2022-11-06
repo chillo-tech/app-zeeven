@@ -1,11 +1,11 @@
 import React, { useContext } from 'react'
 import  BottomBar  from './BottomBar'
-import { NewCampainContext } from '../context/NewCampainContext';
+import { NewCampainContext } from '../../../context/NewCampainContext';
 import { getDisplayedDate } from '../../../utils/DateFormat';
 import Preview from './Preview';
 import { useMutation } from '@tanstack/react-query';
 import { add } from '../../../services/crud';
-import Message from '../../../components/Message';
+import Message from '../../Message';
 import { useRouter } from 'next/router'
 
 function Recap() {

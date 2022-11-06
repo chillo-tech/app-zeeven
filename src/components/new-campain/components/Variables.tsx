@@ -1,7 +1,7 @@
 import React, {useContext, useState, useEffect, useCallback} from 'react'
 import {useForm} from 'react-hook-form';
 import  BottomBar  from './BottomBar';
-import {NewCampainContext} from '../context/NewCampainContext';
+import {NewCampainContext} from '../../../context/NewCampainContext';
 import Preview from './Preview';
 
 const variableWithoutTemplate = (variable: string) => {
@@ -9,6 +9,7 @@ const variableWithoutTemplate = (variable: string) => {
 }
 
 function Variables() {
+  const defaultMessage = "Vous n'avez aucun paramètre, vous pouvez passer à l'étape suivante.";
   const [assignments, setAssignments] = useState<string[]>([]);
   const [firstContact, setFirstContact] = useState<string[]>([]);
 	const context = useContext(NewCampainContext);
@@ -47,7 +48,7 @@ function Variables() {
                 <label htmlFor="variables" className="w-full flex flex-col justify-between mb-2 text-md lg:text-xl font-light">
                   <span className='text-blue-800 font-semibold'>Veuillez définir les valeurs des variables de votre message</span>
                   <span className="text-gray-500 text-sm">Les valeurs permettront de construire le message final</span>
-                  <span className="text-gray-500 text-sm">Si une variable n'a pas de valeur, sasissez là</span>
+                  <span className="text-gray-500 text-sm">Si une variable n&apos;a pas de valeur, sasissez là</span>
                 </label>
                 <div className={`grid grid-rows-${assignments.length}`} aria-describedby='variables'>
                   <div className={`grid gap-6 grid-cols-4 border-t border-b border-slate-200 py-1 text-lg`}>
@@ -86,8 +87,8 @@ function Variables() {
               </div>
             )
             : (
-              <div className="text-center flex justify-center flex-col h-full text-xl py-10">
-                <span className='font-extralight'>Vous n'avez aucun paramètre, vous pouvez passer à l'étape suivante.</span>
+              <div className="text-center flex justify-center flex-col h-full text-xl py-10 font-extralight">
+                {defaultMessage}
               </div>
             )
           }

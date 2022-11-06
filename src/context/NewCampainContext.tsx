@@ -1,8 +1,8 @@
 import Head from 'next/head';
 import Image from 'next/image';
 import {cloneElement, createContext, useCallback, useEffect, useMemo, useReducer} from 'react';
-import Nav from '../components/Nav';
-import {INITIAL_STATE, SET_NB_STEPS, UPDATE_CAMPAIN, UPDATE_STEP_INDEX} from '../utils/data';
+import Nav from '../components/new-campain/components/Nav';
+import {INITIAL_STATE, RESET_CAMPAIN, SET_NB_STEPS, UPDATE_CAMPAIN, UPDATE_STEP_INDEX} from '../utils/data'
 import {NewCampainReducer} from './NewCampainReducer';
 
 interface AppContextInterface {
@@ -36,12 +36,16 @@ function NewCampainContextWrapper({children}: Props) {
   const updateStepIndex = useCallback((data: {}) => {
     dispatch({type: UPDATE_STEP_INDEX, data});
   },[]);
+  const reset = useCallback(() => {
+    dispatch({type: RESET_CAMPAIN});
+  },[]);
 	const authContext = useMemo(() => ({
+    reset,
     previousStep,
 		updateCampain,
     setNbSteps,
     updateStepIndex
-	}), [previousStep, updateCampain, setNbSteps, updateStepIndex]);
+	}), [reset, previousStep, updateCampain, setNbSteps, updateStepIndex]);
 
 	useEffect(() => {
 		// Fetch the token from storage then navigate to our appropriate place

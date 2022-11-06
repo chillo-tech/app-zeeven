@@ -1,4 +1,4 @@
-import { INITIAL_STATE, SET_NB_STEPS, UPDATE_CAMPAIN, UPDATE_STEP_INDEX } from './../utils/data';
+import { INITIAL_STATE, RESET_CAMPAIN, SET_NB_STEPS, UPDATE_CAMPAIN, UPDATE_STEP_INDEX } from '../utils/data';
 export const NewCampainReducer = (state: any = INITIAL_STATE, action: any) => {
 	const {type, data} = action || {};
   switch (type) {
@@ -8,6 +8,8 @@ export const NewCampainReducer = (state: any = INITIAL_STATE, action: any) => {
         ...state,
         ...data
       };
+    case RESET_CAMPAIN:
+      return INITIAL_STATE;
     case UPDATE_CAMPAIN:
       return {
         ...state,

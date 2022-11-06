@@ -3,7 +3,7 @@ import {useForm} from 'react-hook-form';
 import {yupResolver} from '@hookform/resolvers/yup';
 import * as yup from "yup";
 import  BottomBar  from './BottomBar';
-import {NewCampainContext} from '../context/NewCampainContext';
+import {NewCampainContext} from '../../../context/NewCampainContext';
 import { EMAIL_ERROR_MESSAGE, EMAIL_PATTERN, PHONE_ERROR_MESSAGE, PHONE_PATTERN } from '../../../utils/data';
 import { Profile } from '../../../types/Profile';
 
@@ -44,7 +44,7 @@ function Informations() {
 		<div className="rounded-lg bg-white mt-10 md:p-10 p-4">
       <h2 className="w-full flex flex-col justify-between mb-4 text-lg font-light">
           <span className='text-blue-800 font-semibold'>Comment devons vous appeler</span>
-          <span className="text-gray-500 text-sm">Promis nous n'allons pas vous spammer</span>
+          <span className="text-gray-500 text-sm">Promis nous n&apos;allons pas vous spammer</span>
           <span className="text-gray-500 text-sm">Nous utiliserons vos informations pour un compte rendu et des statistiques</span>
 			</h2>
       <div className="form-wrapper">

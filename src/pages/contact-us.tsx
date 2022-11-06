@@ -8,6 +8,7 @@ import { EMAIL_ERROR_MESSAGE, EMAIL_PATTERN, PHONE_ERROR_MESSAGE } from '../util
 import { useMutation } from '@tanstack/react-query';
 import { add } from '../services/crud';
 import Message from '../components/Message';
+import { useRouter } from 'next/router';
 
 export type Message = {
   name: string, 
@@ -36,7 +37,7 @@ const schema = yup.object({
 }).required();
 function ContactUs() {
   const mutation = useMutation({mutationFn: ((message:Message) => add("/message", message))});
-
+  const router = useRouter();
 	const {register, handleSubmit, formState: {errors}} = useForm<Message>({
 		mode: "onChange",
 		resolver: yupResolver(schema)
@@ -57,7 +58,7 @@ function ContactUs() {
       </Head>
       <section className='pt-10 pb-20 w-11/12 mx-auto md:w-1/2'>
         <h1 className='text-4xl text-center text-blue-900 font-extrabold mb-2'>
-          N'hésitez pas écrivez nous
+          N&apos;hésitez pas écrivez nous
         </h1>
         <h3 className='text-lg text-center text-blue-900'>
         Si vous avez des questions ou des commentaires sur ZEEVEN, veuillez nous contacter. 
@@ -83,7 +84,7 @@ function ContactUs() {
         <Message 
           type="success" 
           firstMessage='Nous avons reçu votre message.' 
-          secondMessage='VUne réponse personnalisée vous sera apportée dans les meilleurs délais.' 
+          secondMessage='Une réponse personnalisée vous sera apportée dans les meilleurs délais.' 
           action={handleError} 
           actionLabel="Retourner à l'accueil"
         />) : null}
