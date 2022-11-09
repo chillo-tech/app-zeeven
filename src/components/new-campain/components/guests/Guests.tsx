@@ -53,7 +53,10 @@ function Guests() {
             previousStep={previousStep}
           />
 
-          {displayErrorMessage ? <p className='text-red-600'>Saisir des contacts</p> : null }
+          {displayErrorMessage ? 
+          <p className='text-red-600'>
+            Veuillez saisir au moins un contact et cliquer sur <span className='font-extrabold'>Insérer dans la liste</span>
+          </p> : null }
         </form>
     </div>
   )

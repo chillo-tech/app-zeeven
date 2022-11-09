@@ -1,7 +1,8 @@
 const TOKEN_PAYLOAD = 'TOKEN_PAYLOAD';
 const USER_INFOS = 'USER_INFOS';
 const PHONE_PATTERN = /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,5}$/;
-const EMAIL_PATTERN = /^([\w-\.]+)@((?:[\w]+\.)+)([a-zA-Z]{2,4})$/;
+//const EMAIL_PATTERN = /^([\w-\.]+)@((?:[\w]+\.)+)([a-zA-Z]{2,4})$/;
+const EMAIL_PATTERN = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/;
 const STRING_WITH_NUMBERS_REGEXP = /^\D*(\d\D*){10,}$/;
 const PHONE_ERROR_MESSAGE = "Votre numéro de téléphone est invalide";
 const EMAIL_ERROR_MESSAGE = "Votre mail est invalide";
@@ -42,7 +43,26 @@ const STATISTICS = [
   }
 ]
 
+const INFORMATIONS = [
+  {value:'civility', label: 'Civilité'},
+  {value:'firstName', label: 'Prénom'},
+  {value:'lastName', label: 'Nom'},
+  {value:'email', label: 'Email'},
+  {value:'phone', label: 'Téléphone'},
+  {value:'date', label: 'Date'},
+  {value:'time', label: 'Heure'},
+  {value:'sender', label: 'Expéditeur'},
+  {value:'link', label: 'Lien'},
+  {value:'other', label: 'Autre'}
+]
+
+const variableWithoutTemplate = (variable: string) => {
+  return variable ? variable.replace('{{', '').replace('}}', '') : '';
+}
+
 export {
+  variableWithoutTemplate,
+  INFORMATIONS,
   INITIAL_STATE,
   UPDATE_CAMPAIN,
   UPDATE_STEP_INDEX,

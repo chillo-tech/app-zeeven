@@ -49,6 +49,7 @@ function GuestEdit({handleSubmit}: {handleSubmit: Function}) {
                 <select className="w-full border-gray-300 rounded-lg shadow-sm focus:border-indigo-500 focus:ring-indigo-5000 py-2" {...register("profile.civility")} id="civility">
                   <option value="">Sélectionner</option>
                   <option value="MR">Monsieur</option>
+                  <option value="MLLE">Mademoiselle</option>
                   <option value="MRS">Madame</option>
                   <option value="MR_MRS">Monsieur & Madame</option>
                 </select>

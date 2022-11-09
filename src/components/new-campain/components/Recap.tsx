@@ -9,7 +9,7 @@ import Message from '../../Message';
 import { useRouter } from 'next/router'
 
 function Recap() {
-  const mutation = useMutation({mutationFn: (campain => add("/campain", campain))});
+  const mutation = useMutation({mutationFn: (campain => add("/evenement", campain))});
   const context = useContext(NewCampainContext);
   const {state: {stepIndex, campain}, previousStep} = context;
   const router = useRouter()

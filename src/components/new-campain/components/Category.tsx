@@ -17,6 +17,26 @@ const schema = yup.object({
 }).required();
 const categories = [
   {
+     "label": "Annonce",
+     "image": "announcement.png",
+     "value": "ANNOUNCEMENT"
+  },
+  {
+     "label": "Information",
+     "image": "information.png",
+     "value": "INFORMATION"
+  },
+  {
+     "label": "Promotion",
+     "image": "promotion.png",
+     "value": "PROMOTION"
+  },
+  {
+     "label": "Salon",
+     "image": "salon.png",
+     "value": "EVENT"
+  },
+  {
      "label": "Anniversaire",
      "image": "birthdate.png",
      "value": "BIRTHDATE"
@@ -25,16 +45,6 @@ const categories = [
      "label": "Mariage",
      "image": "wedding.png",
      "value": "WEDDING"
-  },
-  {
-     "label": "Annonce",
-     "image": "announcement.png",
-     "value": "ANNOUNCEMENT"
-  },
-  {
-     "label": "Salon",
-     "image": "salon.png",
-     "value": "EVENT"
   }
 ]
 function Category() {
@@ -56,7 +66,7 @@ function Category() {
           <label htmlFor="name" className="w-full flex justify-between mb-2 text-lg lg:text-xl font-light">
             <span className="text-blue-800 font-semibold">Pour quel évènement est votre message</span>
           </label>
-          <div className="grid gap-4 md:grid-cols-2 md:gap-8 md:items-center md:justify-center">
+          <div className="grid gap-4 md:grid-cols-3 md:gap-8 md:items-center md:justify-center">
             {categories.map((category) => (
               <label key={category.label} htmlFor={category.value} className={`cursor-pointer border-2 ${ watchCategory.libelle === category.value ? 'border-blue-500': 'border-slate-400'} p-4 rounded-md flex flex-col items-center`}>
                 <span><Image src={`/images/category/${category.image}`} width="100" height="100" alt={category.label}/></span>

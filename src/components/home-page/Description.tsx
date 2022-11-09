@@ -12,7 +12,7 @@ function Description() {
     return src;
   }
   return (
-    <section className="bg-yellow-50 py-10">
+    <section className="bg-amber-200 py-20">
     <div className={`container mx-auto grid gap-3 md:grid-cols-${DESCRIPTION.length}`}>
       {DESCRIPTION.map((description, index) => (
         <article className='flex flex-col items-center mx-2 bg-slate-100 rounded-lg' key={`description-${index}`}>
@@ -31,7 +31,7 @@ function Description() {
               onLoadingComplete={() => setLoading(false)}
             />
           </div>
-          <div className="text-2xl py-4">
+          <div className="text-2xl ml-6 py-4">
             <h6 className={`${oswald.className} text-blue-800 font-extrabold text-2xl text-center`}>{description.title}</h6>
           </div>
         </article>

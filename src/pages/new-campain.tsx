@@ -17,9 +17,9 @@ function NewCampain() {
         <NewCampainContextWrapper>
           <Category />
           <Title />
+          <Guests />
           <Message />
           <Variables />
-          <Guests />
           <Options />
           <Dates />
           <Informations />
