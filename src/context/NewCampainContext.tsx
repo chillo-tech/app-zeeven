@@ -61,7 +61,7 @@ function NewCampainContextWrapper({children}: Props) {
 			<Head>
 				<title>ZEEVEN | Nouvelle campagne</title>
 			</Head>
-			<section className='pb-52 font-light'>
+			<section className='pb-20 md:pb-52 font-light'>
 				<Nav/>
 				<main className='container mx-auto py-2'>
 					<div className='md:w-3/4 mx-auto p-2'>

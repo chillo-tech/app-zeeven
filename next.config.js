@@ -23,10 +23,11 @@ const nextConfig = {
     ]
   },
   async rewrites() {
+    console.log("Rewrites called");
     return [
       {
         source: '/api/:path*',
-        destination: `https://api.zeeven.chillo.fr/api/:path*`,
+        destination: `${process.env.API_URL}/api/:path*`
       },
     ]
   },
