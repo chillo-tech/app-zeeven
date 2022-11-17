@@ -351,7 +351,7 @@ function ContactUs() {
                     Votre message
                   </span>
                 </label>
-                <textarea placeholder="De quoi voulez vous nous parler ?" id="message"
+                <textarea placeholder="Nous sommes à votre écoute, dites nous tout." id="message"
                     className="w-full border-gray-300 rounded-lg shadow-sm focus:border-indigo-500 focus:ring-indigo-5000 py-2"
                     {...register("message")}></textarea>
                 <p className="text-red-500">{errors.message?.message}</p>

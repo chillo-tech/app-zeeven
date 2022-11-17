@@ -1,13 +1,11 @@
 import Link from 'next/link'
 import React from 'react'
-import { Oswald } from '@next/font/google'
-const oswald = Oswald({weight:'700'});
 
 function NavBar() {
   return (
     <header className={` bg-blue-900 flex justify-between items-center px-4 py-1`}>
       <div className="container mx-auto flex justify-between items-center">
-        <Link href="/" className={`${oswald.className} text-white text-4xl py-3 !font-extrabold`}>
+        <Link href="/" className={` text-white text-4xl py-3 !font-extrabold`}>
           ZEEVEN
         </Link>
         <nav>

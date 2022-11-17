@@ -13,7 +13,6 @@ function Recap() {
   const context = useContext(NewCampainContext);
   const {state: {stepIndex, campain}, previousStep} = context;
   const router = useRouter()
-
   const handleError = (error:any) => {
     error.preventDefault()
     router.push('/')
@@ -59,8 +58,8 @@ function Recap() {
               <div aria-describedby='recap'>
                 <div className="py-5">
                   <p>Merci pour votre confiance <span className="font-bold">{campain?.utilisateur?.name}</span></p>
-                  <p>Votre message sera transmis le {getDisplayedDate(campain.dateDebut)} à {campain.heureDebut}</p>
-                  <p>Votre message sera transmis à {campain?.invites?.length} personne(s)</p>
+                  <p>Votre message sera transmis le {getDisplayedDate(campain.messages[0].date)} à {campain.messages[0].time}</p>
+                  <p>Votre message sera transmis à {campain?.guests?.length} personne(s)</p>
                 </div>
               </div>
             </div>
@@ -74,7 +73,8 @@ function Recap() {
             </form>
           </div>
           <div className='md:p-5 p-4'>
-            <Preview text={campain.message} variables={campain.variables}/>
+            <Preview text={campain.messages[0].text} variables={campain.messages[0].informations}/>
+            <pre>{JSON.stringify(campain, null, 2)}</pre>
           </div>
         </div>
       ) : null}

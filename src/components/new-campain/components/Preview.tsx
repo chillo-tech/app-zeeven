@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { ReactMarkdown } from 'react-markdown/lib/react-markdown'
-import { Guest } from '../../../types/Guest';
+import { Guest } from '../../../../types/Guest';
 
 type Parameters = {
   text: string;

@@ -4,7 +4,7 @@ import { NewCampainContext } from '../../../../context/NewCampainContext';
 import { PlusCircleOutlined, UserAddOutlined } from '@ant-design/icons';
 import GuestEdit from './GuestEdit';
 import GuestList from './GuestList';
-import { Guest } from '../../../../types/Guest';
+import { Guest } from '../../../../../types/Guest';
 
 function Guests() {
   const context = useContext(NewCampainContext);
@@ -21,7 +21,7 @@ function Guests() {
   const saveContacts = (event: any) => {
     event.preventDefault();
     if(contacts.length) {
-      updateCampain({invites: contacts});
+      updateCampain({guests: contacts});
       setDisplayErrorMessage(false);
     } else {
       setDisplayErrorMessage(true);

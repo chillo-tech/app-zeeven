@@ -4,7 +4,7 @@ import {yupResolver} from '@hookform/resolvers/yup';
 import * as yup from "yup";
 import  BottomBar  from './BottomBar';
 import {NewCampainContext} from '../../../context/NewCampainContext';
-import { getInputFormattedDate } from '../../../utils/DateFormat';
+import { getInputFormattedDate } from '../../../../utils/DateFormat';
 type FormValues = {
   dateDebut: string;
   heureDebut: string;

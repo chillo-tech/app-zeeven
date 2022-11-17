@@ -6,11 +6,9 @@ import { EMAIL_ERROR_MESSAGE, PHONE_ERROR_MESSAGE, PHONE_PATTERN } from "../../.
 
 type FormValues = {
   profile: Profile,
-  sendInvitation?: boolean,
 };
 
 const schema = yup.object({
-  profile: yup.object({
     id: yup.string(),
     civility: yup.string()
           .required("Ce champ est requis"),
@@ -26,16 +24,14 @@ const schema = yup.object({
           .required("Ce champ est requis")
           .min(9, PHONE_ERROR_MESSAGE)
           .max(9, PHONE_ERROR_MESSAGE),
-  }),
-  sendInvitation: yup.bool()
-}).required();
+  }).required();
 
 function GuestEdit({handleSubmit}: {handleSubmit: Function}) {
-  const { register, handleSubmit: handleFormSubmit, reset, formState: { errors } } = useForm<FormValues>({
+  const { register, handleSubmit: handleFormSubmit, reset, formState: { errors } } = useForm<Profile>({
     resolver: yupResolver(schema),
-    defaultValues: {profile:{id: '', civility: '', firstName: '', lastName: '',  email: '', phone: ''}, sendInvitation: true}
+    defaultValues: {id: '', civility: '', firstName: '', lastName: '',  email: '', phone: ''}
   });
-  const onSubmit = (data: FormValues) => {
+  const onSubmit = (data: Profile) => {
     reset();
     handleSubmit(data);
   }
@@ -46,7 +42,7 @@ function GuestEdit({handleSubmit}: {handleSubmit: Function}) {
           <div className="mb-0 text-md">
               <label htmlFor="civility" className="w-full flex flex-col justify-between mb-2 text-md">Civilité</label>
               <div className="mt-1">
-                <select className="w-full border-gray-300 rounded-lg shadow-sm focus:border-indigo-500 focus:ring-indigo-5000 py-2" {...register("profile.civility")} id="civility">
+                <select className="w-full border-gray-300 rounded-lg shadow-sm focus:border-indigo-500 focus:ring-indigo-5000 py-2" {...register("civility")} id="civility">
                   <option value="">Sélectionner</option>
                   <option value="MR">Monsieur</option>
                   <option value="MLLE">Mademoiselle</option>
@@ -54,26 +50,26 @@ function GuestEdit({handleSubmit}: {handleSubmit: Function}) {
                   <option value="MR_MRS">Monsieur & Madame</option>
                 </select>
               </div>
-              <p className='text-red-600'>{errors?.profile?.civility?.message}</p>
+              <p className='text-red-600'>{errors?.civility?.message}</p>
           </div>
           <div className="mb-0 text-md">
             <label htmlFor="firstName" className="w-full flex flex-col justify-between mb-2 text-md">Prénom</label>
             <div className="mt-1">
-              <input autoComplete="false" className="w-full border-gray-300 rounded-lg shadow-sm focus:border-indigo-500 focus:ring-indigo-5000 py-2" {...register("profile.firstName")} type="text" id="firstName"  />
+              <input autoComplete="false" className="w-full border-gray-300 rounded-lg shadow-sm focus:border-indigo-500 focus:ring-indigo-5000 py-2" {...register("firstName")} type="text" id="firstName"  />
             </div>
-            <p className='text-red-600'>{errors?.profile?.firstName?.message}</p>
+            <p className='text-red-600'>{errors?.firstName?.message}</p>
           </div>
           <div className="mb-0 text-md">
             <label htmlFor="lastName" className="w-full flex flex-col justify-between mb-2 text-md">Nom</label>
             <div className="mt-1">
-              <input autoComplete="false" className="w-full border-gray-300 rounded-lg shadow-sm focus:border-indigo-500 focus:ring-indigo-5000 py-2" {...register("profile.lastName")} type="text" id="lastName"  />
+              <input autoComplete="false" className="w-full border-gray-300 rounded-lg shadow-sm focus:border-indigo-500 focus:ring-indigo-5000 py-2" {...register("lastName")} type="text" id="lastName"  />
             </div>
-            <p className='text-red-600'>{errors?.profile?.lastName?.message}</p>
+            <p className='text-red-600'>{errors?.lastName?.message}</p>
           </div>
           <div className="mb-0 text-md">
             <label htmlFor="phone" className="w-full flex flex-col justify-between mb-2 text-md">Téléphone</label>
             <div className="mt-1 flex flex-col md:flex-row">
-              <select {...register("profile.phoneIndex")} className="border-gray-300 rounded-tl-lg rounded-tr-lg md:w-1/3 md:rounded-tr-none md:rounded-bl-lg shadow-sm">
+              <select {...register("phoneIndex")} className="border-gray-300 rounded-tl-lg rounded-tr-lg md:w-1/3 md:rounded-tr-none md:rounded-bl-lg shadow-sm">
                 <option data-countrycode="FR" value="">Sélectionner</option>
                 <option data-countrycode="FR" value="33">France (+33)</option>
                 <option data-countrycode="CM" value="237">Cameroon (+237)</option>
@@ -296,18 +292,18 @@ function GuestEdit({handleSubmit}: {handleSubmit: Function}) {
                   <option data-countrycode="ZW" value="263">Zimbabwe (+263)</option>
                 </optgroup>
               </select>
-              <input autoComplete="false" className="border-gray-300 rounded-bl-lg rounded-br-lg  md:w-2/3 md:rounded-tr-lg md:rounded-br-lg md:rounded-bl-none shadow-sm focus:border-indigo-500 focus:ring-indigo-5000 py-2" {...register("profile.phone")} type="number" 
+              <input autoComplete="false" className="border-gray-300 rounded-bl-lg rounded-br-lg  md:w-2/3 md:rounded-tr-lg md:rounded-br-lg md:rounded-bl-none shadow-sm focus:border-indigo-500 focus:ring-indigo-5000 py-2" {...register("phone")} type="number" 
               id="phone" />
             </div>
-            <p className='text-red-600'>{errors?.profile?.phoneIndex?.message}</p>
-            <p className='text-red-600'>{errors?.profile?.phone?.message}</p>
+            <p className='text-red-600'>{errors?.phoneIndex?.message}</p>
+            <p className='text-red-600'>{errors?.phone?.message}</p>
           </div>
           <div className="mb-0 text-md">
             <label htmlFor="email" className="w-full flex flex-col justify-between mb-2 text-md">E-mail</label>
             <div className="mt-1">
-              <input autoComplete="false" className="w-full border-gray-300 rounded-lg shadow-sm focus:border-indigo-500 focus:ring-indigo-5000 py-2" {...register("profile.email")} type="email" id="email" />
+              <input autoComplete="false" className="w-full border-gray-300 rounded-lg shadow-sm focus:border-indigo-500 focus:ring-indigo-5000 py-2" {...register("email")} type="email" id="email" />
             </div>
-            <p className='text-red-600'>{errors?.profile?.email?.message}</p>
+            <p className='text-red-600'>{errors?.email?.message}</p>
           </div>
         {
           /**

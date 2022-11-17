@@ -1,10 +1,8 @@
 import Head from 'next/head'
 import React from 'react'
-import { Poppins } from '@next/font/google'
 import NavBar from '../components/NavBar';
 import Footer from '../components/Footer';
 
-const poppins = Poppins({weight: '300'});
 function Layout({children}: {children: any}) {
   return (
     <section className={`bg-gradient-to-b from-blue-100 to-pink-50 min-h-screen font-light`}>

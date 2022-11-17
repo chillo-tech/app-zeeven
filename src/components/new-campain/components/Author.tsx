@@ -8,7 +8,7 @@ import { EMAIL_ERROR_MESSAGE, EMAIL_PATTERN, PHONE_ERROR_MESSAGE, PHONE_PATTERN 
 import { Profile } from '../../../types/Profile';
 
 const schema = yup.object({
-  utilisateur: yup.object({
+  author: yup.object({
     id: yup.string(),
     civility: yup.string(),
     firstName: yup.string().trim()
@@ -28,11 +28,11 @@ const schema = yup.object({
   })
 }).required();
 
-function Informations() {
+function Author() {
 	const context = useContext(NewCampainContext);
-	const {state: {stepIndex, campain: {utilisateur}}, updateCampain, previousStep} = context;
-	const {register, handleSubmit, formState: {errors}} = useForm<{utilisateur: Profile}>({
-		defaultValues: {utilisateur},
+	const {state: {stepIndex, campain: {author}}, updateCampain, previousStep} = context;
+	const {register, handleSubmit, formState: {errors}} = useForm<{author: Profile}>({
+		defaultValues: {author},
 		mode: "onChange",
 		resolver: yupResolver(schema)
 	});
@@ -55,8 +55,8 @@ function Informations() {
             </label>
             <input type="text" id="firstName"
                 className="w-full border-gray-300 rounded-lg shadow-sm focus:border-indigo-500 focus:ring-indigo-5000 py-2"
-                {...register("utilisateur.firstName")}/>
-            <p className="text-red-500">{errors.utilisateur?.firstName?.message}</p>
+                {...register("author.firstName")}/>
+            <p className="text-red-500">{errors.author?.firstName?.message}</p>
           </div>
           <div className="block">
             <label htmlFor="lastName" className="w-full flex flex-col justify-between mb-2 text-md font-light">
@@ -64,14 +64,14 @@ function Informations() {
             </label>
             <input type="text" id="lastName"
                 className="w-full border-gray-300 rounded-lg shadow-sm focus:border-indigo-500 focus:ring-indigo-5000 py-2"
-                {...register("utilisateur.lastName")}/>
-            <p className="text-red-500">{errors.utilisateur?.lastName?.message}</p>
+                {...register("author.lastName")}/>
+            <p className="text-red-500">{errors.author?.lastName?.message}</p>
           </div>
          
           <div className="mb-0 text-md">
             <label htmlFor="phone" className="w-full flex flex-col justify-between mb-2 text-md">Téléphone</label>
             <div className="mt-1 flex flex-col md:flex-row">
-              <select {...register("utilisateur.phoneIndex")} className="border-gray-300 rounded-tl-lg rounded-tr-lg md:w-1/3 md:rounded-tr-none md:rounded-bl-lg shadow-sm">
+              <select {...register("author.phoneIndex")} className="border-gray-300 rounded-tl-lg rounded-tr-lg md:w-1/3 md:rounded-tr-none md:rounded-bl-lg shadow-sm">
                 <option data-countrycode="FR" value="">Sélectionner</option>
                 <option data-countrycode="FR" value="33">France (+33)</option>
                 <option data-countrycode="CM" value="237">Cameroon (+237)</option>
@@ -294,11 +294,11 @@ function Informations() {
                   <option data-countrycode="ZW" value="263">Zimbabwe (+263)</option>
                 </optgroup>
               </select>
-              <input type="number" autoComplete="false" className="border-gray-300 rounded-bl-lg rounded-br-lg  md:w-2/3 md:rounded-tr-lg md:rounded-br-lg md:rounded-bl-none shadow-sm focus:border-indigo-500 focus:ring-indigo-5000 py-2" {...register("utilisateur.phone")}
+              <input type="number" autoComplete="false" className="border-gray-300 rounded-bl-lg rounded-br-lg  md:w-2/3 md:rounded-tr-lg md:rounded-br-lg md:rounded-bl-none shadow-sm focus:border-indigo-500 focus:ring-indigo-5000 py-2" {...register("author.phone")}
               id="phone" />
             </div>
-            <p className='text-red-600'>{errors?.utilisateur?.phoneIndex?.message}</p>
-            <p className='text-red-600'>{errors?.utilisateur?.phone?.message}</p>
+            <p className='text-red-600'>{errors?.author?.phoneIndex?.message}</p>
+            <p className='text-red-600'>{errors?.author?.phone?.message}</p>
           </div>
           <div className="block">
             <label htmlFor="email" className="w-full flex flex-col justify-between mb-2 text-md font-light">
@@ -308,8 +308,8 @@ function Informations() {
             </label>
             <input type="email" id="email"
                 className="w-full border-gray-300 rounded-lg shadow-sm focus:border-indigo-500 focus:ring-indigo-5000 py-2"
-                {...register("utilisateur.email")}/>
-            <p className="text-red-500">{errors.utilisateur?.email?.message}</p>
+                {...register("author.email")}/>
+            <p className="text-red-500">{errors.author?.email?.message}</p>
           </div>
           <BottomBar
             stepIndex={stepIndex}
@@ -322,4 +322,4 @@ function Informations() {
 	)
 }
 
-export default Informations
+export default Author

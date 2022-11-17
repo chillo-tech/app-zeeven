@@ -1,15 +1,14 @@
+import { getSession } from 'next-auth/react'
 import Description from '../components/home-page/Description'
 import Hero from '../components/home-page/Hero'
-import Statistics from '../components/home-page/Statistics'
-import Layout from '../containers/opened'
-
+import Footer from '../containers/components/Footer'
 
 export default function Home() {
   return (
-    <Layout>
+    <section>
       <Hero />
-      <Statistics />
       <Description />
-    </Layout>
+      <Footer />
+    </section>
   )
 }

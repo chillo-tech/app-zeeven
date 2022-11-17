@@ -1,10 +1,11 @@
 import React from 'react'
 import  {DeleteOutlined} from '@ant-design/icons';
-import { Guest } from '../../../../types/Guest';
+import { Guest } from '../../../../../types/Guest';
+import { Profile } from '../../../../../types/Profile';
 
 type Params = {
-  remove: (guest: Guest)=> void,
-  guests: Guest[]
+  remove: (guest: Profile)=> void,
+  guests: Profile[]
 }
 
 function GuestList({guests, remove}: Params) {
@@ -16,21 +17,21 @@ function GuestList({guests, remove}: Params) {
             (guest, index) => (
               <tr key={index} className={`${index%2 === 1 ? 'bg-whte': 'bg-blue-50'}`}>
                 <td className='py-2 border-b border-slate-300 text-center capitalize'>
-                  {guest.profile.civility}
+                  {guest.civility}
                 </td>
                 <td className='py-2 border-b border-slate-300'>
                   <span className='text-gray-800 capitalize mr-1 font-bold'>
-                    {guest.profile.firstName}
+                    {guest.firstName}
                   </span>
                   <span className='text-gray-800 uppercase font-bold'>
-                    {guest.profile.lastName}
+                    {guest.lastName}
                   </span>
                 </td>
                 <td className='py-2 border-b border-slate-300'>
-                  {guest.profile.email}
+                  {guest.email}
                 </td>
                 <td className='py-2 border-b border-slate-300'>
-                  (+{guest.profile.phoneIndex}) {guest.profile.phone}
+                  (+{guest.phoneIndex}) {guest.phone}
                 </td>
                 <td className='py-2 border-b border-slate-300'>
                   <button type='button' className='mb-1' onClick={()=> remove(guest)}> 
