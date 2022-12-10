@@ -1,19 +1,14 @@
-import { useSession, signIn, signOut } from "next-auth/react"
-export default function Index() {
-  const { data: session } = useSession()
-  if (session) {
-    return (
-      <>
-        Signed in as {session?.user?.email} <br />
-        <button onClick={() => signOut()}>Sign out</button>
-      </>
-    )
-  }
+import { getSession } from 'next-auth/react'
+import Description from '../components/home-page/Description'
+import Hero from '../components/home-page/Hero'
+import Footer from '../containers/components/Footer'
+
+export default function Home() {
   return (
-    <>
-      Not signed in <br />
-      <button onClick={() => signIn()}>Sign in</button>
-    </>
+    <section>
+      <Hero />
+      <Description />
+      <Footer />
+    </section>
   )
 }
-

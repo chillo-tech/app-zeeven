@@ -1,0 +1,36 @@
+.wrapper {
+  @apply bg-gradient-to-b from-blue-50 to-pink-50 min-h-screen;
+}
+
+.form__title{
+  @apply text-blue-900 lg:text-xl font-light;
+  @apply my-3 text-center;
+
+}
+.form__seperator {
+  @apply border-b border-blue-700 text-center my-5;
+  line-height: 0.1rem;
+}
+.form__container {
+  @apply w-11/12 md:max-w-xl mx-auto;
+  @apply text-blue-900;
+  
+}
+.form__oauthbutton {
+  @apply border border-blue-900 rounded-md w-full mx-auto flex justify-center items-center text-lg;
+  @apply px-3 py-2 
+}
+.inputs__container {
+  @apply bg-white py-6 px-4 sm:p-6 rounded-md;
+  @apply shadow sm:rounded-md sm:overflow-hidden;
+}
+.navigation {
+  @apply container;
+  @apply py-3 mx-auto;
+  @apply text-blue-900;
+  @apply w-11/12;
+}
+
+.logo {
+  @apply font-extrabold text-3xl
+}

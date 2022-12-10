@@ -1,0 +1,7 @@
+export enum ActionType {
+  RESET_EVENT,
+  UPDATE_CONTACT,
+  UPDATE_DATES,
+  UPDATE_EVENT,
+  UPDATE_STEP
+}
