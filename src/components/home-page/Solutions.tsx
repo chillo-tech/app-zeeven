@@ -3,7 +3,6 @@ import { slugify } from '@/utils';
 import Link from 'next/link'
 import React, { useContext } from 'react'
 import ImageDisplay from '../image-display';
-import { link } from 'fs';
 
 function Solutions() {
   const context = useContext(ApplicationContext);
