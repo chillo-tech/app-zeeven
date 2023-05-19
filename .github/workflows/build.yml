@@ -2,6 +2,7 @@ on:
   push:
     branches:
       - send-messages
+      - secured-routes
   workflow_dispatch:
 
 env:
