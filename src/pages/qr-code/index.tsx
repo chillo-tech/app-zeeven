@@ -87,7 +87,6 @@ function QRCode() {
               action={handleError}
               actionLabel="Retourner à l'accueil"
             />
-            <pre>{JSON.stringify(mutation, null, 2)}</pre>
             <Link href={'/'} className="relative flex items-center justify-between shadow-lg pr-6 py-1 text-black bg-white font-light rounded-md"
                             >
                 <ImageDisplay
