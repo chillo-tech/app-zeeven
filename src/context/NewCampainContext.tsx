@@ -2,49 +2,56 @@ import Head from 'next/head';
 import Image from 'next/image';
 import {cloneElement, createContext, useCallback, useEffect, useMemo, useReducer} from 'react';
 import Nav from '../components/new-campain/components/Nav';
-import {INITIAL_STATE, RESET_CAMPAIN, SET_NB_STEPS, UPDATE_CAMPAIN, UPDATE_STEP_INDEX} from '../utils/data'
+import {INITIAL_STATE, RESET_CAMPAIN, SET_NB_STEPS, SET_STATE, UPDATE_CAMPAIN, UPDATE_STEP_INDEX} from '../utils/data'
 import {NewCampainReducer} from './NewCampainReducer';
 
 interface AppContextInterface {
-  state: any;
-  reset: () => void;
-  previousStep: () => void;
-  updateCampain: (data: any) => void;
-  setNbSteps: (data: any) => void;
-  updateStepIndex: (data: any) => void;
+	state: any;
+	reset: () => void;
+	previousStep: () => void;
+	updateCampain: (data: any) => void;
+	setNbSteps: (data: any) => void;
+	updateStepIndex: (data: any) => void;
 }
+
 type Props = {
-  children: JSX.Element[],
+	children: JSX.Element[],
 };
 export const NewCampainContext = createContext<AppContextInterface>({} as AppContextInterface);
+
+
 function NewCampainContextWrapper({children}: Props) {
 	const [state, dispatch] = useReducer(NewCampainReducer, INITIAL_STATE);
-  const previousStep = useCallback(
-    () => {
-      const newStepIndex = state.stepIndex >= 1 ? state.stepIndex - 1 : 0;
-      const data = {stepIndex: newStepIndex};
-      dispatch({type: UPDATE_STEP_INDEX, data});
-    },
-    [state.stepIndex]
-  )
-  const updateCampain = useCallback((data: {}) => {
-    dispatch({type: UPDATE_CAMPAIN, data});
-  },[]);
-  const setNbSteps = useCallback((data: {}) => {
-    dispatch({type: SET_NB_STEPS, data});
-  },[]);
-  const updateStepIndex = useCallback((data: {}) => {
-    dispatch({type: UPDATE_STEP_INDEX, data});
-  },[]);
-  const reset = useCallback(() => {
-    dispatch({type: RESET_CAMPAIN});
-  },[]);
+	const previousStep = useCallback(
+		() => {
+			const newStepIndex = state.stepIndex >= 1 ? state.stepIndex - 1 : 0;
+			const data = {stepIndex: newStepIndex};
+			dispatch({type: UPDATE_STEP_INDEX, data});
+		},
+		[state.stepIndex]
+	)
+	const updateCampain = useCallback((data: {}) => {
+		dispatch({type: UPDATE_CAMPAIN, data});
+	}, []);
+	const setNbSteps = useCallback((data: {}) => {
+		dispatch({type: SET_NB_STEPS, data});
+	}, []);
+	const updateStepIndex = useCallback((data: {}) => {
+		dispatch({type: UPDATE_STEP_INDEX, data});
+	}, []);
+	const reset = useCallback(() => {
+		dispatch({type: RESET_CAMPAIN});
+	}, []);
+	const setState = useCallback((data: {}) => {
+		dispatch({type: SET_STATE, data});
+	}, []);
 	const authContext = useMemo(() => ({
-    reset,
-    previousStep,
+		reset,
+		previousStep,
 		updateCampain,
-    setNbSteps,
-    updateStepIndex
+		setState,
+		setNbSteps,
+		updateStepIndex
 	}), [reset, previousStep, updateCampain, setNbSteps, updateStepIndex]);
 
 	useEffect(() => {
@@ -54,7 +61,10 @@ function NewCampainContextWrapper({children}: Props) {
 			authContext.setNbSteps({nbSteps});
 		};
 		bootstrapAsync();
-
+		const currentState = sessionStorage.getItem("STATE");
+		if (currentState) {
+			setState(JSON.parse(currentState));
+		}
 	}, [children.length, authContext]);
 	return (
 		<NewCampainContext.Provider value={{state, ...authContext}}>

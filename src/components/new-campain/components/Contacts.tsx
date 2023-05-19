@@ -1,10 +1,10 @@
 import React, { useContext,useRef } from 'react'
 import  BottomBar  from './BottomBar';
 import { useForm } from 'react-hook-form';
-import { NewCampainContext } from '../../../context/NewCampainContext';
+import { NewCampainContext } from '@/context/NewCampainContext';
 import {yupResolver} from '@hookform/resolvers/yup';
 import * as yup from "yup";
-import { STRING_WITH_NUMBERS_REGEXP } from '../../../../utils/data';
+import { STRING_WITH_NUMBERS_REGEXP } from '@/utils/data';
 type FormValues = {
   contacts: string;
 };

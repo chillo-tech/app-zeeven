@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import React, {useContext} from 'react'
-import {NewCampainContext} from '../../../context/NewCampainContext';
+import {NewCampainContext} from '@/context/NewCampainContext';
 
 function Nav() {
 	const {state: {nbSteps, stepIndex}} = useContext(NewCampainContext);

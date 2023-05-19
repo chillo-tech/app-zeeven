@@ -32,7 +32,7 @@ const getWeekNumber = (entry: Date) => {
 }
 
 export const getDayAndMonthLabel = (entry: Date) => {
-	const days = ['Dimanche', 'Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi'];
+	const days = ['Dim.', 'Lun.', 'Mar.', 'Mer.', 'Jeu.', 'Ven.', 'Sam.'];
 	const months = ["Jan.", "Fev.", "Mars", "Avr.", "MaI", "Juin",
 		"Jul.", "Août", "Sep.", "Oct.", "Nov.", "Dec."
 	];
@@ -44,8 +44,8 @@ export const getDisplayedDate = (entry: string = "") => {
 		return entry;
 	}
 
-  const [dayOfDate, month, year] = getFormattedDate(new Date(entry)).split('/');
-  const [dayOfWeekLabel, monthLabel] = getDayAndMonthLabel(new Date(entry));
-  return `${dayOfWeekLabel}, ${dayOfDate} ${monthLabel}`;
-	
+	const [dayOfDate, month, year] = getFormattedDate(new Date(entry)).split('/');
+	const [dayOfWeekLabel, monthLabel] = getDayAndMonthLabel(new Date(entry));
+	return `${dayOfWeekLabel}, ${dayOfDate} ${monthLabel}`;
+
 };

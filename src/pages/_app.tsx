@@ -1,9 +1,10 @@
 import '../styles/globals.css'
 import type { AppProps } from 'next/app'
-import { Hydrate, QueryClient, QueryClientProvider } from '@tanstack/react-query'
-import { useState } from 'react'
 import { SessionProvider } from "next-auth/react"
-import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
+import ApplicationContextWrapper from '@/context/ApplicationContext'
+import { QueryClient, QueryClientProvider } from 'react-query'
+import { ReactQueryDevtools } from 'react-query/devtools'
+
 const configs = {
   defaultOptions: {
     queries: {
@@ -14,16 +15,16 @@ const configs = {
   },
 }
 export default function App({ Component, pageProps: { dehydratedState, session, ...pageProps }}: AppProps) {
-  const [queryClient] = useState(() => new QueryClient(configs))
+  const queryClient = new QueryClient(configs);
 
   return (
     <SessionProvider session={session}>
-      <QueryClientProvider client={queryClient}>
-        <ReactQueryDevtools initialIsOpen={false} />
-        <Hydrate state={dehydratedState}>
+      <ApplicationContextWrapper>
+        <QueryClientProvider client={queryClient}>
           <Component {...pageProps} />
-        </Hydrate>
-      </QueryClientProvider>
+          <ReactQueryDevtools initialIsOpen={false} />
+        </QueryClientProvider>
+      </ApplicationContextWrapper>
     </SessionProvider>
   )
 }

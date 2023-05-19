@@ -3,8 +3,8 @@ import {useForm} from 'react-hook-form';
 import {yupResolver} from '@hookform/resolvers/yup';
 import * as yup from "yup";
 import  BottomBar  from './BottomBar';
-import {NewCampainContext} from '../../../context/NewCampainContext';
-import { getInputFormattedDate } from 'utils';
+import {NewCampainContext} from '@/context/NewCampainContext';
+import { getInputFormattedDate } from '@/utils';
 type FormValues = {
   dateDebut: string;
   heureDebut: string;

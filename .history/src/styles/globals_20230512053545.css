@@ -1,0 +1,18 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+.line-break {
+  white-space: pre-wrap;
+}
+strong {
+  font-weight: 900 !important;
+}
+
+@layer base {
+  .yellow-button {
+    @apply flex items-center bg-yellow-400 text-blue-800 py-1 px-5 rounded-md 
+  }
+  .white-button {
+    @apply flex items-center bg-none text-white py-1 px-5 rounded-md border border-white
+  }
+}

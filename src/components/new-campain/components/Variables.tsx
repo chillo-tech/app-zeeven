@@ -1,9 +1,9 @@
 import React, {useContext, useState, useEffect, useCallback} from 'react'
 import {useForm} from 'react-hook-form';
 import  BottomBar  from './BottomBar';
-import {NewCampainContext} from '../../../context/NewCampainContext';
+import {NewCampainContext} from '@/context/NewCampainContext';
 import Preview from './Preview';
-import { INFORMATIONS, isUserInformation, variableWithoutTemplate, variableFieldType} from '../../../utils/data';
+import { INFORMATIONS, isUserInformation, variableWithoutTemplate, variableFieldType} from '@/utils/data';
 
 interface FormValues {
   messages: {

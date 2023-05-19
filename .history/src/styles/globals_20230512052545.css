@@ -1,0 +1,13 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+.line-break {
+  white-space: pre-wrap;
+}
+strong {
+  font-weight: 900 !important;
+}
+
+.yellow-button {
+  @apply 
+}

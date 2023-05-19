@@ -4,7 +4,7 @@ import { useRouter } from 'next/router';
 import React from 'react'
 import { RiLogoutBoxRLine } from 'react-icons/ri';
 import { TfiPencilAlt2 } from 'react-icons/tfi';
-import {ACCOUNT_CATEGORIESLINKS} from 'utils';
+import {ACCOUNT_CATEGORIESLINKS} from '@/utils';
 function Header() {
   const {data: session} = useSession();
   const router = useRouter();

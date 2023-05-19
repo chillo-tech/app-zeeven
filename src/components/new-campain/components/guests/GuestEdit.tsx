@@ -1,8 +1,8 @@
 import { useForm } from "react-hook-form";
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from "yup";
-import { Profile } from "../../../../src/types/Profile";
-import { EMAIL_ERROR_MESSAGE, PHONE_ERROR_MESSAGE, PHONE_PATTERN } from "../../../../utils/data";
+import { Profile } from "@/types/Profile";
+import { EMAIL_ERROR_MESSAGE, PHONE_ERROR_MESSAGE, PHONE_PATTERN } from "@/utils/data";
 
 type FormValues = {
   profile: Profile,
@@ -23,7 +23,7 @@ const schema = yup.object({
     phone: yup.string()
           .required("Ce champ est requis")
           .min(9, PHONE_ERROR_MESSAGE)
-          .max(9, PHONE_ERROR_MESSAGE),
+          .max(10, PHONE_ERROR_MESSAGE),
   }).required();
 
 function GuestEdit({handleSubmit}: {handleSubmit: Function}) {

@@ -1,7 +1,7 @@
 import { useForm } from "react-hook-form";
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from "yup";
-import { Guest } from "types/Guest";
+import { Guest } from "@/types/Guest";
 
 
 const schema = yup.object({

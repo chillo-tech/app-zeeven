@@ -2,10 +2,11 @@ import React, {useContext} from 'react'
 import {useForm} from 'react-hook-form';
 import {yupResolver} from '@hookform/resolvers/yup';
 import * as yup from "yup";
-import  BottomBar  from './BottomBar'
-import {NewCampainContext} from '../../../context/NewCampainContext';
+import BottomBar from './BottomBar'
+import {NewCampainContext} from '@/context/NewCampainContext';
+
 type FormValues = {
-  name: string;
+	name: string;
 };
 const schema = yup.object({
 	name: yup.string().required("Merci de saisir le titre"),
@@ -29,7 +30,7 @@ function Title() {
 				<div className="block">
 					<label htmlFor="name" className="w-full flex flex-col justify-between mb-2 text-lg">
 						<span className='text-blue-800 font-semibold'>Un nom s&apos;il vous plait ...</span>
-            <span className="text-gray-500 text-sm">Le nom sera l&apos;objet de votre message</span>
+						<span className="text-gray-500 text-sm">Le nom sera l&apos;objet de votre message</span>
 					</label>
 					<input type="text" id="name"
 						   className="w-full border-gray-300 rounded-lg shadow-sm focus:border-indigo-500 focus:ring-indigo-5000 py-3"
