@@ -30,7 +30,6 @@ function Espaces({ index }: any) {
       });
     },
   });
-
   return (
     <>
       <Metadata entry={{ title: 'Nos Solutions' }} />
