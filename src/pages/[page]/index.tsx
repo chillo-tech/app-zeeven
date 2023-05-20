@@ -44,14 +44,14 @@ function Espaces({ index }: any) {
                   key={`page-${page_id.id}-${index}`}
                   id={`#${slugify(page_id.label)}`}
                 >
-                  <div className="container flex items-center gap-12 py-10">
+                  <div className="container flex items-center gap-12 py-10 flex-col">
                     <div className="relative w-96 h-96">
                       <ImageDisplay
                         wrapperClasses="h-full rounded-full border-8 border-app-blue relative overflow-hidden shadow-lg"
                         imageClasses= 'object-contain'
                         local={true}
                         image={{
-                          path: `/images/${slugify()}-message.png`,
+                          path: `/images/${slugify(page_id.label)}-message.png`,
                           title: 'Entammez vos échanges>avec ZEEVEN',
                         }}
                       />

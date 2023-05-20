@@ -37,11 +37,11 @@ function Solutions() {
                     key={slugify(`${category.id}-${category.label}`)}
                   >
                     {company && company.categories && company.categories[0].pages ? (
-                      <ul className='flex justify-center gap-6 py-4 text-xl'> 
+                      <ul className='flex justify-center gap-6 py-4 text-xl flex-col md:flex-row'> 
                         {company.categories[index].pages.map((page: any) => (
                           <li  key={getLink(`${page.page_id.id}-${page.page_id.label}`)}>
                             <Link href={getLink(`${page.page_id.id}-${page.page_id.label}`)}
-                                  className="flex items-center justify-between shadow-lg pr-6 py-1 text-black bg-white font-light rounded-md"
+                                  className="flex items-center md:justify-between shadow-lg pr-6 py-1 text-black bg-white font-light rounded-md"
                             >
                                 <ImageDisplay
                                   wrapperClasses = 'relative w-12 h-12 mr-4 ml-2 rounded-full overflow-hidden'
