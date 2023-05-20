@@ -20,7 +20,7 @@ const onRequest = async (config: InternalAxiosRequestConfig): Promise<InternalAx
     authorization = url.startsWith('backoffice') ?  { 'Authorization':`Bearer ${process.env.BACKOFFICE_API_TOKEN}`} : authorization;
 
     const urlToCall = url.startsWith('backoffice') ? url.replaceAll('backoffice', 'items') : url;
-    const baseURL = url.startsWith('backoffice') ? "http://localhost:3000" : process.env.API_URL;
+    const baseURL = url.startsWith('backoffice') ? "https://zeeven.fr" : process.env.API_URL;
 
     return {
       ...config,
