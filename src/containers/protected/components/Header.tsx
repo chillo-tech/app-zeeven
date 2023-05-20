@@ -19,7 +19,7 @@ function Header() {
         <nav>
           <ul className='flex'>
             <li>
-            <Link href="/create-campain" className={`flex items-center bg-yellow-400 text-blue-900 border-yellow-500 py-1 rounded-lg px-3 md:px-5`}>
+            <Link href="/nouvelle-campagne" className={`flex items-center bg-yellow-400 text-blue-900 border-yellow-500 py-1 rounded-lg px-3 md:px-5`}>
               <TfiPencilAlt2 className='mr-2 hidden md:inline'/> Envoyer des messages
             </Link>
             </li>

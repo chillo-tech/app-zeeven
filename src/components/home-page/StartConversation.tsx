@@ -19,7 +19,7 @@ function StartConversation() {
             <span>Meilleurs échanges aujourd&apos;hui</span>
           </p>
           <p className='flex gap-6 items-start justify-start'>
-            <Link href="/create-campain" className={classNames('yellow-button')} >
+            <Link href="/nouvelle-campagne" className={classNames('yellow-button')} >
               Envoyez votre premier message <BsArrowRight className='ml-4' />
             </Link>
             <Link href="/contactez-nous" className={classNames('blue-link', 'underline')}>

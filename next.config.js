@@ -29,7 +29,7 @@ const nextConfig = {
   async redirects() {
     return [
       {
-        source: '/create-campain',
+        source: '/nouvelle-campagne',
         destination: '/nouvelle-campagne',
         permanent: false,
       },

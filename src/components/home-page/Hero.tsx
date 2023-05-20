@@ -34,7 +34,7 @@ function Hero() {
             <span className='mb-1'>Recevez les statistiques et suivez vos messages</span>
           </h4>
           <p className='flex gap-6 items-center justify-center'>
-            <Link href="/create-campain" className={classNames('yellow-button')} >
+            <Link href="/nouvelle-campagne" className={classNames('yellow-button')} >
               Envoyez votre premier message <BsArrowRight className='ml-4' />
             </Link>
             <Link href="/contactez-nous" className={classNames('blue-link', 'underline')}>
