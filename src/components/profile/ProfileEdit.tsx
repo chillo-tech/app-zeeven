@@ -6,10 +6,10 @@ import {useMutation} from 'react-query';
 import {AxiosError} from 'axios';
 import {useForm} from 'react-hook-form';
 import {yupResolver} from '@hookform/resolvers/yup';
-import {add, patch} from "services/crud";
-import styles from 'styles/SignIn.module.css';
+import {add, patch} from "@/services/crud";
+import styles from '@/styles//SignIn.module.css';
 import Message from '@/components/Message';
-import formStyles from 'styles/Form.module.css';
+import formStyles from '@/styles//Form.module.css';
 
 const schema = yup.object({
 	civility: yup.string().trim()
@@ -90,7 +90,7 @@ const ProfileEdit = ({endpoint, redirectUrl, data, method, buttonLabel = 'Enregi
 			setValue('phoneIndex', data?.phoneIndex || "");
 			setValue('civility', data?.civility || "");
 		}
-	}, [data]);
+	}, [data, setValue]);
 	return (
 		<article>
 			{mutation.isSuccess ? (

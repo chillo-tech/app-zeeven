@@ -5,7 +5,7 @@ import * as yup from "yup";
 import  BottomBar  from './BottomBar';
 import {NewCampainContext} from '@/context/NewCampainContext';
 import { EMAIL_ERROR_MESSAGE, EMAIL_PATTERN, PHONE_ERROR_MESSAGE, PHONE_PATTERN } from '@/utils/data';
-import { Profile } from '@/src/types/Profile';
+import { Profile } from '@/types/Profile';
 
 const schema = yup.object({
   author: yup.object({

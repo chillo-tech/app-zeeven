@@ -1,8 +1,8 @@
 import Image from 'next/image';
 import React, { useState } from 'react'
-import { EmptyPage } from 'types/EmptyPage';
+import { EmptyPage } from '@/types/EmptyPage';
 import { cn, loaderProp } from '@/utils/image-loader';
-import formStyles from 'styles/Form.module.css'
+import formStyles from '@/styles//Form.module.css'
 function Empty(params: EmptyPage) {
   const [isLoading, setLoading] = useState(true);
   return (

@@ -52,7 +52,7 @@ function NewCampainContextWrapper({children}: Props) {
 		setState,
 		setNbSteps,
 		updateStepIndex
-	}), [reset, previousStep, updateCampain, setNbSteps, updateStepIndex]);
+	}), [reset, previousStep, updateCampain, setNbSteps, updateStepIndex, setState]);
 
 	useEffect(() => {
 		// Fetch the token from storage then navigate to our appropriate place
@@ -65,7 +65,7 @@ function NewCampainContextWrapper({children}: Props) {
 		if (currentState) {
 			setState(JSON.parse(currentState));
 		}
-	}, [children.length, authContext]);
+	}, [children.length, authContext, setState]);
 	return (
 		<NewCampainContext.Provider value={{state, ...authContext}}>
 			<Head>

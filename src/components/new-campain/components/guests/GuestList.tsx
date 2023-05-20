@@ -11,7 +11,7 @@ function GuestList({guests, remove}: Params) {
   return (
     <table className={`table-auto my-4 border-collapse w-full`}>
       <thead>
-      <tr><th colSpan="5" className="text-left p3 text-lg text-blue-800 font-semibold">Vos contacts </th></tr>
+      <tr><th colSpan={5} className="text-left p3 text-lg text-blue-800 font-semibold">Vos contacts </th></tr>
       </thead>
       <tbody>
         {

@@ -13,11 +13,11 @@ type StyleParams = {
 	value?: string
 }
 type FormValues = {
-	applicationMessage: string;
+	message: string;
 };
 
 const schema = yup.object({
-	applicationMessage: yup.string().required("Merci de saisir votre applicationMessage"),
+	message: yup.string().required("Merci de saisir votre message"),
 }).required();
 
 
@@ -26,15 +26,15 @@ function Message() {
 	const [showInformation, setShowInformation] = useState(false);
 	const messageRef = useRef({selectionStart: 0, selectionEnd: 0, value: ''});
 	const context = useContext(NewCampainContext);
-	const {state: {stepIndex, campain: {applicationMessage}}, updateCampain, previousStep} = context;
+	const {state: {stepIndex, campain: {message}}, updateCampain, previousStep} = context;
 	const {register, handleSubmit, watch, setValue, formState: {errors}} = useForm<FormValues>({
-		defaultValues: {applicationMessage},
+		defaultValues: {message},
 		mode: "onChange",
 		resolver: yupResolver(schema)
 	});
-	const {ref, ...rest} = register('applicationMessage');
+	const {ref, ...rest} = register('message');
 
-	const currentMessage = watch("applicationMessage");
+	const currentMessage = watch("message");
 	const updateStyle = ({type, value}: StyleParams) => {
 		const start = messageRef.current?.selectionStart;
 		const end = messageRef.current.selectionEnd;
@@ -57,11 +57,11 @@ function Message() {
 			fieldValue = `${valueBeforeSelection} {{${value}}} ${selection.length ? selection + valueAfterSelection : valueAfterSelection}`;
 			setShowInformation(false);
 		}
-		setValue("applicationMessage", fieldValue);
+		setValue("message", fieldValue);
 	}
 	const onSubmit = (data: any) => {
-		let {applicationMessage} = data;
-		updateCampain({applicationMessage: applicationMessage.trim()})
+		let {message} = data;
+		updateCampain({message: message.trim()})
 	};
 	return (
 		<section
@@ -69,18 +69,18 @@ function Message() {
 			<div className=" md:p-5 p-4 md:col-span-2 border-r-2 border-slate-300">
 				<form noValidate className="block space-y-6" onSubmit={handleSubmit(onSubmit)}>
 					<div className="block">
-						<label htmlFor="applicationMessage"
+						<label htmlFor="message"
 							   className="w-full flex flex-col justify-between mb-2 text-md font-light">
-							<span className='text-blue-800 font-semibold'>Votre applicationMessage</span>
+							<span className='text-blue-800 font-semibold'>Votre message</span>
 							<span className="text-gray-500 text-sm">Vous pourrez définir la valeur des informations dans la suite</span>
 						</label>
-						<textarea rows={6} id="applicationMessage"
+						<textarea rows={6} id="message"
 								  className="w-full border-gray-300 rounded-lg shadow-sm focus:border-indigo-500 focus:ring-indigo-5000 py-3"
 								  {...rest} ref={(e: any) => {
 							ref(e)
 							messageRef.current = e
 						}}/>
-						<p className="text-red-500">{errors?.applicationMessage?.applicationMessage}</p>
+						<p className="text-red-500">{errors?.message?.message}</p>
 						<div className="flex justify-between items-center flex-col md:flex-row">
 							<p>Charactères: {currentMessage ? currentMessage.length : 0}</p>
 							<div className="flex buttons items-center">

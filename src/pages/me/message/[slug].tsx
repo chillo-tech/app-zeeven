@@ -3,7 +3,7 @@ import Statistics from '@/components/campains/Statistics';
 import Guests from '@/components/guests/Guests';
 import Message from '@/components/Message';
 import {Tabs} from '@/components/Tabs/Index';
-import ProtectedLayout from 'containers/protected';
+import ProtectedLayout from '@/containers/protected';
 import Head from 'next/head';
 import {useRouter} from 'next/router';
 import React from 'react'

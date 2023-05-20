@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { ReactMarkdown } from 'react-markdown/lib/react-markdown'
-import { Guest } from 'types/Guest';
+import { Guest } from '@/types/Guest';
 
 type Parameters = {
   text: string;
@@ -21,7 +21,7 @@ function Preview({text = '', variables}: Parameters) {
       }
     });
     setUpdatedText(textWithVariables);
-  }, [text, variables, updatedText, JSON.stringify(variables)])
+  }, [text, variables, updatedText])
   
   return (
     <>

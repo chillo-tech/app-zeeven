@@ -1,4 +1,4 @@
-import {AxiosError, AxiosInstance, AxiosRequestConfig, AxiosResponse} from "axios";
+import {AxiosError, AxiosInstance, AxiosRequestConfig, AxiosResponse, InternalAxiosRequestConfig} from "axios";
 import { Session } from "next-auth";
 import { getSession, useSession, signOut } from 'next-auth/react';
 
@@ -12,7 +12,7 @@ interface AppSession extends Session {
     accessToken: string
   }
 }
-const onRequest = async (config: AxiosRequestConfig): Promise<AxiosRequestConfig> => {
+const onRequest = async (config: InternalAxiosRequestConfig): Promise<InternalAxiosRequestConfig> => {
     const session = await getSession() as AppSession;
     
     const {url = ''} = config;
@@ -22,9 +22,6 @@ const onRequest = async (config: AxiosRequestConfig): Promise<AxiosRequestConfig
     const urlToCall = url.startsWith('backoffice') ? url.replaceAll('backoffice', 'items') : url;
     const baseURL = url.startsWith('backoffice') ? "http://localhost:3000" : process.env.API_URL;
 
-    console.log('====================================');
-    console.log({urlToCall, baseURL});
-    console.log('====================================');
     return {
       ...config,
       baseURL,
@@ -37,7 +34,7 @@ const onRequest = async (config: AxiosRequestConfig): Promise<AxiosRequestConfig
         'service-key': `${process.env.SERVICE_KEY}`,
         ...(authorization)
       } 
-    } as AxiosRequestConfig;
+    };
 }
 
 const onRequestError = (error: AxiosError): Promise<AxiosError> => {

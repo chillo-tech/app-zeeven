@@ -2,7 +2,17 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from "yup";
 import { Guest } from "@/types/Guest";
-
+export type Invitation = {
+  profile: {
+    id: string,
+    civility: string,
+    firstName: string,
+    lastName: string,
+    email: string,
+    phone: string
+  },
+  sendInvitation: boolean;
+};
 
 const schema = yup.object({
   profile: yup.object({
@@ -24,11 +34,11 @@ const schema = yup.object({
 }).required();
 
 function GuestEdit({handleSubmit}: {handleSubmit: Function}) {
-  const { register, handleSubmit: handleFormSubmit, reset, formState: { errors } } = useForm({
+  const { register, handleSubmit: handleFormSubmit, reset, formState: { errors } } = useForm<Invitation>({
     resolver: yupResolver(schema),
     defaultValues: {profile:{ id: '', civility: '', firstName: '', lastName: '',  email: '', phone: ''}, sendInvitation: false}
   });
-  const onSubmit = (data: {profile: Guest, sendInvitation: boolean}) => {
+  const onSubmit = (data: Invitation) => {
     reset();
     handleSubmit(data);
   }
@@ -81,7 +91,7 @@ function GuestEdit({handleSubmit}: {handleSubmit: Function}) {
           <div className="mt-1 h-100">
             <input className="form-check-input" type="checkbox" {...register("sendInvitation")} id="sendFile" />
             <label className="form-check-label ml-2" htmlFor="sendFile">
-              Envoyer l'invitation
+              Envoyer l&lsquo;invitation
             </label>
           </div>
         </div>

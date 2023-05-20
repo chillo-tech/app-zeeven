@@ -22,7 +22,7 @@ type StyleParams = {
 }
 
 function Messages() {
-	const messageRef = useRef({selectionStart: 0, selectionEnd: 0, value: ''});
+	const messageRef = useRef<HTMLTextAreaElement|null>() ;
 	const [showInformation, setShowInformation] = useState(false);
 	const [lastVariable, setLastVariable] = useState("");
 	const context = useContext(NewCampainContext);
@@ -53,9 +53,9 @@ function Messages() {
 	});
 
 	const updateStyle = ({type, value}: StyleParams) => {
-		const start = messageRef.current?.selectionStart;
-		const end = messageRef.current.selectionEnd;
-		const currentFieldValue = messageRef.current.value;
+		const start = messageRef.current?.selectionStart || 0;
+		const end = messageRef.current?.selectionEnd || 0;
+		const currentFieldValue = messageRef.current?.value || '';
 		let fieldValue = currentFieldValue;
 
 		const valueBeforeSelection = currentFieldValue.substring(0, start);
@@ -105,7 +105,7 @@ function Messages() {
 										  messageRef.current = e // you can still assign to ref
 									  }}
 							/>
-							<p className="text-red-500">{errors?.messages ? errors?.messages[index]?.text?.applicationMessage : null}</p>
+							<p className="text-red-500">{errors?.messages ? errors?.messages[index]?.text?.message : null}</p>
 							<div className="flex justify-between items-center flex-col md:flex-row">
 								<p>Charactères: {currentMessage ? currentMessage.length : 0}</p>
 								<div className="flex buttons items-center">
@@ -163,7 +163,7 @@ function Messages() {
 											   {required: "Merci de sasir une date"}
 										   )}
 									/>
-									<p className="text-red-500">{errors?.messages ? errors?.messages[index]?.date?.applicationMessage : null}</p>
+									<p className="text-red-500">{errors?.messages ? errors?.messages[index]?.date?.message : null}</p>
 								</div>
 								<div className="block">
 									<label htmlFor="time"
@@ -177,12 +177,12 @@ function Messages() {
 											   {required: "Merci de sasir une heure"}
 										   )}
 									/>
-									<p className="text-red-500">{errors?.messages ? errors?.messages[index]?.time?.applicationMessage : null}</p>
+									<p className="text-red-500">{errors?.messages ? errors?.messages[index]?.time?.message : null}</p>
 								</div>
 							</div>
 						</div>
 					))}
-					<p className="text-red-500">{errors?.messages?.root?.applicationMessage}</p>
+					<p className="text-red-500">{errors?.messages?.root?.message}</p>
 
 					<BottomBar
 						stepIndex={stepIndex}

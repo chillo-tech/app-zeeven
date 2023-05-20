@@ -3,7 +3,7 @@ import GuestEdit from './GuestEdit';
 import {useRouter} from 'next/router';
 import GuestList from './GuestList';
 import {AiOutlineUserAdd} from 'react-icons/ai';
-import {Guest} from 'types/Guest';
+import {Guest} from '@/types/Guest';
 import {useMutation, useQuery, useQueryClient} from 'react-query';
 import Message from '@/components/Message';
 import {deleteItem, search} from '@/services/crud';

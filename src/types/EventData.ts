@@ -1,3 +1,4 @@
+import { Profile } from './Profile';
 import { ActionType } from './data';
 export type Dispatch = (action: Action) => void;
 

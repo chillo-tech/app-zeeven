@@ -1,5 +1,5 @@
 import React from 'react';
-import {Guest} from 'types/Guest';
+import {Guest} from '@/types/Guest';
 import classNames from 'classnames';
 import DeletetableItem from '../shared/DeletetableItem';
 
