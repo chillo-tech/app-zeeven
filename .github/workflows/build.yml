@@ -2,7 +2,7 @@ on:
   push:
     branches:
       - send-messages
-      - secured-routes
+      - migration
   workflow_dispatch:
 
 env:
