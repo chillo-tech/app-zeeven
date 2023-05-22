@@ -4,11 +4,11 @@ import { STATISTICS } from '@/utils/data'
 
 function Statistics() {
   return (
-    <section className={`bg-gray-200 container items-center mx-auto rounded-lg grid justify-center grid-cols-${STATISTICS.length}`}>
+    <section className={`bg-gray-200 container md:items-center mx-auto rounded-lg grid md:justify-center md:grid-cols-${STATISTICS.length}`}>
       {STATISTICS.map((statistic, index) => (
-        <article className='py-6 flex flex-col tect-center items-center justify-center items-center' key={`statistic-${index}`}>
+        <article className='md:py-6 py-3 flex flex-row md:flex-col md:text-center md:justify-center md:items-center' key={`statistic-${index}`}>
           <Image src={`/images/statistics/${statistic.image}`} width="50" height="50" alt={`${statistic.title} ${statistic.description}`}/>
-          <div className="text-lg text-center">
+          <div className="text-lg md:text-center pl-5 md:pl-0">
             <h6 className='text-blue-800 font-bold text-2xl'>{statistic.title}</h6>
             <p className='text-blue-700'>{statistic.description}</p>
           </div>

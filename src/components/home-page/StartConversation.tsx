@@ -14,11 +14,11 @@ function StartConversation() {
             <span className='mb-2'>Entammez vos échanges</span>
             <span>avec ZEEVEN</span>
           </h2>
-          <p className='flex flex-col py-8 text-[1.8rem]'>
+          <p className='flex flex-col py-8 text-[1.2rem]'>
             <span>Inscrivez vous entammez vos</span>
             <span>Meilleurs échanges aujourd&apos;hui</span>
           </p>
-          <p className='flex gap-6 items-start justify-start'>
+          <p className='flex gap-6 items-start justify-start flex-col md:flex-row'>
             <Link href="/nouvelle-campagne" className={classNames('yellow-button')} >
               Envoyez votre premier message <BsArrowRight className='ml-4' />
             </Link>
@@ -27,7 +27,7 @@ function StartConversation() {
             </Link>
           </p>
         </div>
-        <div className="relative w-96 h-96">
+        <div className="relative w-72 h-72 md:w-96 md:h-96">
           <ImageDisplay
              wrapperClasses = 'h-full relative rounded-full border-8 border-app-blue overflow-hidden'
              local={true}

@@ -1,6 +1,7 @@
 import Metadata from '@/components/Metadata';
 import RenderHtmlContent from '@/components/RenderHtmlContent';
 import ImageDisplay from '@/components/image-display';
+import SectionLinks from '@/components/shared/SectionLinks';
 import OpenedLayout from '@/containers/opened';
 import { ApplicationContext } from '@/context/ApplicationContext';
 import { fetchData } from '@/services';
@@ -43,33 +44,35 @@ function Espaces({ index }: any) {
                   key={`page-${page_id.id}-${index}`}
                   id={`#${slugify(page_id.label)}`}
                 >
-                  <div className="container flex items-center gap-12 py-10 flex-col">
-                    <div className="relative w-96 h-96">
-                      <ImageDisplay
-                        wrapperClasses="h-full rounded-full border-8 border-app-blue relative overflow-hidden shadow-lg"
-                        imageClasses= 'object-contain'
-                        local={true}
-                        image={{
-                          path: `/images/${slugify(page_id.label)}-message.png`,
-                          title: 'Entammez vos échanges>avec ZEEVEN',
-                        }}
-                      />
+                  <div className={classNames(
+                    "container flex items-center gap-12 flex-col py-4",
+                    {"md:flex-row-reverse": index % 2 === 0  },
+                    {"md:flex-row": index % 2 === 1  }
+                  )}>
+                    <div className="relative w-full h-96 flex-1">
+                    <ImageDisplay
+                            wrapperClasses="relative w-full h-96"
+                            imageClasses= 'object-cover'
+                            image={page_id.images[1].directus_files_id}
+                          />
                     </div>
-                    <div>
+                    <div className='flex-1'>
                       <p className="flex">
                         <span className="flex items-center justify-between pr-10 py-1 text-black font-light rounded-md">
                           <ImageDisplay
-                            wrapperClasses="relative w-12 h-12 mr-4 ml-2"
+                            wrapperClasses="relative w-8 h-8 mr-2"
+                            
                             image={page_id.images[0].directus_files_id}
                           />
-                          {page_id.label}
+                          <span className="text-xl">{page_id.label}</span>
                         </span>
                       </p>
                       <RenderHtmlContent
                         content={page_id.sublabel}
-                        classes="flex flex-col py-3 text-[1.8rem]"
+                        classes="flex flex-col py-3 text-[1.8rem] font-bold leading-8"
                       />
-                      <RenderHtmlContent content={page_id.abstract} classes="flex flex-col" />
+                      <RenderHtmlContent content={page_id.abstract} classes="flex flex-col mb-4" />
+                      <SectionLinks />
                     </div>
                   </div>
                 </section>
@@ -125,12 +128,12 @@ function Espaces({ index }: any) {
 
 export async function getServerSideProps(context: any) {
   const { params } = context;
-  const { page } = params;
+  const { category } = params;
 
   return {
     props: {
       ...params,
-      index: page.split('-')[0],
+      index: category.split('-')[0],
     },
   };
 }

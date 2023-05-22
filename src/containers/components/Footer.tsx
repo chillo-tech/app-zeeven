@@ -4,7 +4,7 @@ import { slugify } from '@/utils';
 import Link from 'next/link';
 import React, { useContext } from 'react';
 import { FaFacebookSquare, FaLinkedinIn, FaWhatsapp } from 'react-icons/fa';
-
+import {signIn, signOut, useSession} from 'next-auth/react';
 //const oswald = Oswald({weight:'700'});
 function Footer() {
   const context = useContext(ApplicationContext);
@@ -20,17 +20,17 @@ function Footer() {
     <>
       {company ? (
         <footer className="bg-blue-900 text-white text-sm text-center md:text-left md:text-lg">
-          <div className="container mx-auto py-10 grid md:grid-cols-5 gap-6">
+          <div className="container mx-auto py-10 grid md:grid-cols-4 gap-6">
             <div className="logo">
               <Link href="/" className={` text-white text-4xl py-3 !font-extrabold`}>
                 ZEEVEN
               </Link>
               <RenderHtmlContent content={company.abstract} classes="my-5" />
               <div className="flex justify-center items-center md:items-start md:justify-start">
-                <Link href="/" className="text-slate-300 hover:text-white">
+                <Link href="https://www.facebook.com/Chillotech-103869952427034" className="text-slate-300 hover:text-white">
                   <FaFacebookSquare className="text-4xl mr-4" />
                 </Link>
-                <Link href="/" className="text-slate-300 hover:text-white mr-2">
+                <Link href="https://www.linkedin.com/company/86905161" className="text-slate-300 hover:text-white mr-2">
                   <FaLinkedinIn color="text-slate-300" className="text-4xl" />
                 </Link>
                 <Link
@@ -44,7 +44,9 @@ function Footer() {
             </div>
             {company && company.categories ? (
               <>
-                {company.categories.map((category: any, index: number) => (
+                {company.categories
+                .filter(({status}: any, index: number) => status === 'published')
+                .map((category: any, index: number) => (
                   <div
                     className="logo flex flex-col"
                     key={slugify(`${category.id}-${category.label}`)}
@@ -54,7 +56,7 @@ function Footer() {
                       <ul> 
                         {company.categories[index].pages.map((page: any) => (
                           <li  key={slugify(`${page.page_id.id}-${page.page_id.label}`)} className='mb-2'>
-                            <Link href={slugify(`${category.id}-${getLabel(category.label)}#${page.page_id.label}`)} className="text-slate-300 hover:text-white">
+                            <Link href={slugify(`1-nos-solutions`)} className="text-slate-300 hover:text-white">
                               {page.page_id.label}
                             </Link>
                           </li>
@@ -70,10 +72,10 @@ function Footer() {
               <Link href="/nouvelle-campagne" className="text-slate-300 hover:text-white mb-2">
                 Envoi des messages
               </Link>
-              <Link href="/nouvelle-campagne" className="text-slate-300 hover:text-white mb-2">
+              <button type="button" onClick={() => signIn()} className="text-slate-300 hover:text-white mb-2 md:text-left">
                 Statistiques de vos messages
-              </Link>
-              <Link href="/generez-des-qr-code" className="text-slate-300 hover:text-white mb-2">
+              </button>
+              <Link href="/qr-code" className="text-slate-300 hover:text-white mb-2">
                 Générez des QR code
               </Link>
             </div>
@@ -82,7 +84,7 @@ function Footer() {
               <Link href="/contactez-nous" className="text-slate-300 hover:text-white mb-2">
                 Contactez nous
               </Link>
-              <Link href="/" className="text-slate-300 hover:text-white mb-2">
+              <Link href="/contactez-nous" className="text-slate-300 hover:text-white mb-2">
                 Grille des prix
               </Link>
               <Link

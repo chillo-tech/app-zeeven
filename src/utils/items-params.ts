@@ -44,6 +44,7 @@ const MENU =  `${base},${image},slug,display`;
 const MENUFULL =  `
       id,
       label,
+      status,
       sublabel,
       categories.*,
       pages.page_id.*,
@@ -54,10 +55,12 @@ const ENTREPRISE =  `
   name,
   abstract,
   menus.id,
+  menus.status,
   menus.label,
   categories.pages.page_id.id,
   categories.id,
   categories.label,
+  categories.status,
   categories.pages.page_id.label,
   categories.pages.page_id.sublabel,
   categories.pages.page_id.images.directus_files_id.*

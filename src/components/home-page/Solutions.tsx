@@ -13,6 +13,8 @@ function Solutions() {
       let link = slugify(label);
       if(link.indexOf('qr-code') > -1) {
         link = "qr-code";
+      } else {
+        link = "nouvelle-campagne";
       }
       return link;
   }
@@ -28,7 +30,6 @@ function Solutions() {
             <span>Gardez un lien avec vos contacts personnalisé</span>
             <span>via le canal de votre choix.</span>
           </p>
-          <ul> 
           {company && company.categories ? (
               <>
                 {company.categories.filter((category: any) => category.label === 'Canaux').map((category: any, index: number) => (
@@ -39,14 +40,15 @@ function Solutions() {
                     {company && company.categories && company.categories[0].pages ? (
                       <ul className='flex justify-center gap-6 py-4 text-xl flex-col md:flex-row'> 
                         {company.categories[index].pages.map((page: any) => (
-                          <li  key={getLink(`${page.page_id.id}-${page.page_id.label}`)}>
+                          <li  key={`${page.page_id.id}-${page.page_id.label}`} className='flex-1'>
                             <Link href={getLink(`${page.page_id.id}-${page.page_id.label}`)}
-                                  className="flex items-center md:justify-between shadow-lg pr-6 py-1 text-black bg-white font-light rounded-md"
+                                  className="flex items-center justify-between shadow-lg px-6 py-4 text-black bg-white font-light rounded-md"
                             >
+                              <span>
+                              {page.page_id.label}</span>
                                 <ImageDisplay
-                                  wrapperClasses = 'relative w-12 h-12 mr-4 ml-2 rounded-full overflow-hidden'
+                                  wrapperClasses = 'relative w-12 h-12 rounded-full overflow-hidden'
                                   image={page.page_id.images[0].directus_files_id}/>
-                              {page.page_id.label}
                             </Link>
                           </li>
                         ))}
@@ -56,7 +58,7 @@ function Solutions() {
                 ))}
               </>
             ) : null}
-          </ul>
+          
       </div>
     </section>
   )

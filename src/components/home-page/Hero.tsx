@@ -23,7 +23,7 @@ function Hero() {
     </Head>
     <section className='bg-white'>
       <div className="container rounded-lg grid md:grid-cols-2 gap-4 py-2">
-        <article className="flex flex-col items-start md:py-20 py-10">
+        <article className="flex flex-col items-start md:py-20 py-4">
           <h1 className='text-blue-900 text-3xl md:text-4xl flex flex-col font-extrabold'>
             <span>Informez vos contacts.</span>
             <span>Ils apprécient votre affection.</span>
@@ -33,7 +33,7 @@ function Hero() {
             <span className='mb-1'>ZEEVEN permet de personnaliser les communications que vous engagiez vos contacts.</span>
             <span className='mb-1'>Recevez les statistiques et suivez vos messages</span>
           </h4>
-          <p className='flex gap-6 items-center justify-center'>
+          <p className='flex gap-2 md:gap-6 md:items-center md:justify-center flex-col md:flex-row'>
             <Link href="/nouvelle-campagne" className={classNames('yellow-button')} >
               Envoyez votre premier message <BsArrowRight className='ml-4' />
             </Link>

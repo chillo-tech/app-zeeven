@@ -1,144 +1,166 @@
-import {signIn, signOut, useSession} from 'next-auth/react';
-import Link from 'next/link'
-import React, { useContext } from 'react'
-import {RiLogoutBoxRLine} from 'react-icons/ri';
-import {useRouter} from 'next/router';
 import { ApplicationContext } from '@/context/ApplicationContext';
-import { slugify } from '@/utils';import { RxCross1 } from 'react-icons/rx';
+import { slugify } from '@/utils';
+import { signIn, signOut, useSession } from 'next-auth/react';
+import Link from 'next/link';
+import { useRouter } from 'next/router';
+import React, { useContext } from 'react';
+import { RiLogoutBoxRLine } from 'react-icons/ri';
+import { RxCross1 } from 'react-icons/rx';
 
-import { HiOutlineMenu, HiOutlineMenuAlt2, HiPhone } from 'react-icons/hi';
+import { HiOutlineMenuAlt3 } from 'react-icons/hi';
 
 function NavBar() {
-
   const context = useContext(ApplicationContext);
-  const { state: {company} } = context;
-	const {data: session} = useSession();
-	const router = useRouter();
+  const {
+    state: { company },
+  } = context;
+  const { data: session } = useSession();
+  const router = useRouter();
   const [isOpen, setIsOpen] = React.useState(false);
   const toggle = () => setIsOpen(!isOpen);
-	return (
-		<header className={` bg-blue-900 flex justify-between items-center px-4 py-1 font-extralight`}>
-			<div className="container mx-auto flex justify-between items-center">
-				<Link href="/" className={` text-white text-4xl py-3 !font-extrabold`}>
-					ZEEVEN
-				</Link>
-        {
-          company && company.menus  ?(
-              <ul className='flex items-center gap-6 font-light hidden md:visible'>
-                {company.menus.map( (menu: any) => (
+  return (
+    <header className={` flex items-center justify-between bg-blue-900 px-4 py-1 font-extralight`}>
+      <div className="container mx-auto flex items-center justify-between">
+        <Link href="/" className={` py-3 text-4xl !font-extrabold text-white`}>
+          ZEEVEN
+        </Link>
+        {company && company.menus ? (
+          <ul className=" hidden items-center gap-6 font-light md:flex">
+            {company.menus
+              .filter(({ status }: any, index: number) => status === 'published')
+              .map((menu: any) => (
+                <li key={`meniu-${menu.id}`}>
+                  <Link
+                    href={'/' + slugify(`${menu.id}-${menu.label}`)}
+                    className="flex items-center text-xl text-white"
+                  >
+                    {menu.label}
+                  </Link>
+                </li>
+              ))}
+          </ul>
+        ) : null}
+        <nav className="hidden md:inline">
+          <ul className="flex items-center gap-6">
+            {session ? (
+              <>
+                <li>
+                  <button
+                    type="button"
+                    onClick={() => router.push('/me')}
+                    className="ml-2 block h-10 w-10 rounded-full border border-white font-extrabold uppercase text-white"
+                  >
+                    {session?.user?.name?.substring(0, 2)}
+                  </button>
+                </li>
+                <li>
+                  <button
+                    type="button"
+                    onClick={() => signOut({ callbackUrl: '/' })}
+                    className="flex items-center"
+                  >
+                    <RiLogoutBoxRLine className="ml-3 text-3xl text-white" />
+                  </button>
+                </li>
+              </>
+            ) : (
+              <>
+                <li>
+                  <button type="button" onClick={() => signIn()} className={`white-button`}>
+                    Connexion
+                  </button>
+                </li>
+                <li>
+                  <Link href="/auth/register" type="button" className={`yellow-button`}>
+                    Inscription
+                  </Link>
+                </li>
+              </>
+            )}
+          </ul>
+        </nav>
+        <button
+          onClick={toggle}
+          className="bg-app-yellow text-app-brown flex items-center justify-center rounded-md font-semibold text-white md:hidden"
+        >
+          <HiOutlineMenuAlt3 className="h-8 w-8" />
+        </button>
+      </div>
+      <nav
+        className={`flex justify-between ${
+          isOpen ? '' : 'hidden'
+        } fixed left-0 top-0 z-10 h-screen w-full flex-col items-center gap-4 bg-blue-900 pt-[20%] text-white`}
+      >
+        <p>
+        <button
+          onClick={toggle}
+          className="border-app-black absolute top-[5%] rounded-full border-2 p-2"
+        >
+          <RxCross1 />
+        </button>
+        </p>
+        <>
+          {company && company.menus ? (
+            <>
+            <ul className="visible flex flex-col items-center gap-6 font-light md:hidden">
+              {company.menus
+                .filter(({ status }: any, index: number) => status === 'published')
+                .map((menu: any) => (
                   <li key={`meniu-${menu.id}`}>
-                    <Link href={slugify(`${menu.id}-${menu.label}`)} className='flex items-center text-white text-xl'>
+                    <Link
+                      href={'/' + slugify(`${menu.id}-${menu.label}`)}
+                      className="flex items-center text-xl text-white"
+                    >
                       {menu.label}
                     </Link>
                   </li>
                 ))}
-              </ul>
-          ): null
-        }
-				<nav className='hidden md:inline'>
-					<ul className='flex items-center gap-6'>
-						{
-							session ? (
-								<>
-									<li>
-										<button type="button" onClick={() => router.push('/me')}
-												className='block ml-2 uppercase text-white border rounded-full w-10 h-10 border-white font-extrabold'>
-											{session?.user?.name?.substring(0, 2)}
-										</button>
-									</li>
-									<li>
-										<button type='button' onClick={() => signOut({callbackUrl: '/'})}
-												className='flex items-center'>
-											<RiLogoutBoxRLine className="text-white ml-3 text-3xl"/>
-										</button>
-									</li>
-								</>
-							) : (
-                <>
-                  <li>
-                    <button type="button" onClick={() => signIn()}
-                        className={`white-button`}>
-                       Connexion
-                    </button>
-                  </li>
-                  <li>
-                    <Link href="/auth/register" type="button"
-                        className={`yellow-button`}>
-                       Inscription
-                    </Link>
-                  </li>
-                </>
-							)
-						}
 
-					</ul>
-				</nav>
-        <button
-            onClick={toggle}
-            className="text-white md:hidden flex justify-center items-center rounded-md bg-app-yellow text-app-brown font-semibold">
-            <HiOutlineMenu className="w-8 h-8" />
-          </button>
-			</div>
-      <nav
-          className={`flex ${
-            isOpen ? '' : 'hidden'
-          } w-full h-screen fixed z-10 top-0 left-0 bg-blue-900 text-white flex-col pt-[20%] items-center gap-4`}>
-          <button
-            onClick={toggle}
-            className="rounded-full p-2 absolute top-[5%] border-2 border-app-black">
-            <RxCross1 />
-          </button>
-          <>
-          {
-            company && company.menus  ?(
-                <ul className='flex flex-col items-center gap-6 font-light visible md:hidden'>
-                  {company.menus.map( (menu: any) => (
-                    <li key={`meniu-${menu.id}`}>
-                      <Link href={slugify(`${menu.id}-${menu.label}`)} className='flex items-center text-white text-xl'>
-                        {menu.label}
-                      </Link>
-                    </li>
-                  ))}
-                  {
-							session ? (
-								<>
-									<li>
-										<button type="button" onClick={() => router.push('/me')}
-												className='block ml-2 uppercase text-white border rounded-full w-10 h-10 border-white font-extrabold'>
-											{session?.user?.name?.substring(0, 2)}
-										</button>
-									</li>
-									<li>
-										<button type='button' onClick={() => signOut({callbackUrl: '/'})}
-												className='flex items-center'>
-											<RiLogoutBoxRLine className="text-white ml-3 text-3xl"/>
-										</button>
-									</li>
-								</>
-							) : (
+            </ul>
+            <ul className="visible flex py-5 items-center gap-6 font-light md:hidden">
+
+              {session ? (
                 <>
                   <li>
-                    <button type="button" onClick={() => signIn()}
-                        className={`white-button`}>
-                       Connexion
+                    <button
+                      type="button"
+                      onClick={() => router.push('/me')}
+                      className="ml-2 block h-10 w-10 rounded-full border border-white font-extrabold uppercase text-white"
+                    >
+                      {session?.user?.name?.substring(0, 2)}
                     </button>
                   </li>
                   <li>
-                    <Link href="/auth/register" type="button"
-                        className={`yellow-button`}>
-                       Inscription
+                    <button
+                      type="button"
+                      onClick={() => signOut({ callbackUrl: '/' })}
+                      className="flex items-center"
+                    >
+                      <RiLogoutBoxRLine className="ml-3 text-3xl text-white" />
+                    </button>
+                  </li>
+                </>
+              ) : (
+                <>
+                  <li>
+                    <button type="button" onClick={() => signIn()} className={`white-button`}>
+                      Connexion
+                    </button>
+                  </li>
+                  <li>
+                    <Link href="/auth/register" type="button" className={`yellow-button`}>
+                      Inscription
                     </Link>
                   </li>
                 </>
-							)
-						}
-                </ul>
-            ): null
-          }
-          </>
-        </nav>
-		</header>
-	)
+              )}
+            </ul>
+            </>
+          ) : null}
+        </>
+      </nav>
+    </header>
+  );
 }
 
-export default NavBar
+export default NavBar;

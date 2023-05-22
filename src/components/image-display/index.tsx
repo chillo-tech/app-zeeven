@@ -17,10 +17,11 @@ function ImageDisplay({
         <span className={classNames('block', wrapperClasses)}>
           <Image 
             loader={loaderProp}
-            src={`${local ? `${image.path}`: `/assets/${image.id}`}`} 
+            src={`${local ? `${image.path}`: `${process.env.BACKOFFICE_API}/assets/${image.id}`}`} 
             alt={image.title} 
             unoptimized
             fill={true}
+            
             className={
               classNames(
                 imageClasses,

@@ -1,5 +1,6 @@
 import Message from '@/components/Message';
 import Layout from '@/containers/opened';
+import { sendData } from '@/services';
 import { add } from '@/services/crud';
 import { EMAIL_ERROR_MESSAGE, EMAIL_PATTERN, PHONE_ERROR_MESSAGE } from '@/utils';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -11,7 +12,7 @@ import * as yup from 'yup';
 
 export type Message = {
   name: string;
-  applicationMessage: string;
+  message: string;
   email: string;
   phone: string;
   phoneIndex: string;
@@ -29,8 +30,8 @@ const schema = yup
       .string()
       .email(EMAIL_ERROR_MESSAGE)
       .required(EMAIL_ERROR_MESSAGE)
-      .matches(EMAIL_PATTERN, { applicationMessage: EMAIL_ERROR_MESSAGE }),
-    applicationMessage: yup
+      .matches(EMAIL_PATTERN, { message: EMAIL_ERROR_MESSAGE }),
+    message: yup
       .string()
       .trim()
       .required('Ce champ est requis')
@@ -39,7 +40,7 @@ const schema = yup
   .required();
 function ContactUs() {
   const mutation = useMutation({
-    mutationFn: (applicationMessage: Message) => add('/applicationMessage', applicationMessage),
+    mutationFn: (message: Message) => sendData('backoffice/message', message),
   });
   const router = useRouter();
   const {
@@ -93,7 +94,7 @@ function ContactUs() {
           {mutation.isSuccess ? (
             <Message
               type="success"
-              firstMessage="Nous avons reçu votre applicationMessage."
+              firstMessage="Nous avons reçu votre message."
               secondMessage="Une réponse personnalisée vous sera apportée dans les meilleurs délais."
               action={handleError}
               actionLabel="Retourner à l'accueil"
@@ -819,23 +820,23 @@ function ContactUs() {
               </div>
               <div className="block">
                 <label
-                  htmlFor="applicationMessage"
+                  htmlFor="message"
                   className="text-md mb-2 flex w-full flex-col justify-between font-light"
                 >
-                  <span className="text-blue-800">Votre applicationMessage</span>
+                  <span className="text-blue-800">Votre message</span>
                 </label>
                 <textarea
                   placeholder="Nous sommes à votre écoute, dites nous tout."
-                  id="applicationMessage"
+                  id="message"
                   className="focus:ring-indigo-5000 w-full rounded-lg border-gray-300 py-2 shadow-sm focus:border-indigo-500"
-                  {...register('applicationMessage')}
+                  {...register('message')}
                 ></textarea>
-                <p className="text-red-500">{errors.applicationMessage?.message}</p>
+                <p className="text-red-500">{errors.message?.message}</p>
               </div>
 
               <button
                 type="submit"
-                className="rounded-md border-yellow-500 bg-yellow-500 px-4 py-2 text-blue-900"
+                className="w-full rounded-md border-yellow-500 bg-yellow-500 px-4 py-2 text-blue-900"
               >
                 <span>Envoyer</span>
               </button>
