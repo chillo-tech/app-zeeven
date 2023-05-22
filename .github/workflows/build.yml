@@ -1,8 +1,7 @@
 on:
   push:
     branches:
-      - send-messages
-      - migration
+      - feature/*
   workflow_dispatch:
 
 env:
