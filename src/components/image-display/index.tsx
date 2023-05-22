@@ -5,11 +5,23 @@ import React, {useState} from 'react'
 function ImageDisplay({
   image,
   local = false,
+  base64 = false,
   wrapperClasses = 'h-full relative',
   imageClasses
 }: any) {
   const [isImageLoading, setLoading] = useState(true);
   const loaderProp =({ src}: {src: string}) => src;
+  const getPath =() => {
+    if(local) {
+      return  image.path
+    }
+    if(base64) {
+      return `data:image/jpg;base64,${image.path}`
+    }
+
+    return `${process.env.BACKOFFICE_API}/assets/${image.id}`;
+  }
+
   return (
     <>
      {
@@ -17,7 +29,7 @@ function ImageDisplay({
         <span className={classNames('block', wrapperClasses)}>
           <Image 
             loader={loaderProp}
-            src={`${local ? `${image.path}`: `${process.env.BACKOFFICE_API}/assets/${image.id}`}`} 
+            src={getPath()} 
             alt={image.title} 
             unoptimized
             fill={true}

@@ -79,20 +79,26 @@ function QRCode() {
           </section>
         ) : null}
         {mutation.isSuccess ? (
-          <section className="container mx-auto mb-10 rounded-lg border-2 border-blue-300 bg-white md:w-2/3">
-            <Message
-              type="success"
-              firstMessage="Votre QR CODE a bien été généré"
-              secondMessage="Inscrivez vous pour recevoir des statistiques personnalisées"
-              action={handleError}
-              actionLabel="Retourner à l'accueil"
-            />
-            <Link href={'/'} className="relative flex items-center justify-between shadow-lg pr-6 py-1 text-black bg-white font-light rounded-md"
-                            >
-                <ImageDisplay
-                  wrapperClasses = 'relative w-12 h-12 mr-4 ml-2 rounded-full overflow-hidden'
-                  image={{path: mutation.data.data}}/>
-            </Link>
+          <section className="container mx-auto mb-10 rounded-lg border-2 border-blue-300 bg-white md:w-2/3 overflow-hidden">
+            <div className="grid grid-cols-3">
+              <div className="col-span-2">
+                  <Message
+                  type="success"
+                  firstMessage="Votre QR CODE a bien été généré"
+                  secondMessage="Inscrivez vous pour recevoir des statistiques personnalisées"
+                  action={handleError}
+                  actionLabel="Retourner à l'accueil"
+                />
+              </div>
+              <ImageDisplay 
+                base64={true} 
+                image={{path: mutation.data.data}} 
+                wrapperClasses="relative w-full h-full"
+                imageClasses='object-contain'
+              />
+            </div>
+           
+
           </section>
         ) : null}
         {mutation.isIdle ? (
