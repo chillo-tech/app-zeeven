@@ -5,3 +5,7 @@ export enum ActionType {
   UPDATE_EVENT,
   UPDATE_STEP
 }
+
+export enum Channel {
+  SMS, WHATSAPP, EMAIL, APPLICATION
+}

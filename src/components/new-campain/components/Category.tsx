@@ -38,7 +38,7 @@ function Category() {
 						<span
 							className="text-blue-800 font-semibold text-lg">Pour quel évènement est votre message</span>
 					</label>
-					<div className="grid gap-4 md:grid-cols-3 md:gap-8 md:items-center md:justify-center">
+					<div className="grid gap-4 md:grid-cols-2 md:gap-8 md:items-center md:justify-center">
 						{CATEGORIES.map((category) => (
 							<label key={category.label} htmlFor={category.value}
 								   className={`cursor-pointer border-2 ${watchCategory.label === category.value ? 'border-blue-500' : 'border-slate-400'} p-4 rounded-md flex flex-col items-center`}>

@@ -10,20 +10,6 @@ import StartConversation from '@/components/home-page/StartConversation';
 import Metadata from '@/components/Metadata';
 
 function OpenedLayout({children}: {children: any}) {
-  const context = useContext(ApplicationContext);
-  const { updateData, state: {company} } = context;
-  useQuery<any>({
-    queryKey: ['entreprises'],
-    enabled: !company,
-    queryFn: () =>
-      fetchData({
-        path: 'backoffice/company',
-        fields: ENTREPRISE,
-      }),
-    onSuccess: (data) => {
-      updateData({ company: data.data.data });
-    },
-  });
 
   return (
     <>

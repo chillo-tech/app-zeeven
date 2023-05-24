@@ -131,7 +131,7 @@ export const CATEGORIES = [
 		"label": "Salon",
 		"image": "salon.png",
 		"value": "EVENT"
-	},
+	}/*,
 	{
 		"label": "Anniversaire",
 		"image": "birthdate.png",
@@ -141,7 +141,7 @@ export const CATEGORIES = [
 		"label": "Mariage",
 		"image": "wedding.png",
 		"value": "WEDDING"
-	}
+	}*/
 ]
 const variableWithoutTemplate = (variable: string) => {
 	return variable ? variable.replace('{{', '').replace('}}', '') : '';

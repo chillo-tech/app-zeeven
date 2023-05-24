@@ -1,42 +1,64 @@
 import RenderHtmlContent from '@/components/RenderHtmlContent';
 import { ApplicationContext } from '@/context/ApplicationContext';
-import { slugify } from '@/utils';
+import { fetchData } from '@/services';
+import { ENTREPRISE, slugify } from '@/utils';
+import { signIn } from 'next-auth/react';
 import Link from 'next/link';
-import React, { useContext } from 'react';
+import { useContext } from 'react';
 import { FaFacebookSquare, FaLinkedinIn, FaWhatsapp } from 'react-icons/fa';
-import {signIn, signOut, useSession} from 'next-auth/react';
+import { useQuery } from 'react-query';
 //const oswald = Oswald({weight:'700'});
 function Footer() {
   const context = useContext(ApplicationContext);
-  const {
-    state: { company },
-  } = context;
 
   const getLabel = (label: string) => {
-     if(label.toLowerCase() === 'canaux') return 'solutions';
-     return label;
-  }
+    if (label.toLowerCase() === 'canaux') return 'solutions';
+    return label;
+  };
+
+  const {
+    updateData,
+    state: { company },
+  } = context;
+  useQuery<any>({
+    queryKey: ['entreprises'],
+    enabled: !company,
+    queryFn: () =>
+      fetchData({
+        path: 'backoffice/company',
+        fields: ENTREPRISE,
+      }),
+    onSuccess: (data) => {
+      updateData({ company: data.data.data });
+    },
+  });
   return (
     <>
       {company ? (
-        <footer className="bg-blue-900 text-white text-sm text-center md:text-left md:text-lg">
-          <div className="container mx-auto py-10 grid md:grid-cols-4 gap-6">
+        <footer className="bg-blue-900 text-center text-sm text-white md:text-left md:text-lg">
+          <div className="container mx-auto grid gap-6 py-10 md:grid-cols-4">
             <div className="logo">
-              <Link href="/" className={` text-white text-4xl py-3 !font-extrabold`}>
+              <Link href="/" className={` py-3 text-4xl !font-extrabold text-white`}>
                 ZEEVEN
               </Link>
               <RenderHtmlContent content={company.abstract} classes="my-5" />
-              <div className="flex justify-center items-center md:items-start md:justify-start">
-                <Link href="https://www.facebook.com/Chillotech-103869952427034" className="text-slate-300 hover:text-white">
-                  <FaFacebookSquare className="text-4xl mr-4" />
+              <div className="flex items-center justify-center md:items-start md:justify-start">
+                <Link
+                  href="https://www.facebook.com/Chillotech-103869952427034"
+                  className="text-slate-300 hover:text-white"
+                >
+                  <FaFacebookSquare className="mr-4 text-4xl" />
                 </Link>
-                <Link href="https://www.linkedin.com/company/86905161" className="text-slate-300 hover:text-white mr-2">
+                <Link
+                  href="https://www.linkedin.com/company/86905161"
+                  className="mr-2 text-slate-300 hover:text-white"
+                >
                   <FaLinkedinIn color="text-slate-300" className="text-4xl" />
                 </Link>
                 <Link
                   target="_blank"
                   href="https://wa.me/0033761705745"
-                  className="text-slate-300 hover:text-white mr-2"
+                  className="mr-2 text-slate-300 hover:text-white"
                 >
                   <FaWhatsapp color="text-slate-300" className="text-4xl" />
                 </Link>
@@ -45,46 +67,56 @@ function Footer() {
             {company && company.categories ? (
               <>
                 {company.categories
-                .filter(({status}: any, index: number) => status === 'published')
-                .map((category: any, index: number) => (
-                  <div
-                    className="logo flex flex-col"
-                    key={slugify(`${category.id}-${category.label}`)}
-                  >
-                    <h3 className="text-white mb-3 text-xl">{category.label}</h3>
-                    {company && company.categories && company.categories[0].pages ? (
-                      <ul> 
-                        {company.categories[index].pages.map((page: any) => (
-                          <li  key={slugify(`${page.page_id.id}-${page.page_id.label}`)} className='mb-2'>
-                            <Link href={slugify(`1-nos-solutions`)} className="text-slate-300 hover:text-white">
-                              {page.page_id.label}
-                            </Link>
-                          </li>
-                        ))}
-                      </ul>
-                    ): null }
-                  </div>
-                ))}
+                  .filter(({ status }: any, index: number) => status === 'published')
+                  .map((category: any, index: number) => (
+                    <div
+                      className="logo flex flex-col"
+                      key={slugify(`${category.id}-${category.label}`)}
+                    >
+                      <h3 className="mb-3 text-xl text-white">{category.label}</h3>
+                      {company && company.categories && company.categories[0].pages ? (
+                        <ul>
+                          {company.categories[index].pages.map((page: any) => (
+                            <li
+                              key={slugify(`${page.page_id.id}-${page.page_id.label}`)}
+                              className="mb-2"
+                            >
+                              <Link
+                                href={slugify(`1-nos-solutions`)}
+                                className="text-slate-300 hover:text-white"
+                              >
+                                {page.page_id.label}
+                              </Link>
+                            </li>
+                          ))}
+                        </ul>
+                      ) : null}
+                    </div>
+                  ))}
               </>
             ) : null}
             <div className="logo flex flex-col">
-              <h3 className="text-white pb- text-xl mb-3">Fonctionnalités</h3>
-              <Link href="/nouvelle-campagne" className="text-slate-300 hover:text-white mb-2">
+              <h3 className="pb- mb-3 text-xl text-white">Fonctionnalités</h3>
+              <Link href="/nouvelle-campagne" className="mb-2 text-slate-300 hover:text-white">
                 Envoi des messages
               </Link>
-              <button type="button" onClick={() => signIn()} className="text-slate-300 hover:text-white mb-2 md:text-left">
+              <button
+                type="button"
+                onClick={() => signIn()}
+                className="mb-2 text-slate-300 hover:text-white md:text-left"
+              >
                 Statistiques de vos messages
               </button>
-              <Link href="/qr-code" className="text-slate-300 hover:text-white mb-2">
+              <Link href="/qr-code" className="mb-2 text-slate-300 hover:text-white">
                 Générez des QR code
               </Link>
             </div>
             <div className="logo flex flex-col">
-              <h3 className="text-white mb-3 text-xl">Entreprise</h3>
-              <Link href="/contactez-nous" className="text-slate-300 hover:text-white mb-2">
+              <h3 className="mb-3 text-xl text-white">Entreprise</h3>
+              <Link href="/contactez-nous" className="mb-2 text-slate-300 hover:text-white">
                 Contactez nous
               </Link>
-              <Link href="/contactez-nous" className="text-slate-300 hover:text-white mb-2">
+              <Link href="/contactez-nous" className="mb-2 text-slate-300 hover:text-white">
                 Grille des prix
               </Link>
               <Link
@@ -96,7 +128,7 @@ function Footer() {
               </Link>
             </div>
           </div>
-          <div className="container mx-auto text-center pt-5 pb-20 !font-extralight border-t border-slate-400 text-sm">
+          <div className="container mx-auto border-t border-slate-400 pb-20 pt-5 text-center text-sm !font-extralight">
             &copy; Copyright {new Date().getFullYear()}
             <Link href="https://chillo.tech" target="_blank" className="mx-1 border-b border-white">
               chillo.tech.
