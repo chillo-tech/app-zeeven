@@ -57,6 +57,7 @@ export default function SignIn({providers, csrfToken}: { providers: Provider[], 
 		onError: (error) => {
 			const {response} = error as AxiosError;
 			const {data, status} = response as any;
+			console.log(error);
 			if (String(status).charAt(0) === "4" && data.message) {
 				setErrorMessage(data.message);
 			}
