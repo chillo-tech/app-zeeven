@@ -20,7 +20,6 @@ const onRequest = async (config: AxiosRequestConfig): Promise<AxiosRequestConfig
   authorization = url.startsWith('backoffice') ?  { 'Authorization':`Bearer ${process.env.BACKOFFICE_API_TOKEN}`} : authorization;
 
   const credentials = url.startsWith('backoffice') ?  {} : { 'service-id': `${process.env.SERVICE_ID}`, 'service-key': `${process.env.SERVICE_KEY}`};
-
   const baseURL = url.startsWith('backoffice') ? process.env.BACKOFFICE_API : `${process.env.API_URL}/api`;
 
   console.log('=======REQUEST CONFIG===========');
@@ -28,7 +27,7 @@ const onRequest = async (config: AxiosRequestConfig): Promise<AxiosRequestConfig
   console.log('=======REQUEST CONFIG===========');
   return {
       ...config,
-      //baseURL,
+      baseURL,
       url: urlToCall,
       headers: {
         ...config.headers,
