@@ -28,7 +28,7 @@ const onRequest = async (config: AxiosRequestConfig): Promise<AxiosRequestConfig
   console.log('=======REQUEST CONFIG===========');
   return {
       ...config,
-      //baseURL,
+      baseURL,
       url: urlToCall,
       headers: {
         ...config.headers,
