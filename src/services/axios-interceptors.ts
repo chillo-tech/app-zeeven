@@ -23,9 +23,6 @@ const onRequest = async (config: AxiosRequestConfig): Promise<AxiosRequestConfig
 
   const baseURL = url.startsWith('backoffice') ? process.env.BACKOFFICE_API : `${process.env.API_URL}/api`;
 
-  console.log('====================================');
-  console.log({baseURL, config});
-  console.log('====================================');
   return {
       ...config,
       baseURL,
@@ -39,6 +36,9 @@ const onRequest = async (config: AxiosRequestConfig): Promise<AxiosRequestConfig
     };
 }
 const onRequestError = (error: AxiosError): Promise<AxiosError> => {
+  console.log('=======REQUEST ERROR===========');
+  console.log({error});
+  console.log('=======REQUEST ERROR===========');
     return Promise.reject(error);
 }
 const onResponse = (response: AxiosResponse): AxiosResponse => {
@@ -46,6 +46,9 @@ const onResponse = (response: AxiosResponse): AxiosResponse => {
 }
 
 const onResponseError = async (error: AxiosError): Promise<AxiosError> => {
+  console.log('=========RESPONSE ERROR=============');
+  console.log({error});
+  console.log('=========RESPONSE ERROR=============');
    const {status, response} = error;
    if(status === 401 || (response && response.status && response.status === 401)) {
     signOut();
