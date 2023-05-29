@@ -24,7 +24,7 @@ const onRequest = async (config: AxiosRequestConfig): Promise<AxiosRequestConfig
   const baseURL = url.startsWith('backoffice') ? process.env.BACKOFFICE_API : `${process.env.API_URL}/api`;
 
   console.log('====================================');
-  console.log({baseURL});
+  console.log({baseURL, config});
   console.log('====================================');
   return {
       ...config,
