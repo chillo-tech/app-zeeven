@@ -18,7 +18,7 @@ const nextConfig = {
     return [
       {
         source: '/api/auth/:path*',
-        destination: `${process.env.API_URL}/api/auth/:path*`
+        destination: `/api/auth/:path*`
       },
       {
         source: '/api/:path*',
