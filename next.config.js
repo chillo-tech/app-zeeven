@@ -14,6 +14,7 @@ const nextConfig = {
     GOOGLE_ID: process.env.GOOGLE_ID,
     GOOGLE_SECRET: process.env.GOOGLE_SECRET
   },
+  /*
   async rewrites() {
     return [
       {
@@ -33,7 +34,7 @@ const nextConfig = {
         destination: `${process.env.BACKOFFICE_API}/assets/:path*`
       },
     ]
-  },
+  },*/
   async redirects() {
     return [
       {
