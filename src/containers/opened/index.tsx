@@ -1,11 +1,6 @@
-import Head from 'next/head'
-import React, { useContext } from 'react'
+import React from 'react'
 import NavBar from '../components/NavBar';
 import Footer from '../components/Footer';
-import { useQuery } from 'react-query';
-import { fetchData } from '@/services/fetch-data';
-import { ApplicationContext } from '@/context/ApplicationContext';
-import { ENTREPRISE } from '@/utils';
 import StartConversation from '@/components/home-page/StartConversation';
 import Metadata from '@/components/Metadata';
 
