@@ -15,7 +15,7 @@ interface AppSession extends Session {
 const onRequest = async (config: AxiosRequestConfig): Promise<AxiosRequestConfig> => { 
   const session = await getSession() as AppSession;
   const {url = ''} = config;
-  const urlToCall = url.startsWith('backoffice') ? url.replaceAll('backoffice', '/items') : `${url}/api`;
+  const urlToCall = url.startsWith('backoffice') ? url.replaceAll('backoffice', '/items') : `/api/${url}`;
   let authorization: any = session && session.token ? { 'Authorization': `Bearer ${session.token.accessToken}` } : {};
   authorization = url.startsWith('backoffice') ?  { 'Authorization':`Bearer ${process.env.BACKOFFICE_API_TOKEN}`} : authorization;
 
