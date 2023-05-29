@@ -42,6 +42,9 @@ const onRequestError = (error: AxiosError): Promise<AxiosError> => {
     return Promise.reject(error);
 }
 const onResponse = (response: AxiosResponse): AxiosResponse => {
+  console.log('=======REQUEST RESPONSE===========');
+  console.log({response});
+  console.log('=======REQUEST RESPONSE===========');
     return response;
 }
 
