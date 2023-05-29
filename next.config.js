@@ -14,13 +14,13 @@ const nextConfig = {
     GOOGLE_ID: process.env.GOOGLE_ID,
     GOOGLE_SECRET: process.env.GOOGLE_SECRET
   },
-  /*
   async rewrites() {
     return [
       {
-        source: '/api/auth/:path*',
-        destination: `/api/auth/:path*`
-      },
+        source: '/signin',
+        destination: `http://ms-zeeven:3000/api/signin`
+      }
+      /*,
       {
         source: '/api/:path*',
         destination: `${process.env.API_URL}/api/:path*`
@@ -32,9 +32,9 @@ const nextConfig = {
       {
         source: '/assets/:path*',
         destination: `${process.env.BACKOFFICE_API}/assets/:path*`
-      },
+      },*/
     ]
-  },*/
+  },
   async redirects() {
     return [
       {
