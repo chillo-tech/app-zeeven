@@ -9,6 +9,8 @@ services:
     ports:
       # The HTTP port
       - "82:3000"
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.app-zeeven.rule=Headers(`X-Host`, `app.zeeven.chillo.fr`)"
