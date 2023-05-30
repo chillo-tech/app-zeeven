@@ -117,7 +117,7 @@ function NavBar() {
                 ))}
 
             </ul>
-            <ul className="visible flex py-5 items-center gap-6 font-light md:hidden">
+            <ul className="visible flex mb-10 items-center gap-6 font-light md:hidden">
 
               {session ? (
                 <>
