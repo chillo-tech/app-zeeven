@@ -19,7 +19,7 @@ function ImageDisplay({
       return `data:image/jpg;base64,${image.path}`
     }
 
-    return `${process.env.BACKOFFICE_API}/assets/${image.id}`;
+    return `/assets/${image.id}`;
   }
 
   return (
