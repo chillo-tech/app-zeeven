@@ -7,6 +7,7 @@ const nextConfig = {
   env: {
     BACKOFFICE_API: process.env.BACKOFFICE_API,
     BACKOFFICE_API_TOKEN: process.env.BACKOFFICE_API_TOKEN,
+    APPLICATION_URL: process.env.APPLICATION_URL,
     NEXTAUTH_URL: process.env.NEXTAUTH_URL,
     API_URL: process.env.API_URL,
     SERVICE_KEY: process.env.SERVICE_KEY,
