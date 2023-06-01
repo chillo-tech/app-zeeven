@@ -9,6 +9,9 @@ function Solutions() {
   const {
     state: { company },
   } = context;
+  console.log('====================================');
+  console.log(company);
+  console.log('====================================');
   const getLink = (label: string) => {
       let link = slugify(label);
       if(link.indexOf('qr-code') > -1) {

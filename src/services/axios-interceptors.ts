@@ -15,16 +15,13 @@ interface AppSession extends Session {
 const onRequest = async (config: AxiosRequestConfig): Promise<AxiosRequestConfig> => { 
   const session = await getSession() as AppSession;
   const {url = ''} = config;
-  const urlToCall = url.startsWith('backoffice') ? url.replaceAll('backoffice', '/items') : `/api/${url}`;
+  const urlToCall = url.startsWith('/api/backoffice') ? url.replaceAll('/api/backoffice', '/items') : `/api/${url}`;
   let authorization: any = session && session.token ? { 'Authorization': `Bearer ${session.token.accessToken}` } : {};
-  authorization = url.startsWith('backoffice') ?  { 'Authorization':`Bearer ${process.env.BACKOFFICE_API_TOKEN}`} : authorization;
+  authorization = url.startsWith('/api/backoffice') ?  { 'Authorization':`Bearer ${process.env.BACKOFFICE_API_TOKEN}`} : authorization;
 
-  const credentials = url.startsWith('backoffice') ?  {} : { 'service-id': `${process.env.SERVICE_ID}`, 'service-key': `${process.env.SERVICE_KEY}`};
-  const baseURL = url.startsWith('backoffice') ? process.env.BACKOFFICE_API : `${process.env.API_URL}`;
+  const credentials = url.startsWith('/api/backoffice') ?  {} : { 'service-id': `${process.env.SERVICE_ID}`, 'service-key': `${process.env.SERVICE_KEY}`};
+  const baseURL = url.startsWith('/api/backoffice') ? process.env.BACKOFFICE_API : `${process.env.API_URL}`;
 
-  console.log('=======REQUEST CONFIG===========');
-  console.log({config});
-  console.log('=======REQUEST CONFIG===========');
   return {
       ...config,
       baseURL,
@@ -38,22 +35,13 @@ const onRequest = async (config: AxiosRequestConfig): Promise<AxiosRequestConfig
     };
 }
 const onRequestError = (error: AxiosError): Promise<AxiosError> => {
-  console.log('=======REQUEST ERROR===========');
-  console.log({error});
-  console.log('=======REQUEST ERROR===========');
     return Promise.reject(error);
 }
 const onResponse = (response: AxiosResponse): AxiosResponse => {
-  console.log('=======REQUEST RESPONSE===========');
-  console.log({response});
-  console.log('=======REQUEST RESPONSE===========');
     return response;
 }
 
 const onResponseError = async (error: AxiosError): Promise<AxiosError> => {
-  console.log('=========RESPONSE ERROR=============');
-  console.log({error});
-  console.log('=========RESPONSE ERROR=============');
    const {status, response} = error;
    if(status === 401 || (response && response.status && response.status === 401)) {
     signOut();

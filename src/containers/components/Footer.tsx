@@ -25,7 +25,7 @@ function Footer() {
     enabled: !company,
     queryFn: () =>
       fetchData({
-        path: 'backoffice/company',
+        path: '/api/backoffice/company',
         fields: ENTREPRISE,
       }),
     onSuccess: (data) => {
