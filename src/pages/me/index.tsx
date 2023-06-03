@@ -1,19 +1,21 @@
 import {useQuery} from 'react-query'
 import Head from 'next/head'
-import React from 'react'
+import React, { useState } from 'react'
 import ProtectedLayout from '@/containers/protected';
-import {fetchData, search} from '@/services';
+import {fetchData, handleError} from '@/services';
 import Message from '@/components/Message';
 import Empty from '@/components/search/Empty';
 import {useRouter} from 'next/router';
 import List from '@/components/search/List';
 
 function Compte() {
-	const {isSuccess, isLoading, isError, data: {data} = {}} = useQuery<any>({
+	const [isError, setIsError] = useState(false);
+	const {isSuccess, isLoading, data: {data} = {}} = useQuery<any>({
 		queryKey: ["user-campainnnns"],
 		queryFn: () =>  fetchData({
       path: '/api/backend/event',
     }),
+    onError: (error: any) => {setIsError(true), handleError(error)},
 	});
 	const router = useRouter();
 	return (

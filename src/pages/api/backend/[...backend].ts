@@ -3,6 +3,8 @@ import type { NextApiRequest, NextApiResponse } from 'next';
 import { getServerSession } from "next-auth/next"
 import { authOptions } from "../auth/[...nextauth]"
 import { Session } from 'next-auth';
+import axios, { AxiosError } from 'axios';
+import { signOut } from 'next-auth/react';
 
 interface AppSession extends Session {
   token: {
@@ -24,7 +26,15 @@ async function handler(
     const backendUrl = url.substring(url.indexOf('backend')) || '';
     const {data} = await axiosInstance.get(`${backendUrl}`, {headers});
     return res.status(200).json(data);
-  } catch (error) {
+  } catch (error: any) {
+    const axiosError = error as Error | AxiosError;
+    if(axios.isAxiosError(axiosError)){
+      const {status, response} = error;
+      if(status === 401 || (response && response.status && response.status === 401)) {
+        signOut();
+      }
+      return Promise.reject(error);
+    }
   }
 }
 

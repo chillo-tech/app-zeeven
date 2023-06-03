@@ -7,6 +7,7 @@ import {Guest} from '@/types/Guest';
 import {useMutation, useQuery, useQueryClient} from 'react-query';
 import Message from '@/components/Message';
 import {deleteItem, search} from '@/services/crud';
+import { handleError } from '@/services';
 
 function Guests() {
 	const queryClient = useQueryClient();
@@ -16,6 +17,7 @@ function Guests() {
 
 	const [guests, setGuests] = useState([]);
 	const [formVisible, setFormVisible] = useState(false);
+	const [isError, setIsError] = useState(false);
 	const mutation = useMutation({
 		mutationFn: ({eventId, guestId}: any) => deleteItem(`event/${eventId}/guest/${guestId}`),
 		onSuccess: () => queryClient.invalidateQueries(["user-campains", slug, "contacts"]),
@@ -28,16 +30,17 @@ function Guests() {
 		try {
 
 		} catch (error) {
-		}
+		} 
 	};
 	const deleteGuest = (guestId?: string) => {
 		const eventId = `${(slug as string).substring((slug as string)?.lastIndexOf('-') + 1)}`;
 		mutation.mutate({eventId, guestId});
 	}
 
-	const {isSuccess, isLoading, isError, data: {data} = []} = useQuery<any>({
+	const {isSuccess, isLoading, data: {data} = []} = useQuery<any>({
 		queryKey: ["user-campains", slug, "contacts"],
 		queryFn: () => search(`/event/${(slug as string).substring((slug as string)?.lastIndexOf('-') + 1)}/guest`),
+    onError: (error: any) => {setIsError(true), handleError(error)},
 		refetchOnWindowFocus: false,
 	});
 	return (
