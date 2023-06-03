@@ -15,7 +15,7 @@ function Recap() {
 	const {data: sessionData} = useSession();
 
 	const mutation = useMutation({
-		mutationFn: (campain => add("/event", campain)),
+		mutationFn: (campain => add("/api/backend/event", campain)),
 
 	});
 	const router = useRouter()

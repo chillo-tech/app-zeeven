@@ -28,7 +28,7 @@ export default function Activation() {
 	const [errorMessage, setErrorMessage] = useState("Une erreur est survenue, nous allons la résoudre sous peu");
 	const router = useRouter();
 	const mutation = useMutation({
-		mutationFn: (code => add("/activation", code)),
+		mutationFn: (code => add("/api/backend/activation", code)),
 		onError: (error) => {
 			const {response} = error as AxiosError;
 			const {data, status} = response as any;
