@@ -5,9 +5,15 @@ async function handler(
   req: NextApiRequest,
   res: NextApiResponse<any>,
 ) {
-  const {url = ''} = req;
-  const {data} = await axiosInstance.get(url);
-  return res.status(200).json(data);;
+  try {
+    const {url = ''} = req;
+    const {data} = await axiosInstance.get(url);
+    return res.status(200).json(data);
+  } catch (error) {
+    console.log('==========ERROR==============');
+    console.log(error);
+    console.log('=============ERROR============');
+  }
 }
 
 export default handler;
