@@ -17,7 +17,7 @@ const onRequest = async (config: AxiosRequestConfig): Promise<AxiosRequestConfig
   let authorization: any = {'Authorization': headers['Authorization']}
   
   const {url = ''} = config;
-  const urlToCall = url.startsWith('/api/backoffice') ? url.replaceAll('/api/backoffice', '/items') : `/${url}`;
+  const urlToCall = url.startsWith('/api/backoffice') ? url.replaceAll('/api/backoffice', '/items') : url.replaceAll('/api/backend', '/backend');
   authorization = url.startsWith('/api/backoffice') ?  { 'Authorization':`Bearer ${process.env.BACKOFFICE_API_TOKEN}`} : authorization;
 
   const credentials = url.startsWith('/api/backoffice') ?  {} : { 'service-id': `${process.env.SERVICE_ID}`, 'service-key': `${process.env.SERVICE_KEY}`};
