@@ -21,7 +21,7 @@ function Espaces({ index }: any) {
     enabled: !!index,
     queryFn: () =>
       fetchData({
-        path: `backoffice/menus/${index}`,
+        path: `/api/backoffice/menus/${index}`,
         fields: MENUFULL,
       }),
     onSuccess: (data) => {
