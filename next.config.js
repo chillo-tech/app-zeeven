@@ -39,11 +39,6 @@ const nextConfig = {
   async redirects() {
     return [
       {
-        source: '/nouvelle-campagne',
-        destination: '/nouvelle-campagne',
-        permanent: false,
-      },
-      {
         source: '/new-campain',
         destination: '/nouvelle-campagne',
         permanent: false,
