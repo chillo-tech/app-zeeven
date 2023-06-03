@@ -27,7 +27,7 @@ console.log({baseURL, url: urlToCall});
 console.log('====================================');
   return {
       ...config,
-      //baseURL,
+      baseURL,
       url: urlToCall,
       headers: {
         ...config.headers,
