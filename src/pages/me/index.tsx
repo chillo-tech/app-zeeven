@@ -39,7 +39,7 @@ function Compte() {
 							type="error"
 							firstMessage='Une erreur est survenue, nous allons la résoudre sous peu'
 							secondMessage='Veuillez prendre contact avec nous'
-							actionLabel="Retourner à l'accueil"
+							actionLabel="Revenir à l'accueil"
 						/>)
 					: null
 				}
