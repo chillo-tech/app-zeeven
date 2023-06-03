@@ -1,6 +1,6 @@
 import {AxiosError, AxiosInstance, AxiosRequestConfig, AxiosResponse} from "axios";
 import { Session } from "next-auth";
-import { getSession, useSession, signOut } from 'next-auth/react';
+import { signOut } from 'next-auth/react';
 
 /**
   const instance = axios.create({ baseURL: `${process.env.API_URL}/items`});
@@ -13,10 +13,11 @@ interface AppSession extends Session {
   }
 }
 const onRequest = async (config: AxiosRequestConfig): Promise<AxiosRequestConfig> => { 
-  const session = await getSession() as AppSession;
+  let {headers = {}}= config;
+  let authorization: any = {'Authorization': headers['Authorization']}
+  
   const {url = ''} = config;
-  const urlToCall = url.startsWith('/api/backoffice') ? url.replaceAll('/api/backoffice', '/items') : `/api/${url}`;
-  let authorization: any = session && session.token ? { 'Authorization': `Bearer ${session.token.accessToken}` } : {};
+  const urlToCall = url.startsWith('/api/backoffice') ? url.replaceAll('/api/backoffice', '/items') : `/${url}`;
   authorization = url.startsWith('/api/backoffice') ?  { 'Authorization':`Bearer ${process.env.BACKOFFICE_API_TOKEN}`} : authorization;
 
   const credentials = url.startsWith('/api/backoffice') ?  {} : { 'service-id': `${process.env.SERVICE_ID}`, 'service-key': `${process.env.SERVICE_KEY}`};
@@ -45,7 +46,9 @@ const onResponseError = async (error: AxiosError): Promise<AxiosError> => {
    const {status, response} = error;
    if(status === 401 || (response && response.status && response.status === 401)) {
     signOut();
-    window.location.href = '/';
+    if (typeof window !== "undefined") {
+      window.location.href = '/';
+    }
    }
     return Promise.reject(error);
 }

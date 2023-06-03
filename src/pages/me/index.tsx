@@ -2,7 +2,7 @@ import {useQuery} from 'react-query'
 import Head from 'next/head'
 import React from 'react'
 import ProtectedLayout from '@/containers/protected';
-import {search} from '@/services';
+import {fetchData, search} from '@/services';
 import Message from '@/components/Message';
 import Empty from '@/components/search/Empty';
 import {useRouter} from 'next/router';
@@ -11,7 +11,9 @@ import List from '@/components/search/List';
 function Compte() {
 	const {isSuccess, isLoading, isError, data: {data} = {}} = useQuery<any>({
 		queryKey: ["user-campainnnns"],
-		queryFn: () => search("/event"),
+		queryFn: () =>  fetchData({
+      path: '/api/backend/event',
+    }),
 	});
 	const router = useRouter();
 	return (

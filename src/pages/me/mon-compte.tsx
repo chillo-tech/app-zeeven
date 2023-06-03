@@ -1,20 +1,19 @@
-import {useSession} from 'next-auth/react'
 import Head from 'next/head'
 import React from 'react'
 import ProtectedLayout from '@/containers/protected'
 import {useQuery} from 'react-query';
-import {search} from '@/services';
+import {fetchData} from '@/services';
 import {useRouter} from 'next/router';
 import Message from '@/components/Message';
 import ProfileEdit from '@/components/profile/ProfileEdit';
 
 function Compte() {
-	const {data: sessionData} = useSession();
-	const {isSuccess, isLoading, isError, data: {data} = {}} = useQuery<any>({
+	const {isLoading, isError, data: {data} = {}} = useQuery<any>({
 		queryKey: ["user-profile"],
-		queryFn: () => search("/profile"),
+    queryFn: () =>  fetchData({
+      path: '/api/backend/profile',
+    }),
 	});
-	const router = useRouter();
 	return (
 		<ProtectedLayout>
 			<Head>

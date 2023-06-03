@@ -11,7 +11,7 @@ function Stocks() {
     queryKey: ['stocks'],
     queryFn: () =>
       fetchData({
-        path: 'stocks/statistics',
+        path: '/api/backend/stocks/statistics',
       }),
     onSuccess: (data) => {
       setstocks(data.data);

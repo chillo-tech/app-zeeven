@@ -5,11 +5,8 @@ const deleteItem = (endpoint: string) => {
 }
 
 const add = (endpoint: string, data: any) => {
-  console.log('====================================');
-  console.log({endpoint});
-  console.log('====================================');
 	return axiosInstance.post(
-		endpoint,
+		`backend/${endpoint}`,
 		data,
 		{
 			headers: {"Content-Type": "application/json"}
