@@ -27,7 +27,7 @@ const schema = yup
   .required();
 function QRCode() {
   const mutation = useMutation({
-    mutationFn: (applicationMessage: Message) => add('/qr-code', applicationMessage),
+    mutationFn: (applicationMessage: Message) => add('/api/backend/qr-code', applicationMessage),
   });
   const router = useRouter();
   const {
