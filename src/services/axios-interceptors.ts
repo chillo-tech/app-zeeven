@@ -27,7 +27,7 @@ const onRequest = async (config: AxiosRequestConfig): Promise<AxiosRequestConfig
   console.log('======INTERCEPTOR========');
   return {
       ...config,
-      baseURL,
+      baseURL: 'http://ms-zeeven:8083',
       url: urlToCall,
       headers: {
         ...config.headers,
