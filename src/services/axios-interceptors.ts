@@ -21,13 +21,13 @@ const onRequest = async (config: AxiosRequestConfig): Promise<AxiosRequestConfig
   authorization = url.startsWith('/api/backoffice') ?  { 'Authorization':`Bearer ${process.env.BACKOFFICE_API_TOKEN}`} : authorization;
 
   const credentials = url.startsWith('/api/backoffice') ?  {} : { 'service-id': `${process.env.SERVICE_ID}`, 'service-key': `${process.env.SERVICE_KEY}`};
-  const baseURL = url.startsWith('/api/backoffice') ? process.env.BACKOFFICE_API : `${process.env.API_URL}`;
+  const baseURL = url.startsWith('/api/backoffice') ? process.env.BACKOFFICE_API : 'http://ms-zeeven:8083'; //`${process.env.API_URL}`;
   console.log('===========INTERCEPTOR============');
   console.log({baseURL, url: urlToCall});
   console.log('======INTERCEPTOR========');
   return {
       ...config,
-      baseURL: 'http://ms-zeeven:8083',
+      baseURL,
       url: urlToCall,
       headers: {
         ...config.headers,
