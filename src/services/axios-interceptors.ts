@@ -2,11 +2,6 @@ import {AxiosError, AxiosInstance, AxiosRequestConfig, AxiosResponse} from "axio
 import { Session } from "next-auth";
 import { signOut } from 'next-auth/react';
 
-/**
-  const instance = axios.create({ baseURL: `${process.env.API_URL}/items`});
-  instance.defaults.headers.common['Authorization'] = `Bearer ${process.env.ACCES_TOKEN}`;
-  instance.defaults.headers.common['Accept'] = 'application/json';
- */
 interface AppSession extends Session {
   token: {
     accessToken: string
@@ -21,10 +16,8 @@ const onRequest = async (config: AxiosRequestConfig): Promise<AxiosRequestConfig
   authorization = url.startsWith('/api/backoffice') ?  { 'Authorization':`Bearer ${process.env.BACKOFFICE_API_TOKEN}`} : authorization;
 
   const credentials = url.startsWith('/api/backoffice') ?  {} : { 'service-id': `${process.env.SERVICE_ID}`, 'service-key': `${process.env.SERVICE_KEY}`};
-  const baseURL = url.startsWith('/api/backoffice') ? process.env.BACKOFFICE_API : 'http://ms-zeeven:8083'; //`${process.env.API_URL}`;
-  console.log('===========INTERCEPTOR============');
-  console.log({baseURL, url: urlToCall});
-  console.log('======INTERCEPTOR========');
+  const baseURL = url.startsWith('/api/backoffice') ? process.env.BACKOFFICE_API : process.env.API_URL;
+
   return {
       ...config,
       baseURL,

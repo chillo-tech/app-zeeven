@@ -2,11 +2,6 @@ import {AxiosError, AxiosInstance, AxiosRequestConfig, AxiosResponse, InternalAx
 import { Session } from "next-auth";
 import { getSession, useSession, signOut } from 'next-auth/react';
 
-/**
-  const instance = axios.create({ baseURL: `${process.env.API_URL}/items`});
-  instance.defaults.headers.common['Authorization'] = `Bearer ${process.env.ACCES_TOKEN}`;
-  instance.defaults.headers.common['Accept'] = 'application/json';
- */
 interface AppSession extends Session {
   token: {
     accessToken: string
@@ -21,9 +16,6 @@ const onRequest = async (config: InternalAxiosRequestConfig): Promise<InternalAx
 
     const urlToCall = url.startsWith('backoffice') ? url.replaceAll('backoffice', 'items') : `${url}`;
     const baseURL = url.startsWith('backoffice') ? process.env.BACKOFFICE_API : process.env.API_URL;
-console.log('====================================');
-console.log(baseURL, url);
-console.log('====================================');
     return {
       ...config,
       url: urlToCall,
