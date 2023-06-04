@@ -12,7 +12,7 @@ import {search} from '@/services/crud';
 function CampainDetail({id}:{id: number}) {
 	const {isSuccess, isLoading, isError, data: {data} = {}} = useQuery<any>({
 		queryKey: ["user-campains", id],
-		queryFn: () => search(`/event/${id}`),
+		queryFn: () => search(`/api/backend/event/${id}`),
     enabled: !!id,
 		refetchOnWindowFocus: false,
 	});

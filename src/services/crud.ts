@@ -1,11 +1,12 @@
+import axios from "axios"
 import {axiosInstance} from "./axios-instance"
 
 const deleteItem = (endpoint: string) => {
-	return axiosInstance.delete(endpoint)
+	return axios.delete(endpoint)
 }
 
 const add = (endpoint: string, data: any) => {
-	return axiosInstance.post(
+	return axios.post(
 		`${endpoint}`,
 		data,
 		{
@@ -25,7 +26,7 @@ const patch = (endpoint: string, data: any) => {
 }
 
 const search = (endpoint: string) => {
-	return axiosInstance.get(endpoint)
+	return axios.get(endpoint)
 }
 
 export {add, search, patch, deleteItem}

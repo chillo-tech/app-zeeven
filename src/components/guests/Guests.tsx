@@ -39,7 +39,7 @@ function Guests() {
 
 	const {isSuccess, isLoading, data: {data} = []} = useQuery<any>({
 		queryKey: ["user-campains", slug, "contacts"],
-		queryFn: () => search(`/event/${(slug as string).substring((slug as string)?.lastIndexOf('-') + 1)}/guest`),
+		queryFn: () => search(`/api/backend/event/${(slug as string).substring((slug as string)?.lastIndexOf('-') + 1)}/guest`),
     onError: (error: any) => {setIsError(true), handleError(error)},
 		refetchOnWindowFocus: false,
 	});

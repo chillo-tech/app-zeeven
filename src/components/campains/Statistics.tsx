@@ -22,8 +22,8 @@ function Statistics({id}:{id: number}) {
   }
   const { query: { slug }} = useRouter();
   useQuery<any>({
-    queryKey: ['user-campains', slug],
-    queryFn: () => search(`/event/${id}/statistic`),
+    queryKey: ['user-campains', slug, 'statistic'],
+    queryFn: () => search(`/api/backend/event/${id}/statistic`),
     refetchOnWindowFocus: false,
     onSuccess: (data) => handleStatistics(data?.data)
   });

@@ -22,10 +22,17 @@ async function handler(
       const {accessToken} = session.token;
       headers = {...headers, 'Authorization':`Bearer ${accessToken}`};
     }
+
     const {url = ''} = req;
     const backendUrl = url.substring(url.indexOf('backend')) || '';
-    const {data} = await axiosInstance.get(`${backendUrl}`, {headers});
-    return res.status(200).json(data);
+    
+    if (req.method === 'POST') {
+      const {data} = await axiosInstance.post(`${backendUrl}`, req.body, {headers});
+      return res.status(200).json(data);
+    } else {
+      const {data} = await axiosInstance.get(`${backendUrl}`, {headers});
+      return res.status(200).json(data);
+    }
   } catch (error: any) {
     const axiosError = error as Error | AxiosError;
     if(axios.isAxiosError(axiosError)){

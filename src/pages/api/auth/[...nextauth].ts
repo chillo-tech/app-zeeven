@@ -2,6 +2,7 @@ import NextAuth, {NextAuthOptions} from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
 import CredentialsProvider from "next-auth/providers/credentials";
 import {add} from "@/services/crud";
+import { axiosInstance } from "@/services/axios-instance";
 
 export const authOptions: NextAuthOptions = {
 	secret: process.env.NEXTAUTH_SECRET,
@@ -16,7 +17,7 @@ export const authOptions: NextAuthOptions = {
 			async authorize(credentials, req) {
 				try {
 
-					const {data: {token}} = await add('signin', {
+					const {data: {token}} = await axiosInstance.post('/api/backend/signin', {
 						email: req.body?.username,
 						username: req.body?.username,
 						password: req.body?.password
