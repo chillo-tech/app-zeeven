@@ -17,7 +17,8 @@ function Recap() {
 	const [isError, setIsError] = useState(false);
 
 	const mutation = useMutation({
-		mutationFn: (campain => add("/api/backend/event", campain)),
+    mutationFn: ((campain) => add("/api/backend/event", campain)),
+		//mutationFn: ((campain: any) => add("/api/backend/event", campain)),
     onError: (error: AxiosError) => {setIsError(true), handleError(error)}
 	});
 	const router = useRouter()

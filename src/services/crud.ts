@@ -6,7 +6,6 @@ const deleteItem = (endpoint: string) => {
 }
 
 const add = (endpoint: string, data: any) => {
-  try {
     return axios.post(
       `${endpoint}`,
       data,
@@ -14,12 +13,6 @@ const add = (endpoint: string, data: any) => {
         headers: {"Content-Type": "application/json"}
       }
     )
-  } catch (error) {
-    console.log('==========axios error===================');
-    console.log(error);
-    console.log('=========axios error=================');
-  }
-
 }
 
 const patch = (endpoint: string, data: any) => {
