@@ -21,9 +21,7 @@ function Guests() {
 	const mutation = useMutation({
 		mutationFn: ({eventId, guestId}: any) => deleteItem(`event/${eventId}/guest/${guestId}`),
 		onSuccess: () => queryClient.invalidateQueries(["user-campains", slug, "contacts"]),
-		onError: (error) => {
-			console.log(error)
-		},
+    onError: (error: any) => {setIsError(true), handleError(error)}
 	});
 	const onSubmit = async (profile: Guest) => {
 		setFormVisible(false);

@@ -10,6 +10,7 @@ interface FormValues {
     text: string,
     date: string,
     time: string,
+    timezone: string,
     informations:{
       [key: string]: any
     },
@@ -25,12 +26,12 @@ function Variables() {
   const defaultMessage = "Vous n'avez aucun paramètre, vous pouvez passer à l'étape suivante.";
   const [assignments, setAssignments] = useState<string[]>([]);
 	const context = useContext(NewCampainContext);
-	const {state: {stepIndex, campain: {guests, messages}}, updateCampain, previousStep} = context;
+	const {state: {stepIndex, campain}, updateCampain, previousStep} = context;
+  const {guests, messages} = campain;
 	const {register, setValue, handleSubmit, watch, formState: {errors}} = useForm<FormValues>({
 		mode: "onChange"
 	});
   const updatedVariables = watch("messages.0.informations");
-  
 	const onSubmit = (data: any) => {
 		updateCampain(data);
 	};
@@ -60,7 +61,6 @@ function Variables() {
 	return (
     <section className='grid grid-cols-1 md:grid-cols-3 md:gap-0 gap-2 rounded-lg bg-white border border-slate-200 shadow-sm'>
       <div className=" md:p-5 p-4 md:col-span-2 border-r-2 border-slate-300">
-
           <form noValidate className="block space-y-6" onSubmit={handleSubmit(onSubmit)}>    
           <div className="hidden-fields hidden">
             <textarea                          
@@ -72,6 +72,9 @@ function Variables() {
             <input type="time"                             
                className="hidden" defaultValue={messages[0].time}
                {...register(`messages.0.time`, { required: `Veuillez saisir une valeur pour le paramètre time` })}/>
+               <input type="timezone"                             
+                  className="hidden" defaultValue={messages[0].timezone}
+                  {...register(`messages.0.timezone`, { required: `Veuillez sélectionner votre fuseau horaire` })}/>
           </div>  
           {
             assignments.length ? (

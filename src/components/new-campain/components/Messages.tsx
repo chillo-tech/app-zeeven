@@ -12,6 +12,7 @@ type FormValues = {
 		text: string,
 		date: string,
 		time: string,
+		timezone?: string,
 		informations?: { [key: string]: any }
 		isSent?: boolean
 	}[];
@@ -22,7 +23,7 @@ type StyleParams = {
 }
 
 function Messages() {
-	const messageRef = useRef<HTMLTextAreaElement|null>() ;
+	const messageRef = useRef<HTMLTextAreaElement | null>();
 	const [showInformation, setShowInformation] = useState(false);
 	const [lastVariable, setLastVariable] = useState("");
 	const context = useContext(NewCampainContext);
@@ -45,7 +46,7 @@ function Messages() {
 	const {fields} = useFieldArray({
 		rules: {
 			minLength: 1,
-			required: "Merci de saisir votre applicationMessage"
+			required: "Merci de saisir votre message"
 		},
 
 		control,
@@ -79,6 +80,8 @@ function Messages() {
 	}
 
 	const onSubmit = (data: FormValues) => {
+		let messages = data.messages.map(message => ({...message, timezone: Intl.DateTimeFormat().resolvedOptions().timeZone}));
+		data['messages'] = messages;
 		updateCampain(data);
 	};
 
@@ -148,7 +151,8 @@ function Messages() {
 								</div>
 							</div>
 							<h2 className="w-full flex flex-col justify-between my-2 font-light">
-								<span className='text-blue-800 font-semibold'>Quand voulez vous envoyer applicationMessage</span>
+								<span
+									className='text-blue-800 font-semibold'>Quand voulez vous envoyer les messages</span>
 							</h2>
 							<div className="grid md:grid-cols-2 gap-4">
 								<div className="block">

@@ -85,6 +85,14 @@ function NewCampainContextWrapper({children}: Props) {
 								<p>En quelques questions je vais vous aider à rédiger votre message.</p>
 							</div>
 						</div>
+            {
+              (state && state.stepIndex && state.stepIndex > 0) ? (
+                <p className="flex items-center justify-end">
+                  <button type="button" onClick={reset} className='blue-link underline'>Recommencer</button>
+                </p>
+              ) : null
+            }
+           
 						<section className='py-3'>
 							{
 								children.map((child, index) => index === state.stepIndex ? cloneElement(child, {

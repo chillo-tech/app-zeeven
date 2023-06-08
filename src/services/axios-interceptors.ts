@@ -38,14 +38,6 @@ const onResponse = (response: AxiosResponse): AxiosResponse => {
 }
 
 const onResponseError = async (error: AxiosError): Promise<AxiosError> => {
-   const {status, response} = error;
-   if(status === 401 || (response && response.status && response.status === 401)) {
-    signOut();
-
-    if (typeof window !== "undefined") {
-      window.location.href = '/';
-    }
-   }
     return Promise.reject(error);
 }
 

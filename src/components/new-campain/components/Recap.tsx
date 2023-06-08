@@ -1,25 +1,28 @@
-import React, {useContext} from 'react'
+import React, {useContext, useState} from 'react'
 import BottomBar from './BottomBar'
 import {NewCampainContext} from '@/context/NewCampainContext';
 import {getDisplayedDate} from '@/utils/DateFormat';
 import Preview from './Preview';
 import {useMutation} from 'react-query';
-import {add} from '@/services/crud';
+import {add, handleError} from '@/services';
 import Message from '@/components/Message';
 import {useRouter} from 'next/router'
 import {signIn, useSession} from 'next-auth/react';
+import { AxiosError } from 'axios';
 
 function Recap() {
 	const context = useContext(NewCampainContext);
 	const {state: {stepIndex, campain}, previousStep, reset} = context;
 	const {data: sessionData} = useSession();
+	const [isError, setIsError] = useState(false);
 
 	const mutation = useMutation({
 		mutationFn: (campain => add("/api/backend/event", campain)),
-
+    onError: (error: AxiosError) => {setIsError(true), handleError(error)}
 	});
 	const router = useRouter()
-	const handleError = (error: any) => {
+	const pageError = (error: any) => {
+    setIsError(false);
 		error.preventDefault();
 		mutation.reset();
 		//router.push('/');
@@ -50,12 +53,12 @@ function Recap() {
 					firstMessage='Un instant'
 					secondMessage='Nous enregistrons votre demande'
 				/>) : null}
-			{mutation.isError ? (
+			{isError ? (
 				<Message
 					type="error"
 					firstMessage='Une erreur est survenue, nous allons la résoudre sous peu'
 					secondMessage='Veuillez prendre contact avec nous'
-					action={handleError}
+					action={pageError}
 					actionLabel="Retourner à l'accueil"
 				/>) : null}
 			{mutation.isSuccess ? (

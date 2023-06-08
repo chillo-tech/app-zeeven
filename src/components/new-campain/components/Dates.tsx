@@ -16,9 +16,9 @@ const schema = yup.object({
 
 function Dates() {
 	const context = useContext(NewCampainContext);
-	const {state: {stepIndex, campain: {dateDebut, heureDebut= '06:00'}}, updateCampain, previousStep} = context;
+	const {state: {stepIndex, campain: {dateDebut, heureDebut= '00:00'}}, updateCampain, previousStep} = context;
 	const {register, handleSubmit, formState: {errors}} = useForm<FormValues>({
-		defaultValues: {dateDebut, heureDebut: heureDebut ? heureDebut: '06:00'},
+		defaultValues: {dateDebut, heureDebut: heureDebut ? heureDebut: '00:00'},
 		mode: "onChange",
 		resolver: yupResolver(schema)
 	});

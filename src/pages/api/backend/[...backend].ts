@@ -1,10 +1,9 @@
 import { axiosInstance } from '@/services/axios-instance';
 import type { NextApiRequest, NextApiResponse } from 'next';
-import { getServerSession } from "next-auth/next"
+import { getServerSession, } from "next-auth/next"
 import { authOptions } from "../auth/[...nextauth]"
 import { Session } from 'next-auth';
 import axios, { AxiosError } from 'axios';
-import { signOut } from 'next-auth/react';
 
 interface AppSession extends Session {
   token: {
@@ -36,12 +35,17 @@ async function handler(
   } catch (error: any) {
     const axiosError = error as Error | AxiosError;
     if(axios.isAxiosError(axiosError)){
-      const {status, response} = error;
-      if(status === 401 || (response && response.status && response.status === 401)) {
-        signOut();
+      const axiosError = error as Error | AxiosError;
+      if(axios.isAxiosError(axiosError)){
+        const {status, response} = error;
+        if(status === 401 || (response && response.status && response.status === 401)) {
+          res.status(401).json({ message: "Veuillez vous connecter" });
+          return;
+        }
       }
       return Promise.reject(error);
     }
+    return Promise.reject(error);
   }
 }
 
