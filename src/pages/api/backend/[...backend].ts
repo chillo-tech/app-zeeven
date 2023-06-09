@@ -24,9 +24,17 @@ async function handler(
 
     const {url = ''} = req;
     const backendUrl = url.substring(url.indexOf('backend')) || '';
-    
     if (req.method === 'POST') {
       const {data} = await axiosInstance.post(`${backendUrl}`, req.body, {headers});
+      return res.status(200).json(data);
+    } else if (req.method === 'PUT') {
+      const {data} = await axiosInstance.post(`${backendUrl}`, req.body, {headers});
+      return res.status(200).json(data);
+    } else if (req.method === 'PATCH') {
+      const {data} = await axiosInstance.patch(`${backendUrl}`, req.body, {headers});
+      return res.status(200).json(data);
+    }  else if (req.method === 'DELETE') {
+      const {data} = await axiosInstance.delete(`${backendUrl}`, {headers});
       return res.status(200).json(data);
     } else {
       const {data} = await axiosInstance.get(`${backendUrl}`, {headers});

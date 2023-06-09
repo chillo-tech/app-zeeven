@@ -39,7 +39,7 @@ function Compte() {
 						/>)
 					: null
 				}
-				{data ? (<ProfileEdit redirectUrl="/me" endpoint={`/profile/${data.id}`} data={data}
+				{data ? (<ProfileEdit redirectUrl="/me" endpoint={`profile/${data.id}`} data={data}
 									  method="PATCH"/>) : null}
 			</section>
 		</ProtectedLayout>

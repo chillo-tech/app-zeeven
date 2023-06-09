@@ -61,13 +61,15 @@ function Guests() {
 			}
 			{isSuccess && data ? (
 					<>
-						<div className="border-b-2 border-blue-500 flex justify-between items-center py-2 my-2">
+						<div className="border-b-2 border-blue-500 flex justify-between items-center">
 							<span className='text-blue-800'>
 							  Vos contacts ({data.length})
 							</span>
+              {/** 
 							<button type='button' onClick={() => setFormVisible(!formVisible)}>
 								<AiOutlineUserAdd className='text-2xl text-blue-800'/>
 							</button>
+              */}
 						</div>
 						{formVisible ? <GuestEdit handleSubmit={onSubmit}/> : null}
 						{data.length ? <GuestList guests={data} deleteGuest={deleteGuest}/> : null}

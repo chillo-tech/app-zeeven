@@ -5,16 +5,18 @@ import Message from '@/components/Message';
 import {Tabs} from '@/components/Tabs/Index';
 import ProtectedLayout from '@/containers/protected';
 import Head from 'next/head';
-import {useRouter} from 'next/router';
-import React from 'react'
+import React, { useState } from 'react'
 import {search} from '@/services/crud';
+import { handleError } from '@/services';
 
 function CampainDetail({id}:{id: number}) {
-	const {isSuccess, isLoading, isError, data: {data} = {}} = useQuery<any>({
+	const [isError, setIsError] = useState(false);
+	const {isSuccess, isLoading, data: {data} = {}} = useQuery<any>({
 		queryKey: ["user-campains", id],
 		queryFn: () => search(`/api/backend/event/${id}`),
     enabled: !!id,
 		refetchOnWindowFocus: false,
+    onError: (error: any) => {setIsError(true), handleError(error)},
 	});
 	return (
 		<ProtectedLayout>
@@ -50,9 +52,7 @@ function CampainDetail({id}:{id: number}) {
 						<Tabs.Item title="Contacts">
 							<Guests/>
 						</Tabs.Item>
-						<Tabs.Item title="Programme">
-
-						</Tabs.Item>
+						
 					</Tabs.Group>
 				</section>
 			) : null}

@@ -10,9 +10,8 @@ async function handler(
     const {data} = await axiosInstance.get(url);
     return res.status(200).json(data);
   } catch (error) {
-    console.log('==========ERROR==============');
     console.log(error);
-    console.log('=============ERROR============');
+    res.status(400).json({ message: "Requête invalide" });
   }
 }
 

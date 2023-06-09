@@ -7,7 +7,7 @@ function List({data = []}: { data: any[] }) {
      {
       data && data.length ? (
         <div className='search-result h-min-100  text-center'>
-          <div className="grid grid-cols-5 bg-blue-50 font-semibold">
+          <div className="hidden md:grid grid-cols-5 bg-blue-50 font-semibold">
             <span className='py-3 px-5 text-left'>Date</span>
             <span className='py-3 px-5'>Categorie</span>
             <span className='py-3 px-5'>Contacts</span>

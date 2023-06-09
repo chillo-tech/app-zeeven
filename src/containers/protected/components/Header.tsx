@@ -1,57 +1,77 @@
+import { ACCOUNT_CATEGORIESLINKS } from '@/utils';
 import { signOut, useSession } from 'next-auth/react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import React from 'react'
+import React from 'react';
+import { HiOutlineMenuAlt3 } from 'react-icons/hi';
 import { RiLogoutBoxRLine } from 'react-icons/ri';
+import { RxCross1 } from 'react-icons/rx';
 import { TfiPencilAlt2 } from 'react-icons/tfi';
-import {ACCOUNT_CATEGORIESLINKS} from '@/utils';
 function Header() {
-  const {data: session} = useSession();
+  const { data: session } = useSession();
   const router = useRouter();
+  const [isOpen, setIsOpen] = React.useState(false);
+  const toggle = () => setIsOpen(!isOpen);
 
   return (
-    <header className=' bg-white shadow-md'>
+    <header className=" bg-white shadow-md">
       <div className="first">
-        <div className="container py-4 mx-auto flex justify-between items-center border-b border-gray-200">
-        <Link href="/" className={`block text-blue-900 text-4xl !font-extrabold`}>
-          ZEEVEN
-        </Link>
-        <nav>
-          <ul className='flex'>
+        <div className="container mx-auto flex items-center justify-between border-b border-gray-200 py-4">
+          <Link href="/" className={`block text-2xl !font-extrabold text-blue-900 md:text-4xl`}>
+            ZEEVEN
+          </Link>
+          <nav className='md:flex hidden'>
+            <ul className="flex">
+              <li>
+                <Link
+                  href="/nouvelle-campagne"
+                  className={`flex items-center rounded-lg border-yellow-500 bg-yellow-400 px-3 py-1 text-blue-900 md:px-5`}
+                >
+                  <TfiPencilAlt2 className="mr-2 hidden md:inline" /> Envoyer des messages
+                </Link>
+              </li>
+            </ul>
+          </nav>
+          <ul className='md:flex flex hidden font-semibold text-blue-900'>
             <li>
-            <Link href="/nouvelle-campagne" className={`flex items-center bg-yellow-400 text-blue-900 border-yellow-500 py-1 rounded-lg px-3 md:px-5`}>
-              <TfiPencilAlt2 className='mr-2 hidden md:inline'/> Envoyer des messages
-            </Link>
+              <button type="button" className="ml-2 block rounded-lg bg-white px-2 uppercase">
+                {session?.user?.name?.substring(0, 2)}
+              </button>
+            </li>
+            <li>
+              <Link href="/contactez-nous" className="ml-2 block rounded-lg bg-white px-5">
+                Des questions ?
+              </Link>
+            </li>
+            <li>
+              <button
+                type="button"
+                onClick={() => signOut({ callbackUrl: '/' })}
+                className="ml-2 flex items-center rounded-lg border border-blue-900 px-5 text-blue-900"
+              >
+                Déconnexion <RiLogoutBoxRLine className="ml-3  text-blue-900" />
+              </button>
             </li>
           </ul>
-        </nav>
-        <ul className='flex text-blue-900 font-semibold'>
-          <li>
-            <button type="button" className='block ml-2 uppercase bg-white rounded-lg px-2'>
-              {session?.user?.name?.substring(0, 2)}
-            </button>
-          </li>
-          <li>
-            <Link href="/contactez-nous" className='block ml-2 bg-white rounded-lg px-5'>
-              Des questions ?
-            </Link>
-          </li>
-          <li>
-            <button type='button' onClick={()=>signOut({callbackUrl: '/'})} className='ml-2 flex items-center text-blue-900 rounded-lg px-5 border border-blue-900'>
-              Déconnexion <RiLogoutBoxRLine className="text-blue-900  ml-3" />
-            </button> 
-          </li>
-        </ul>
+
+          <button
+            onClick={toggle}
+            className="bg-app-yellow text-app-brown flex items-center justify-center rounded-md font-semibold text-blue-900 md:hidden"
+          >
+            <HiOutlineMenuAlt3 className="h-8 w-8" />
+          </button>
         </div>
         <div className="second">
           <nav className="container mx-auto">
-            <ul className='flex'>
-              {ACCOUNT_CATEGORIESLINKS.map((categoryLink, index)=> (
+            <ul className="flex">
+              {ACCOUNT_CATEGORIESLINKS.map((categoryLink, index) => (
                 <li key={`link-${index}`}>
-                  <Link 
-                    className={`px-5 text-gray-500 py-3 text-center block ${router.pathname === categoryLink.url ? 'border-b-4 border-blue-900': ''}`} 
+                  <Link
+                    className={`block px-5 py-3 text-center text-gray-500 ${
+                      router.pathname === categoryLink.url ? 'border-b-4 border-blue-900' : ''
+                    }`}
                     href={categoryLink.url}
-                    >
+                  >
                     {categoryLink.label}
                   </Link>
                 </li>
@@ -60,8 +80,53 @@ function Header() {
           </nav>
         </div>
       </div>
+
+      <nav
+        className={`flex justify-between ${
+          isOpen ? '' : 'hidden'
+        } fixed left-0 top-0 z-10 h-screen w-full flex-col items-center gap-4 bg-blue-900 pt-[20%] text-white`}
+      >
+        <p>
+          <button
+            onClick={toggle}
+            className="border-app-black absolute top-[5%] rounded-full border-2 p-2"
+          >
+            <RxCross1 />
+          </button>
+        </p>
+        <ul className="visible flex flex-col items-center gap-6 font-light md:hidden">
+          <li>
+            <Link
+              href="/nouvelle-campagne"
+              className={`flex items-center rounded-lg border-yellow-500 bg-yellow-400 px-3 py-1 text-blue-900 md:px-5`}
+            >
+              <TfiPencilAlt2 className="mr-2 hidden md:inline" /> Envoyer des messages
+            </Link>
+          </li>
+        </ul>
+        <ul className="visible mb-20 flex items-center gap-6 font-light md:hidden">
+          <li>
+            <button
+              type="button"
+              onClick={() => router.push('/me')}
+              className="ml-2 block h-10 w-10 rounded-full border border-white font-extrabold uppercase text-white"
+            >
+              {session?.user?.name?.substring(0, 2)}
+            </button>
+          </li>
+          <li>
+            <button
+              type="button"
+              onClick={() => signOut({ callbackUrl: '/' })}
+              className="flex items-center"
+            >
+              <RiLogoutBoxRLine className="ml-3 text-3xl text-white" />
+            </button>
+          </li>
+        </ul>
+      </nav>
     </header>
-  )
+  );
 }
 
-export default Header
+export default Header;

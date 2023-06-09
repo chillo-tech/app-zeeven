@@ -44,9 +44,9 @@ function GuestEdit({handleSubmit}: {handleSubmit: Function}) {
   }
 
 	return (
-		 <form onSubmit={handleFormSubmit(onSubmit)}>
-       <div className="grid grid-cols-2 gap-4">        
-       <div className="mb-0 text-md">
+		 <form onSubmit={handleFormSubmit(onSubmit)} className="md:grid md:grid-cols-2 gap-4">
+          
+       <div className="mb-0 text-md flex flex-col">
           <label htmlFor="civility" className="form-label">Civilité</label>
           <div className="mt-1">
             <select {...register("profile.civility")} id="civility">
@@ -98,8 +98,6 @@ function GuestEdit({handleSubmit}: {handleSubmit: Function}) {
         <button type="submit" className="col-span-2 mt-2 w-full bg-blue-800 hover:bg-blue-800 text-white font-light py-2 px-4 rounded-lg shadow-sm">
           Enregistrer
         </button>
-
-        </div> 
       </form>
 	);
 }

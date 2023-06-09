@@ -1,10 +1,6 @@
 import React, { useContext } from 'react'
 import Footer from '../components/Footer';
 import Header from './components/Header';
-import { ApplicationContext } from '@/context/ApplicationContext';
-import { useQuery } from 'react-query';
-import { fetchData } from '@/services';
-import { ENTREPRISE } from '@/utils';
 import Stocks from './components/Stocks';
 
 function ProtectedLayout({children}: {children: any}) {

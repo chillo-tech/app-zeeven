@@ -1,7 +1,8 @@
 import ImageDisplay from '@/components/image-display';
 import Icon from '@/components/shared/Icon';
-import { fetchData } from '@/services';
+import { fetchData, handleError } from '@/services';
 import { Channel } from '@/types/data';
+import axios from 'axios';
 import { useState } from 'react';
 import { useQuery } from 'react-query';
 
@@ -10,9 +11,10 @@ function Stocks() {
   useQuery<any>({
     queryKey: ['stocks'],
     queryFn: () =>
-      fetchData({
-        path: '/api/backend/stocks/statistics',
-      }),
+      axios.get(
+        '/api/backend/stocks/statistics',
+      ),
+    onError: handleError,
     onSuccess: (data) => {
       setstocks(data.data);
     },
@@ -25,7 +27,7 @@ function Stocks() {
             <span className='font-bold'>
               Vos crédits: 
               </span>
-              <ul className="flex flex-col justify-center gap-4 py-4 md:flex-row text-lg">
+              <ul className="flex justify-center gap-4 py-4 md:flex-row text-lg">
                 {Object.keys(stocks).map((key) => (
                   <li key={`${key}`} className="flex-1">
                     <p className="flex items-center justify-between rounded-md bg-white font-light text-black">

@@ -18,7 +18,7 @@ function GuestList({guests, deleteGuest}: Props) {
 					(guest, index) => (
 						<DeletetableItem classes="border-b border-slate-100" data={guest}
 										 action={deleteGuest} actionValue={guest.publicId} key={`${guest.id}-${index}`}>
-							<article className={classNames("grid grid-cols-5 text-gray-800")}>
+							<article className={classNames("grid md:grid-cols-5 text-gray-800")}>
 								<span className='py-1 px-1'>{guest.civility}</span>
 								<span className='capitalize py-1'>{guest.firstName}</span>
 								<span className='uppercase font-bold py-1'>

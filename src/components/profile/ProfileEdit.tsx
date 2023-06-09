@@ -28,8 +28,8 @@ const schema = yup.object({
 		.required(PHONE_ERROR_MESSAGE)
 		.min(9, PHONE_ERROR_MESSAGE)
 		.max(10, PHONE_ERROR_MESSAGE),
-	password: yup.string()
-		.required(REQUIRED_FIELD_ERROR_MESSAGE),
+	/*password: yup.string()
+		.required(REQUIRED_FIELD_ERROR_MESSAGE),*/
 	csrfToken: yup.string(),
 }).required();
 
@@ -38,7 +38,7 @@ type Profile = {
 	firstName: string;
 	lastName: string;
 	username: string;
-	password: string;
+	password?: string;
 	email: string;
 	phoneIndex: string;
 	phone: string;
@@ -51,9 +51,9 @@ const ProfileEdit = ({endpoint, redirectUrl, data, method, buttonLabel = 'Enregi
 	const mutation = useMutation({
 		mutationFn: profile => {
 			if (method === "PATCH") {
-				return patch(endpoint, profile);
+				return patch(`/api/backend/${endpoint}`, profile);
 			} else {
-				return add(endpoint, profile);
+				return add(`/api/backend/${endpoint}`, profile);
 			}
 		},
 		onError: (error) => {
@@ -435,6 +435,7 @@ const ProfileEdit = ({endpoint, redirectUrl, data, method, buttonLabel = 'Enregi
 								<p className='text-red-600'>{errors?.phoneIndex?.message}</p>
 								<p className='text-red-600'>{errors?.phone?.message}</p>
 							</div>
+              {/**
 							<div className={formStyles.form_control}>
 								<label htmlFor="password" className={formStyles.form_control__label}>
 										<span
@@ -445,6 +446,7 @@ const ProfileEdit = ({endpoint, redirectUrl, data, method, buttonLabel = 'Enregi
 									   {...register("password")} placeholder="Mot de passe"/>
 								<p className={formStyles.form_control__error}>{errors.password?.message}</p>
 							</div>
+               */}
 							<button className={formStyles.form_control__button}>{buttonLabel}</button>
 						</form>
 					</article>

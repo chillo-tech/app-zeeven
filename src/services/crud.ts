@@ -16,7 +16,7 @@ const add = (endpoint: string, data: any) => {
 }
 
 const patch = (endpoint: string, data: any) => {
-	return axiosInstance.patch(
+	return axios.patch(
 		endpoint,
 		data,
 		{

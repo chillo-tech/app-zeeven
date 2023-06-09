@@ -4,7 +4,7 @@ import ImageDisplay from '@/components/image-display';
 import SectionLinks from '@/components/shared/SectionLinks';
 import OpenedLayout from '@/containers/opened';
 import { ApplicationContext } from '@/context/ApplicationContext';
-import { fetchData } from '@/services';
+import { fetchData, handleError } from '@/services';
 import { MENUFULL, URL_DATA, slugify } from '@/utils';
 import classNames from 'classnames';
 import { useRouter } from 'next/router';
@@ -24,6 +24,7 @@ function Espaces({ index }: any) {
         path: `/api/backoffice/menus/${index}`,
         fields: MENUFULL,
       }),
+    onError: handleError,
     onSuccess: (data) => {
       setData(data.data.data);
       updateData({

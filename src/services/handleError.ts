@@ -7,6 +7,7 @@ function handleError(error: any) {
     const {status, response} = error;
     if(status === 401 || (response && response.status && response.status === 401)) {
       signOut();
+      window.location.href= '/auth/signin';
     }
   }
 }
