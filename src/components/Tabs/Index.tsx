@@ -126,7 +126,7 @@ export const TabsComponent: FC<TabsProps> = ({ children, className, style = 'def
             aria-controls={`tabpanel-${index}`}
             aria-selected={index === activeTab}
             className={classNames(
-              'text-lg flex items-center justify-center p-4 first:ml-0 disabled:cursor-not-allowed disabled:text-gray-400 disabled:dark:text-gray-500',
+              'text-lg flex items-center justify-center p-1 first:ml-0 disabled:cursor-not-allowed disabled:text-gray-400 disabled:dark:text-gray-500',
               {
                 'ml-2 first:ml-0': style !== 'fullWidth',
                 'rounded-t-lg': style === 'underline' || style === 'default',

@@ -29,9 +29,6 @@ export const authOptions: NextAuthOptions = {
 						image: null,
 						accessToken: token
 					};
-          console.log('====================================');
-          console.log({user});
-          console.log('====================================');
 					if (token) {
 						return user;
 					}

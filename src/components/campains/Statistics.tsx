@@ -18,6 +18,9 @@ function Statistics({id}:{id: number}) {
       },
       {}
     );
+    console.log('====================================');
+    console.log({results});
+    console.log('====================================');
     setData(results);
   }
   const { query: { slug }} = useRouter();
@@ -36,23 +39,24 @@ function Statistics({id}:{id: number}) {
             <Emoji symbol="&#128521;" />
             <h3 className="text-orange-600 text-xl py-2 flex flex-col font-semibold">
               <span>{data["QUEUED"]}</span>
-              <span>Transmis</span>
-            </h3>
-          </div>
-          <div className="grid grid-rows-2 text-center items-center justify-center">
-            <Emoji symbol="&#128516;" />
-            <h3 className="text-blue-500 text-xl py-2 flex flex-col font-semibold">
-              <span>{data["SENT"]}</span>
-              <span>Ouverts</span>
+              <span>Programmés</span>
             </h3>
           </div>
           <div className="grid grid-rows-2 text-center items-center justify-center">
             <Emoji symbol="&#128522;" />
             <h3 className="text-purple-500 text-xl py-2 flex flex-col font-semibold">
-              <span>{data?.clicks}</span>
-              <span>Clicks</span>
+              <span>{data["SENT"]}</span>
+              <span>Envoyés</span>
             </h3>
           </div>
+          <div className="grid grid-rows-2 text-center items-center justify-center">
+            <Emoji symbol="&#128516;" />
+            <h3 className="text-blue-500 text-xl py-2 flex flex-col font-semibold">
+              <span>{Number(data["DELIVERED"]) > Number(data["SENT"]) ? data["SENT"] : data["DELIVERED"]}</span>
+              <span>Reçus</span>
+            </h3>
+          </div>
+          
           {/** 
           <div className="grid grid-rows-2 text-center items-center justify-center">
             <Emoji symbol="&#129303;" />
