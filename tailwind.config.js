@@ -14,10 +14,10 @@ module.exports = {
       'lg': '1000px',
       // => @media (min-width: 1024px) { ... }
 
-      'xl': '1280px',
+      'xl': '1200px',
       // => @media (min-width: 1280px) { ... }
 
-      '2xl': '1280px',
+      '2xl': '1200px',
       // => @media (min-width: 1536px) { ... }
     },
     extend: {

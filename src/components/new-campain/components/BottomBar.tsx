@@ -3,9 +3,11 @@ type BottomBarParams = {
   stepIndex: number,
   nextDisabled: boolean,
   previousStep: () => void,
+  handleOnClick?: any,
   previousDisabled?: boolean,
   previousLabel?: string,
   nextLabel?: string,
+  nextButtonType?: string,
 };
 function BottomBar({
   stepIndex,
@@ -13,7 +15,10 @@ function BottomBar({
   nextDisabled,
   previousDisabled = false,
   previousLabel = "Retour",
-  nextLabel = "Etape suivante"
+  nextLabel = "Etape suivante",
+  nextButtonType = 'submit',
+  handleOnClick
+  
 }:BottomBarParams) {
   return (
     <div className='flex items-center justify-between mt-6 font-extralight'>
@@ -24,9 +29,19 @@ function BottomBar({
           </button>
         ): <span />
       }
-      <button type='submit' className='rounded-md bg-yellow-500 text-blue-900 border-yellow-500 px-4 py-2' disabled={nextDisabled}>
-        <span>{nextLabel}</span>
-      </button>
+      {
+        nextButtonType  === 'submit'? (
+          <button type='submit' className='rounded-md bg-yellow-500 text-blue-900 border-yellow-500 px-4 py-2' disabled={nextDisabled}>
+            <span>{nextLabel}</span>
+          </button>
+        ): (
+          <button type='button'
+            onClick={handleOnClick}
+            className='rounded-md bg-yellow-500 text-blue-900 border-yellow-500 px-4 py-2' disabled={nextDisabled}>
+            <span>{nextLabel}</span>
+          </button>
+        )
+      }
     </div>
   )
 }

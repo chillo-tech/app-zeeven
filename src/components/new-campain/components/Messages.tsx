@@ -10,10 +10,11 @@ import Preview from './Preview'
 type FormValues = {
 	messages: {
 		text: string,
-		date: string,
-		time: string,
+		date?: string,
+		time?: string,
 		timezone?: string,
-		informations?: { [key: string]: any }
+		informations?: { [key: string]: any },
+		ordre: number,
 		isSent?: boolean
 	}[];
 };
@@ -28,7 +29,7 @@ function Messages() {
 	const [lastVariable, setLastVariable] = useState("");
 	const context = useContext(NewCampainContext);
 	const {
-		state: {stepIndex, campain: {messages = [{text: '', date: '', time: ''}]}},
+		state: {stepIndex, campain: {messages = [{text: '', date: '', time: '', ordre: 1}]}},
 		updateCampain,
 		previousStep
 	} = context;
@@ -39,10 +40,8 @@ function Messages() {
 			}
 		}
 	);
-	const {ref, ...rest} = register("messages.0.text", {required: "Merci de sasir un applicationMessage"});
+	const {ref, ...rest} = register("messages.0.text", {required: "Merci de sasir un message"});
 	const currentMessage = watch("messages.0.text");
-
-
 	const {fields} = useFieldArray({
 		rules: {
 			minLength: 1,
@@ -80,7 +79,7 @@ function Messages() {
 	}
 
 	const onSubmit = (data: FormValues) => {
-		let messages = data.messages.map(message => ({...message, timezone: Intl.DateTimeFormat().resolvedOptions().timeZone}));
+		let messages = data.messages;
 		data['messages'] = messages;
 		updateCampain(data);
 	};
@@ -93,13 +92,13 @@ function Messages() {
 				<form noValidate className="block space-y-6" onSubmit={handleSubmit(onSubmit)}>
 					{fields.map((field, index) => (
 
-						<div key={`applicationMessage-${field.id}`}>
-							<label htmlFor="applicationMessage"
+						<div key={`message-${field.id}`}>
+							<label htmlFor="message"
 								   className="w-full flex flex-col justify-between mb-2 font-light">
-								<span className='text-blue-800 font-semibold'>Votre applicationMessage</span>
+								<span className='text-blue-800 font-semibold'>Votre message</span>
 								<span className="text-gray-500 text-sm">Vous pourrez définir la valeur des informations dans la suite</span>
 							</label>
-							<textarea rows={6} id="applicationMessage"
+							<textarea rows={6} id="message"
 									  className="w-full border-gray-300 rounded-lg shadow-sm focus:border-indigo-500 focus:ring-indigo-5000 py-3"
 									  {...rest}
 									  name={`messages.${index}.text`}
@@ -150,6 +149,7 @@ function Messages() {
 									</div>
 								</div>
 							</div>
+              {/**
 							<h2 className="w-full flex flex-col justify-between my-2 font-light">
 								<span
 									className='text-blue-800 font-semibold'>Quand voulez vous envoyer les messages</span>
@@ -184,6 +184,7 @@ function Messages() {
 									<p className="text-red-500">{errors?.messages ? errors?.messages[index]?.time?.message : null}</p>
 								</div>
 							</div>
+               */}
 						</div>
 					))}
 					<p className="text-red-500">{errors?.messages?.root?.message}</p>

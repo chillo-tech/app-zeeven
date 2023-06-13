@@ -2,12 +2,14 @@ import Message from '@/components/Message';
 import Metadata from '@/components/Metadata';
 import ImageDisplay from '@/components/image-display';
 import OpenedLayout from '@/containers/opened';
+import { handleError } from '@/services';
 import { add } from '@/services/crud';
 import { QR_CODES_TYPES, slugify } from '@/utils';
 import { yupResolver } from '@hookform/resolvers/yup';
 import classNames from 'classnames';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
+import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useMutation } from 'react-query';
 import * as yup from 'yup';
@@ -26,8 +28,10 @@ const schema = yup
   })
   .required();
 function QRCode() {
+  const [isError, setIsError] = useState(false);
   const mutation = useMutation({
     mutationFn: (applicationMessage: Message) => add('/api/backend/qr-code', applicationMessage),
+    onError: (error: any) => {setIsError(true), handleError(error)}
   });
   const router = useRouter();
   const {
@@ -44,10 +48,7 @@ function QRCode() {
     mutation.mutate(data);
   };
 
-  const handleError = (error: any) => {
-    error.preventDefault();
-    router.push('/');
-  };
+
   const type = watch('type');
   return (
     <>
@@ -67,7 +68,7 @@ function QRCode() {
             QR dynamiques pour votre marque
           </h3>
         </div>
-        {mutation.isError ? (
+        {isError ? (
           <section className="container mx-auto mb-10 rounded-lg border-2 border-blue-300 bg-white md:w-2/3">
             <Message
               type="error"

@@ -40,3 +40,10 @@ export const todayDate = () => {
   date.setDate(date.getDate() - 1);
   return date;
 };
+
+
+export const getQrCodeUrl = (current: string, qrCodeUrl: string) => {
+  const slugifiedCurrent = slugify(current);
+  const slugifiedQrCodeUrl = slugify(qrCodeUrl);
+  return slugifiedCurrent.indexOf('qr-code') > -1 ? qrCodeUrl : slugifiedCurrent;
+};

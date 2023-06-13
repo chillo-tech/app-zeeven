@@ -1,6 +1,6 @@
-import { axiosInstance } from "./axios-instance";
+import axios from "axios";
 const sendData = (endpoint: string, data: any) => {
-  return axiosInstance.post(
+  return axios.post(
     endpoint, 
     data, 
     {

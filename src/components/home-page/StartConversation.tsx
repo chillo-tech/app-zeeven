@@ -11,11 +11,11 @@ function StartConversation() {
         <div className="description py-10 col-span-2">
           <span className='text-md font-light text-blue-900'>Commencez maintenant</span>
           <h2 className='flex flex-col font-bold text-5xl'>
-            <span className='mb-2'>Entammez vos échanges</span>
+            <span className='mb-2'>Entamez vos échanges</span>
             <span>avec ZEEVEN</span>
           </h2>
           <p className='flex flex-col py-8 text-[1.2rem]'>
-            <span>Inscrivez vous entammez vos</span>
+            <span>Inscrivez vous entamez vos</span>
             <span>Meilleurs échanges aujourd&apos;hui</span>
           </p>
           <p className='flex gap-6 items-start justify-start flex-col md:flex-row'>

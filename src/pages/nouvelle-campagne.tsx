@@ -8,6 +8,8 @@ import Title from '@/components/new-campain/components/Title'
 import Variables from '@/components/new-campain/components/Variables'
 import NewCampainContextWrapper from '@/context/NewCampainContext'
 import Messages from '@/components/new-campain/components/Messages'
+import CampainMessages from '@/components/new-campain/components/messages/CampainMessages'
+import Dates from '@/components/new-campain/components/dates/Dates'
 
 function NewCampain() {
 	return (
@@ -17,6 +19,7 @@ function NewCampain() {
 				<Title/>
 				<Guests/>
 				<Messages/>
+        <Dates />
 				<Variables/>
 				<Options/>
 				<Recap/>

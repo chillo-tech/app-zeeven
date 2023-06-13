@@ -19,4 +19,9 @@ strong {
   .white-button {
     @apply flex items-center bg-none text-white py-2 px-7 rounded-md border border-white
   }
+
+  .add-date_button{
+    @apply text-white bg-blue-800 flex items-center justify-between px-3 py-2 rounded-full;
+  }
+
 }

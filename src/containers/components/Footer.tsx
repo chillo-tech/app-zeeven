@@ -1,7 +1,7 @@
 import RenderHtmlContent from '@/components/RenderHtmlContent';
 import { ApplicationContext } from '@/context/ApplicationContext';
 import { fetchData } from '@/services';
-import { ENTREPRISE, slugify } from '@/utils';
+import { ENTREPRISE, getQrCodeUrl, slugify } from '@/utils';
 import { signIn } from 'next-auth/react';
 import Link from 'next/link';
 import { useContext } from 'react';
@@ -82,7 +82,7 @@ function Footer() {
                               className="mb-2"
                             >
                               <Link
-                                href={slugify(`1-nos-solutions`)}
+                                href={`/${getQrCodeUrl(`1-nos-solutions`, 'qr-code')}`}
                                 className="text-slate-300 hover:text-white"
                               >
                                 {page.page_id.label}

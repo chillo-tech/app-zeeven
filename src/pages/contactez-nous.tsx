@@ -40,7 +40,7 @@ const schema = yup
   .required();
 function ContactUs() {
   const mutation = useMutation({
-    mutationFn: (message: Message) => sendData('backoffice/message', message),
+    mutationFn: (message: Message) => sendData('/api/backoffice/message', message),
   });
   const router = useRouter();
   const {
@@ -48,7 +48,8 @@ function ContactUs() {
     handleSubmit,
     formState: { errors },
   } = useForm<Message>({
-    mode: 'onChange',
+    mode: 'onBlur',
+    reValidateMode: 'onChange',
     resolver: yupResolver(schema),
   });
   const onSubmit = (data: Message) => {

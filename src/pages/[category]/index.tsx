@@ -5,10 +5,12 @@ import SectionLinks from '@/components/shared/SectionLinks';
 import OpenedLayout from '@/containers/opened';
 import { ApplicationContext } from '@/context/ApplicationContext';
 import { fetchData, handleError } from '@/services';
-import { MENUFULL, URL_DATA, slugify } from '@/utils';
+import { MENUFULL, getQrCodeUrl, slugify } from '@/utils';
 import classNames from 'classnames';
+import Link from 'next/link';
 import { useRouter } from 'next/router';
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useState } from 'react';
+import { BsArrowRight } from 'react-icons/bs';
 import { useQuery } from 'react-query';
 
 function Espaces({ index }: any) {
@@ -73,7 +75,11 @@ function Espaces({ index }: any) {
                         classes="flex flex-col py-3 text-[1.8rem] font-bold leading-8"
                       />
                       <RenderHtmlContent content={page_id.abstract} classes="flex flex-col mb-4" />
-                      <SectionLinks />
+                      {getQrCodeUrl(page_id.label, 'qr-code').indexOf('qr-code') > -1 ? (
+                          <Link href="/qr-code" className={classNames('blue-link', 'underline')}>
+                            Générez un QR CODE <BsArrowRight className='ml-4' />
+                          </Link>
+                      ): (<SectionLinks />)}
                     </div>
                   </div>
                 </section>
