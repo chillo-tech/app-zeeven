@@ -20,12 +20,7 @@ const QR_CODES_TYPES = [
 		"label": "Lien",
 		"icon": "link",
 		"value": "LINK"
-	},
-	{
-		"label": "WIFI",
-		"icon": "WIFI",
-		"value": "WIFI"
-	},
+	}
 	
 ]
 const GUESTS_OPTIONS = [
