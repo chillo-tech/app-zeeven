@@ -2,7 +2,8 @@ const TOKEN_PAYLOAD = 'TOKEN_PAYLOAD';
 const USER_INFOS = 'USER_INFOS';
 const PHONE_PATTERN = /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,5}$/;
 //const EMAIL_PATTERN = /^([\w-\.]+)@((?:[\w]+\.)+)([a-zA-Z]{2,4})$/;
-const EMAIL_PATTERN = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,6})+$/;
+const EMAIL_PATTERN = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,})+$/;
+const URL_PATTERN = /((https?):\/\/)?(www.)?[a-z0-9]+(\.[a-z]{2,}){1,3}(#?\/?[a-zA-Z0-9#]+)*\/?(\?[a-zA-Z0-9-_]+=[a-zA-Z0-9-%]+&?)?$/;
 const STRING_WITH_NUMBERS_REGEXP = /^\D*(\d\D*){10,}$/;
 const PHONE_ERROR_MESSAGE = 'Votre numéro de téléphone est invalide';
 const EMAIL_ERROR_MESSAGE = 'Votre mail est invalide';
@@ -15,11 +16,43 @@ const SET_STATE = 'SET_STATE';
 const RESET_CAMPAIN = 'RESET_CAMPAIN';
 const SET_NB_STEPS = 'SET_NB_STEPS';
 const UPDATE_DATA = "UPDATE_DATA";
+
+
+
+const WIFI_ENCODAGE = [
+	{
+		"label": "Aucun",
+		"value": "LINK"
+	},
+  {
+		"label": "WEP",
+		"value": "WEP"
+	},
+  {
+		"label": "WPA",
+		"value": "WPA"
+	},
+  {
+		"label": "WPA2 / EAP",
+		"value": "WPA2-EAP"
+	}
+	
+]
 const QR_CODES_TYPES = [
 	{
 		"label": "Lien",
 		"icon": "link",
 		"value": "LINK"
+	},
+  {
+		"label": "Wifi",
+		"icon": "wifi",
+		"value": "WIFI"
+	},
+  {
+		"label": "VCARD",
+		"icon": "VCARD",
+		"value": "VCARD"
 	}
 	
 ]
@@ -162,6 +195,16 @@ const isUserInformation = (variable: string) => {
 	);
 };
 
+const isValidUrl = (url: string) => {
+  try {
+      new URL(url);
+  } catch (e) {
+      return false;
+  }
+  return true;
+};
+
+
 export {
 	variableFieldType,
 	isUserInformation,
@@ -179,6 +222,7 @@ export {
 	USER_INFOS,
 	PHONE_PATTERN,
 	EMAIL_PATTERN,
+  URL_PATTERN,
 	STRING_WITH_NUMBERS_REGEXP,
 	PHONE_ERROR_MESSAGE,
 	EMAIL_ERROR_MESSAGE,
@@ -187,5 +231,7 @@ export {
   UPDATE_DATA,
 	GUESTS_OPTIONS,
   QR_CODES_TYPES,
-	ACCOUNT_CATEGORIESLINKS
+  isValidUrl,
+	ACCOUNT_CATEGORIESLINKS,
+  WIFI_ENCODAGE
 };

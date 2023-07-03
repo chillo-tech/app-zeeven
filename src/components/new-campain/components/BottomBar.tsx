@@ -31,13 +31,13 @@ function BottomBar({
       }
       {
         nextButtonType  === 'submit'? (
-          <button type='submit' className='rounded-md bg-yellow-500 text-blue-900 border-yellow-500 px-4 py-2' disabled={nextDisabled}>
+          <button type='submit' className='rounded-md bg-app-yellow text-app-blue border-app-yellow px-4 py-2' disabled={nextDisabled}>
             <span>{nextLabel}</span>
           </button>
         ): (
           <button type='button'
             onClick={handleOnClick}
-            className='rounded-md bg-yellow-500 text-blue-900 border-yellow-500 px-4 py-2' disabled={nextDisabled}>
+            className='rounded-md bg-app-yellow text-app-blue border-app-yellow px-4 py-2' disabled={nextDisabled}>
             <span>{nextLabel}</span>
           </button>
         )

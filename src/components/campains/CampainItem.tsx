@@ -41,7 +41,7 @@ function CampainItem({item, index}: { item: any, index: number }) {
         </span>
       </p>
       <p className='md:justify-center py-2 md:py-3 md:px-5 flex justify-end'>
-			  <Link className="text-blue-900 font-semibold text-center" href={`/me/message/${item.slug}`}>Afficher</Link>
+			  <Link className="text-app-blue font-semibold text-center" href={`/me/message/${item.slug}`}>Afficher</Link>
       </p>
         {
           /** 

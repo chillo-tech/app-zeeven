@@ -4,6 +4,7 @@ import {cloneElement, createContext, useCallback, useEffect, useMemo, useReducer
 import Nav from '../components/new-campain/components/Nav';
 import {INITIAL_STATE, RESET_CAMPAIN, SET_NB_STEPS, SET_STATE, UPDATE_CAMPAIN, UPDATE_STEP_INDEX} from '../utils/data'
 import {NewCampainReducer} from './NewCampainReducer';
+import Metadata from '@/components/Metadata';
 
 interface AppContextInterface {
 	state: any;
@@ -68,9 +69,7 @@ function NewCampainContextWrapper({children}: Props) {
 	}, [children.length, authContext, setState]);
 	return (
 		<NewCampainContext.Provider value={{state, ...authContext}}>
-			<Head>
-				<title>ZEEVEN | Nouvelle campagne</title>
-			</Head>
+			<Metadata entry={{title: 'Créez votre campagne', description: 'Informez nos contacts de vos évènements'}}/>
 			<section className='pb-20 md:pb-20 font-light'>
 				<Nav/>
 				<main className='container mx-auto py-2'>

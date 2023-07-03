@@ -76,7 +76,7 @@ function Recap() {
 						<div className="block">
 							<label htmlFor="recap"
 								   className="w-full flex flex-col justify-between mb-2 text-md lg:text-xl font-light">
-								<span className='text-blue-800 font-semibold'>Validez tout</span>
+								<span className='text-app-blue font-semibold'>Validez tout</span>
 								<span
 									className="text-gray-500 text-sm">Votre message et ceux à qui il sera transmis</span>
 							</label>
@@ -100,7 +100,11 @@ function Recap() {
 						</form>
 					</div>
 					<div className='md:p-5 p-4'>
-						<Preview text={campain.messages[0].text} variables={campain.messages[0].informations}/>
+						<Preview 
+              text={campain.messages[0].text} 
+              guests={campain?.guests||[]} 
+              variables={campain.messages[0].informations}
+            />
 					</div>
 				</div>
 			) : null}

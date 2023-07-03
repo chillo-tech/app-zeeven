@@ -24,7 +24,7 @@ function Empty(params: EmptyPage) {
                 onLoadingComplete={() => setLoading(false)}
               />
         </div>
-        <h3 className="py-4 text-blue-900 font-semibold text-xl">
+        <h3 className="py-4 text-app-blue font-semibold text-xl">
           {params.firstMessage}
         </h3>
         <div className="pb-4 text-gray-600 text-lg">

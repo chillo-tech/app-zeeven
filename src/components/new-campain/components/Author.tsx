@@ -43,7 +43,7 @@ function Author() {
 	return (
 		<div className="rounded-lg bg-white mt-10 md:p-10 p-4">
       <h2 className="w-full flex flex-col justify-between mb-4 text-lg font-light">
-          <span className='text-blue-800 font-semibold'>Comment devons vous appeler</span>
+          <span className='text-app-blue font-semibold'>Comment devons vous appeler</span>
           <span className="text-gray-500 text-sm">Promis nous n&apos;allons pas vous spammer</span>
           <span className="text-gray-500 text-sm">Nous utiliserons vos informations pour un compte rendu et des statistiques</span>
 			</h2>
@@ -51,7 +51,7 @@ function Author() {
         <form noValidate className="block space-y-6" onSubmit={handleSubmit(onSubmit)}>
           <div className="block">
             <label htmlFor="firstName" className="w-full flex flex-col justify-between mb-2 text-md font-light">
-              <span className='text-blue-800 font-semibold'>Votre prénom</span>
+              <span className='text-app-blue font-semibold'>Votre prénom</span>
             </label>
             <input type="text" id="firstName"
                 className="w-full border-gray-300 rounded-lg shadow-sm focus:border-indigo-500 focus:ring-indigo-5000 py-2"
@@ -60,7 +60,7 @@ function Author() {
           </div>
           <div className="block">
             <label htmlFor="lastName" className="w-full flex flex-col justify-between mb-2 text-md font-light">
-              <span className='text-blue-800 font-semibold'>Votre nom</span>
+              <span className='text-app-blue font-semibold'>Votre nom</span>
             </label>
             <input type="text" id="lastName"
                 className="w-full border-gray-300 rounded-lg shadow-sm focus:border-indigo-500 focus:ring-indigo-5000 py-2"
@@ -302,7 +302,7 @@ function Author() {
           </div>
           <div className="block">
             <label htmlFor="email" className="w-full flex flex-col justify-between mb-2 text-md font-light">
-              <span className='text-blue-800 font-semibold'>
+              <span className='text-app-blue font-semibold'>
                 Votre email
               </span>
             </label>

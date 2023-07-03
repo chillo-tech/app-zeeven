@@ -1,7 +1,7 @@
 import RenderHtmlContent from '@/components/RenderHtmlContent';
 import { ApplicationContext } from '@/context/ApplicationContext';
 import { fetchData } from '@/services';
-import { ENTREPRISE, getQrCodeUrl, slugify } from '@/utils';
+import { ENTREPRISE, getUrl, slugify } from '@/utils';
 import { signIn } from 'next-auth/react';
 import Link from 'next/link';
 import { useContext } from 'react';
@@ -35,7 +35,7 @@ function Footer() {
   return (
     <>
       {company ? (
-        <footer className="bg-blue-900 text-center text-sm text-white md:text-left md:text-lg">
+        <footer className="bg-app-blue text-center text-sm text-white md:text-left md:text-lg">
           <div className="container mx-auto grid gap-6 py-10 md:grid-cols-4">
             <div className="logo">
               <Link href="/" className={` py-3 text-4xl !font-extrabold text-white`}>
@@ -82,7 +82,7 @@ function Footer() {
                               className="mb-2"
                             >
                               <Link
-                                href={`/${getQrCodeUrl(`1-nos-solutions`, 'qr-code')}`}
+                                href={`/${slugify(page.page_id.label).indexOf('qr-code') > -1 ? 'qr-code':  `1-nos-solutions`}`}
                                 className="text-slate-300 hover:text-white"
                               >
                                 {page.page_id.label}

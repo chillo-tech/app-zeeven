@@ -41,9 +41,26 @@ export const todayDate = () => {
   return date;
 };
 
+interface Params {
+  current: string;
+  url: string;
+  pattern?: string;
+}
 
-export const getQrCodeUrl = (current: string, qrCodeUrl: string) => {
+export const getUrl = ({ current, url, pattern = 'qr-code' }: Params) => {
   const slugifiedCurrent = slugify(current);
-  const slugifiedQrCodeUrl = slugify(qrCodeUrl);
-  return slugifiedCurrent.indexOf('qr-code') > -1 ? qrCodeUrl : slugifiedCurrent;
+  return slugifiedCurrent.indexOf(pattern) == -1 ? slugifiedCurrent : url;
+};
+
+export const formattedNumber = (value: string) => {
+  return String(value).replace(/(.)(?=(\d{3})+$)/g, '$1 ');
+};
+export const frequenceLabel = (frequence: string) => {
+  switch (frequence) {
+    case 'MONTH':
+      return 'Mois';
+
+    default:
+      return 'Année';
+  }
 };

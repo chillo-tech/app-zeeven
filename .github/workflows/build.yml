@@ -28,7 +28,6 @@ jobs:
           sudo mkdir -p /opt/applications/zeeven/app-zeeven
           sudo chmod ugo+rwx /opt/applications/zeeven/app-zeeven
 
-
   copy-configs:
     name: "copy configs"
     runs-on: ubuntu-latest
@@ -72,7 +71,6 @@ jobs:
           push: true
           tags: simachille/app-zeeven:latest
   
-
   run-container:
     name: "Run container"
     runs-on: ubuntu-latest

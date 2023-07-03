@@ -9,8 +9,8 @@ function Statistics() {
         <article className='md:py-6 py-3 flex flex-row md:flex-col md:text-center md:justify-center md:items-center' key={`statistic-${index}`}>
           <Image src={`/images/statistics/${statistic.image}`} width="50" height="50" alt={`${statistic.title} ${statistic.description}`}/>
           <div className="text-lg md:text-center pl-5 md:pl-0">
-            <h6 className='text-blue-800 font-bold text-2xl'>{statistic.title}</h6>
-            <p className='text-blue-700'>{statistic.description}</p>
+            <h6 className='text-app-blue font-bold text-2xl'>{statistic.title}</h6>
+            <p className='text-app-blue'>{statistic.description}</p>
           </div>
         </article>
       ))}

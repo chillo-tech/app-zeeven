@@ -29,7 +29,7 @@ function Title() {
 			<form noValidate className="block space-y-6" onSubmit={handleSubmit(onSubmit)}>
 				<div className="block">
 					<label htmlFor="name" className="w-full flex flex-col justify-between mb-2 text-lg">
-						<span className='text-blue-800 font-semibold'>Un nom s&apos;il vous plait ...</span>
+						<span className='text-app-blue font-semibold'>Un nom s&apos;il vous plait ...</span>
 						<span className="text-gray-500 text-sm">Le nom sera l&apos;objet de votre message</span>
 					</label>
 					<input type="text" id="name"

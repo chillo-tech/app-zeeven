@@ -24,7 +24,7 @@ module.exports = {
       container: {
         center: true,
         padding: {
-          DEFAULT: '1rem',
+          DEFAULT: '0.25rem',
           sm: '2rem',
           lg: '0rem',
           xl: '0rem',
@@ -32,8 +32,10 @@ module.exports = {
         },
       },
       colors: {
-        'app-blue': '#2C7CBB',
-        'app-light-blue': '#EEF5FA'
+        'app-blue': '#1D3A8A',
+        'app-yellow': '#FDDE6D',
+        'app-light-blue': '#EEF5FA',
+        'app-light-gray': '#F8FAFB'
 
       },
       gridTemplateRows: {

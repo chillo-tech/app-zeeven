@@ -42,7 +42,7 @@ function Guests() {
 			<div id="contacts"
 				 className="w-full flex flex-col md:flex-row justify-between mb-8 items-center text-md lg:text-lg">
 				<p className='flex flex-col'>
-					<span className="text-blue-800 font-semibold text-xl">A qui transmettre votre message</span>
+					<span className="text-app-blue font-semibold text-xl">A qui transmettre votre message</span>
 					<span className="text-gray-500 text-sm">Choisissez comment vous voulez ajouter des contacts</span>
 				</p>
 			</div>
@@ -59,16 +59,16 @@ function Guests() {
 										key={`${index}-${option.id}`}
 										className="relative border border-gray-200 flex hover:bg-gray-50 rounded-lg items-center">
 										<BsArrowRightShort
-											className="absolute top-1/3 right-3 text-3xl text-3xl text-blue-900 font-thin"/>
+											className="absolute top-1/3 right-3 text-3xl text-3xl text-app-blue font-thin"/>
 										<span className="icon flex flex-column items-center justify-center px-5">
-										{option.id === "CSV" ? (<FaFileCsv className="text-3xl text-blue-900"/>) : null}
+										{option.id === "CSV" ? (<FaFileCsv className="text-3xl text-app-blue"/>) : null}
 											{option.id === "FORM" ? (
-												<FaWpforms className="text-3xl text-blue-900"/>) : null}
+												<FaWpforms className="text-3xl text-app-blue"/>) : null}
 									</span>
 										<span className="flex flex-col items-start pl-3 py-4 border-l border-gray-200">
 										<span className="text-gray-700">{option.sublabel}</span>
 										<span
-											className="text-blue-900 text-xl uppercase font-medium">{option.label}</span>
+											className="text-app-blue text-xl uppercase font-medium">{option.label}</span>
 									</span>
 									</button>
 								))}
@@ -86,12 +86,12 @@ function Guests() {
 							<p className="flex items-center justify-end py-3">
 								<button
 									onClick={() => display("OPTIONS")}
-									className="relative text-blue-900 text-md font-semibold flex hover:bg-gray-50 rounded-lg items-center">
+									className="relative text-app-blue text-md font-semibold flex hover:bg-gray-50 rounded-lg items-center">
 									Changer
 								</button>
 							</p>
 							<article className="bg-white border border-gray-10 rounded-lg p-4  items-center">
-								<p className="text-blue-900 text-xl font-semibold">Saisissez chaque contact et cliquez
+								<p className="text-app-blue text-xl font-semibold">Saisissez chaque contact et cliquez
 									sur <span className="font-cold">enregistrer</span>.</p>
 								<div aria-describedby='contacts'>
 									<GuestEdit handleSubmit={addContact}/>

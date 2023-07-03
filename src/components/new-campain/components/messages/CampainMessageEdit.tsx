@@ -89,7 +89,7 @@ const CampainMessageEdit: FunctionComponent<CampainMessageEditProps> = ({
   return (
     <div>
       <label htmlFor="message" className="mb-2 flex w-full flex-col justify-between font-light">
-        <span className="font-semibold text-blue-800">Votre message</span>
+        <span className="font-semibold text-app-blue">Votre message</span>
         <span className="text-sm text-gray-500">
           Vous pourrez définir la valeur des informations dans la suite
         </span>

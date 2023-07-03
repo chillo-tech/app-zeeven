@@ -11,7 +11,7 @@ function Nav() {
             {
               Array.from(Array(nbSteps).keys())
                 .map((key, index) =>
-                  <li className={`h-2 ${stepIndex >= index ? 'bg-yellow-400' : 'bg-white'}`}
+                  <li className={`h-2 ${stepIndex >= index ? 'bg-app-yellow' : 'bg-white'}`}
                     key={index}></li>
                 )
             }

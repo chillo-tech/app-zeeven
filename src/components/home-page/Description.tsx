@@ -33,7 +33,7 @@ function Description() {
 							/>
 						</div>
 						<div className="text-2xl py-4">
-							<h6 className={` text-blue-800 font-extrabold text-2xl text-center`}>{description.title}</h6>
+							<h6 className={` text-app-blue font-extrabold text-2xl text-center`}>{description.title}</h6>
 						</div>
 					</article>
 				))}

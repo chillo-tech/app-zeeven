@@ -3,7 +3,7 @@
 }
 
 .form__title{
-  @apply text-blue-900 lg:text-xl font-light;
+  @apply text-app-blue lg:text-xl font-light;
   @apply my-3 text-center;
 
 }
@@ -13,7 +13,7 @@
 }
 .form__container {
   @apply w-11/12 md:max-w-xl mx-auto;
-  @apply text-blue-900;
+  @apply text-app-blue;
   
 }
 .form__oauthbutton {
@@ -27,7 +27,7 @@
 .navigation {
   @apply container;
   @apply py-3 mx-auto;
-  @apply text-blue-900;
+  @apply text-app-blue;
   @apply w-11/12;
 }
 

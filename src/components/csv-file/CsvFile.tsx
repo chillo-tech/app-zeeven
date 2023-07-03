@@ -48,7 +48,7 @@ function CsvFile({display, setContacts}: any) {
 			<p className="flex items-center justify-end py-3">
 				<button
 					onClick={() => display("OPTIONS")}
-					className="relative text-blue-900 text-md font-semibold flex hover:bg-gray-50 rounded-lg items-center">
+					className="relative text-app-blue text-md font-semibold flex hover:bg-gray-50 rounded-lg items-center">
 					Changer
 				</button>
 			</p>

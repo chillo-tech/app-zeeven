@@ -4,11 +4,9 @@ import React, { useMemo ,useState} from 'react'
 function Metadata({entry}: any) {
   const [title, setTitle] = useState();
   const [description, setDescription] = useState();
-
   useMemo(() => {
-    
-    if(entry && entry.metadonnees && entry.metadonnees.title) {
-      setTitle(entry.metadonnees.title);
+    if(entry && entry.title) {
+      setTitle(entry.title);
     } else if(entry?.libelle) {
       setTitle(entry?.libelle);
     } else if(entry?.title) {
@@ -16,13 +14,14 @@ function Metadata({entry}: any) {
     }else if(entry?.nom) {
       setTitle(entry?.nom);
     }
-    if(entry && entry.metadonnees && entry.metadonnees.description) {
-      setDescription(entry.metadonnees.description.replace(/(<([^>]+)>)/ig, ''));
+    if(entry && entry.description) {
+      setDescription(entry.description.replace(/(<([^>]+)>)/ig, ''));
     } else if(entry?.description) {
       setDescription(entry?.description);
     }
 
   }, [entry])
+  
   return (
     <Head>
       <title>{title}</title>

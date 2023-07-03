@@ -62,7 +62,7 @@ function Contacts() {
     <form noValidate className="block space-y-6" onSubmit={handleSubmit(onSubmit)}>
       <div className="block">
         <label htmlFor="contact" className="w-full flex flex-col justify-between mb-2 text-md lg:text-lg">
-          <span className="text-blue-800 font-semibold">A qui transmettre votre message</span>
+          <span className="text-app-blue font-semibold">A qui transmettre votre message</span>
           <span className="text-gray-500 text-sm">Saisissez chaque contact sur une ligne. <br/>Séparez les informations par une virgule(Exemple: Mlle,Emmanuelle,BERNARD,...)</span>
         </label>
         <textarea rows={6} id="contact"

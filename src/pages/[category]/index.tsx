@@ -5,7 +5,7 @@ import SectionLinks from '@/components/shared/SectionLinks';
 import OpenedLayout from '@/containers/opened';
 import { ApplicationContext } from '@/context/ApplicationContext';
 import { fetchData, handleError } from '@/services';
-import { MENUFULL, getQrCodeUrl, slugify } from '@/utils';
+import { MENUFULL, getUrl, slugify } from '@/utils';
 import classNames from 'classnames';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
@@ -37,7 +37,7 @@ function Espaces({ index }: any) {
   return (
     <>
       <OpenedLayout>
-      <Metadata entry={{ title: 'ZEEEN | Nos Solutions' }} />
+      <Metadata entry={{ title: data?.label }} />
         {data ? (
           <>
             {data.pages.map(({ page_id }: any, index: number) => {
@@ -75,7 +75,7 @@ function Espaces({ index }: any) {
                         classes="flex flex-col py-3 text-[1.8rem] font-bold leading-8"
                       />
                       <RenderHtmlContent content={page_id.abstract} classes="flex flex-col mb-4" />
-                      {getQrCodeUrl(page_id.label, 'qr-code').indexOf('qr-code') > -1 ? (
+                      {getUrl({current: page_id.label, url: 'qr-code'}).indexOf('qr-code') > -1 ? (
                           <Link href="/qr-code" className={classNames('blue-link', 'underline')}>
                             Générez un QR CODE <BsArrowRight className='ml-4' />
                           </Link>

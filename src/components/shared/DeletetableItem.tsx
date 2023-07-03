@@ -7,7 +7,7 @@ type Props = {
 	children: any,
 	data?: any,
 	odd?: 0,
-	action?: (actionValue?: any) => null,
+	action?: (actionValue?: any) => any,
 	actionValue?: any,
 	classes?: string
 };

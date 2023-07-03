@@ -46,7 +46,7 @@ function CampainDetail({id}:{id: number}) {
 			}
 			{isSuccess && data ? (
 				<section className=''>
-					<h1 className='text-blue-900 font-semibold text-4xl mb-3'>{data.name}</h1>
+					<h1 className='text-app-blue font-semibold text-4xl mb-3'>{data.name}</h1>
           <Statistics id={id}/>
 					<Tabs.Group aria-label="Tabs with icons" style="fullWidth">
 						<Tabs.Item title="Contacts">

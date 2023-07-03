@@ -36,7 +36,7 @@ function Category() {
 				<div className="block">
 					<label htmlFor="name" className="w-full flex justify-between mb-2 font-light">
 						<span
-							className="text-blue-800 font-semibold text-lg">Pour quel évènement est votre message</span>
+							className="text-app-blue font-semibold text-lg">Pour quel évènement est votre message</span>
 					</label>
 					<div className="grid gap-4 md:grid-cols-2 md:gap-8 md:items-center md:justify-center">
 						{CATEGORIES.map((category) => (

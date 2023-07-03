@@ -41,6 +41,81 @@ revue.item.nom,
 revue.item.prenom
 `;
 const MENU =  `${base},${image},slug,display`;
+
+const PAGE_FIELDS =  `
+      id,
+      label,
+      abstract,
+      sublabel, 
+      articles.article_id.id,
+      articles.article_id.label,
+      articles.article_id.sublabel,
+      articles.article_id.abstract,
+      articles.article_id.description,
+      articles.article_id.images.directus_files_id.id,
+      articles.article_id.images.directus_files_id.title,
+      articles.article_id.images.directus_files_id.description,
+      articles.article_id.articles.related_article_id.id,
+      articles.article_id.articles.related_article_id.label,
+      articles.article_id.articles.related_article_id.sublabel,
+      articles.article_id.articles.related_article_id.abstract,
+      articles.article_id.articles.related_article_id.description,
+      articles.article_id.articles.related_article_id.images.directus_files_id.id,
+      articles.article_id.articles.related_article_id.images.directus_files_id.title,
+      articles.article_id.articles.related_article_id.images.directus_files_id.description,
+
+      pages.related_page_id.id,
+      pages.related_page_id.label,
+      pages.related_page_id.sublabel,
+      pages.related_page_id.prices.pricing_id.id,
+      pages.related_page_id.prices.pricing_id.unit,
+      pages.related_page_id.prices.pricing_id.frequence,
+      pages.related_page_id.prices.pricing_id.description,
+      pages.related_page_id.prices.pricing_id.popular,
+      pages.related_page_id.prices.pricing_id.label,
+      pages.related_page_id.prices.pricing_id.sublabel,
+      pages.related_page_id.prices.pricing_id.type,
+      pages.related_page_id.prices.pricing_id.value,
+      pages.related_page_id.prices.pricing_id.channel,
+      pages.related_page_id.prices.pricing_id.credits,
+      pages.related_page_id.prices.pricing_id.items.item_id.id,
+      pages.related_page_id.prices.pricing_id.items.item_id.label
+    `;
+const TARIF_FIELDS =  `
+      id,
+      label,
+      status,
+      sublabel, 
+      prices.pricing_id.id,
+      prices.pricing_id.unit,
+      prices.pricing_id.frequence,
+      prices.pricing_id.description,
+      prices.pricing_id.popular,
+      prices.pricing_id.label,
+      prices.pricing_id.sublabel,
+      prices.pricing_id.type,
+      prices.pricing_id.value,
+      prices.pricing_id.channel,
+      prices.pricing_id.credits,
+      prices.pricing_id.items.item_id.id,
+      prices.pricing_id.items.item_id.label,
+      pages.related_page_id.id,
+      pages.related_page_id.label,
+      pages.related_page_id.sublabel,
+      pages.related_page_id.prices.pricing_id.id,
+      pages.related_page_id.prices.pricing_id.unit,
+      pages.related_page_id.prices.pricing_id.frequence,
+      pages.related_page_id.prices.pricing_id.description,
+      pages.related_page_id.prices.pricing_id.popular,
+      pages.related_page_id.prices.pricing_id.label,
+      pages.related_page_id.prices.pricing_id.sublabel,
+      pages.related_page_id.prices.pricing_id.type,
+      pages.related_page_id.prices.pricing_id.value,
+      pages.related_page_id.prices.pricing_id.channel,
+      pages.related_page_id.prices.pricing_id.credits,
+      pages.related_page_id.prices.pricing_id.items.item_id.id,
+      pages.related_page_id.prices.pricing_id.items.item_id.label
+    `;
 const MENUFULL =  `
       id,
       label,
@@ -67,4 +142,4 @@ const ENTREPRISE =  `
 `;
 const PARTIAL_SPACES = `${base},${image},${prix},${type},slug`;
 
-export {MENU, MENUFULL, PARTIAL_SPACES, ENTREPRISE};
+export {MENU, MENUFULL, PARTIAL_SPACES, ENTREPRISE,PAGE_FIELDS, TARIF_FIELDS};

@@ -67,10 +67,10 @@ function ContactUs() {
         <meta name="description" content="Une question, un feedback, contactez nous" />
       </Head>
       <section className="mx-auto w-11/12 pb-20 pt-10 md:w-1/2">
-        <h1 className="mb-2 text-center text-4xl font-extrabold text-blue-900">
+        <h1 className="mb-2 text-center text-4xl font-extrabold text-app-blue">
           N&apos;hésitez pas écrivez nous
         </h1>
-        <h3 className="text-center text-lg text-blue-900">
+        <h3 className="text-center text-lg text-app-blue">
           Si vous avez des questions ou des commentaires sur ZEEVEN, veuillez nous contacter.
           <br />
           Remplissez le formulaire ci-dessous et nous vous répondrons dès que possible.
@@ -108,7 +108,7 @@ function ContactUs() {
                   htmlFor="name"
                   className="text-md mb-2 flex w-full flex-col justify-between font-light"
                 >
-                  <span className="text-blue-800">Votre nom</span>
+                  <span className="text-app-blue">Votre nom</span>
                 </label>
                 <input
                   type="text"
@@ -122,7 +122,7 @@ function ContactUs() {
               <div className="text-md mb-0">
                 <label
                   htmlFor="phone"
-                  className="text-md mb-2 flex w-full flex-col justify-between text-blue-800"
+                  className="text-md mb-2 flex w-full flex-col justify-between text-app-blue"
                 >
                   Votre téléphone
                 </label>
@@ -808,7 +808,7 @@ function ContactUs() {
                   htmlFor="email"
                   className="text-md mb-2 flex w-full flex-col justify-between font-light"
                 >
-                  <span className="text-blue-800">Votre email</span>
+                  <span className="text-app-blue">Votre email</span>
                 </label>
                 <input
                   type="email"
@@ -824,7 +824,7 @@ function ContactUs() {
                   htmlFor="message"
                   className="text-md mb-2 flex w-full flex-col justify-between font-light"
                 >
-                  <span className="text-blue-800">Votre message</span>
+                  <span className="text-app-blue">Votre message</span>
                 </label>
                 <textarea
                   placeholder="Nous sommes à votre écoute, dites nous tout."
@@ -837,7 +837,7 @@ function ContactUs() {
 
               <button
                 type="submit"
-                className="w-full rounded-md border-yellow-500 bg-yellow-500 px-4 py-2 text-blue-900"
+                className="w-full rounded-md border-app-yellow bg-app-yellow px-4 py-2 text-app-blue"
               >
                 <span>Envoyer</span>
               </button>

@@ -17,7 +17,7 @@ function Header() {
     <header className=" bg-white shadow-md">
       <div className="first">
         <div className="container mx-auto flex items-center justify-between border-b border-gray-200 py-4">
-          <Link href="/" className={`block text-2xl !font-extrabold text-blue-900 md:text-4xl`}>
+          <Link href="/" className={`block text-2xl !font-extrabold text-app-blue md:text-4xl`}>
             ZEEVEN
           </Link>
           <nav className='md:flex hidden'>
@@ -25,14 +25,14 @@ function Header() {
               <li>
                 <Link
                   href="/nouvelle-campagne"
-                  className={`flex items-center rounded-lg border-yellow-500 bg-yellow-400 px-3 py-1 text-blue-900 md:px-5`}
+                  className={`flex items-center rounded-lg border-app-yellow bg-app-yellow px-3 py-1 text-app-blue md:px-5`}
                 >
                   <TfiPencilAlt2 className="mr-2 hidden md:inline" /> Envoyer des messages
                 </Link>
               </li>
             </ul>
           </nav>
-          <ul className='md:flex flex hidden font-semibold text-blue-900'>
+          <ul className='md:flex flex hidden font-semibold text-app-blue'>
             <li>
               <button type="button" className="ml-2 block rounded-lg bg-white px-2 uppercase">
                 {session?.user?.name?.substring(0, 2)}
@@ -47,16 +47,16 @@ function Header() {
               <button
                 type="button"
                 onClick={() => signOut({ callbackUrl: '/' })}
-                className="ml-2 flex items-center rounded-lg border border-blue-900 px-5 text-blue-900"
+                className="ml-2 flex items-center rounded-lg border border-blue-900 px-5 text-app-blue"
               >
-                Déconnexion <RiLogoutBoxRLine className="ml-3  text-blue-900" />
+                Déconnexion <RiLogoutBoxRLine className="ml-3  text-app-blue" />
               </button>
             </li>
           </ul>
 
           <button
             onClick={toggle}
-            className="bg-app-yellow text-app-brown flex items-center justify-center rounded-md font-semibold text-blue-900 md:hidden"
+            className="bg-app-yellow text-app-brown flex items-center justify-center rounded-md font-semibold text-app-blue md:hidden"
           >
             <HiOutlineMenuAlt3 className="h-8 w-8" />
           </button>
@@ -84,7 +84,7 @@ function Header() {
       <nav
         className={`flex justify-between ${
           isOpen ? '' : 'hidden'
-        } fixed left-0 top-0 z-10 h-screen w-full flex-col items-center gap-4 bg-blue-900 pt-[20%] text-white`}
+        } fixed left-0 top-0 z-10 h-screen w-full flex-col items-center gap-4 bg-app-blue pt-[20%] text-white`}
       >
         <p>
           <button
@@ -98,7 +98,7 @@ function Header() {
           <li>
             <Link
               href="/nouvelle-campagne"
-              className={`flex items-center rounded-lg border-yellow-500 bg-yellow-400 px-3 py-1 text-blue-900 md:px-5`}
+              className={`flex items-center rounded-lg border-app-yellow bg-app-yellow px-3 py-1 text-app-blue md:px-5`}
             >
               <TfiPencilAlt2 className="mr-2 hidden md:inline" /> Envoyer des messages
             </Link>

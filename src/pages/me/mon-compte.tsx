@@ -3,7 +3,6 @@ import React from 'react'
 import ProtectedLayout from '@/containers/protected'
 import {useQuery} from 'react-query';
 import {fetchData} from '@/services';
-import {useRouter} from 'next/router';
 import Message from '@/components/Message';
 import ProfileEdit from '@/components/profile/ProfileEdit';
 

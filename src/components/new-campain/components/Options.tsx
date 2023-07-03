@@ -47,7 +47,7 @@ function Options() {
       <form noValidate className="block space-y-6" onSubmit={handleSubmit(onSubmit)}>
         <div className="block">
           <label htmlFor="channels" className="w-full flex justify-between mb-2 text-md lg:text-xl">
-            <span className="text-blue-800 font-semibold">Sur quel canal voulez vous envoyer votre message</span>
+            <span className="text-app-blue font-semibold">Sur quel canal voulez vous envoyer votre message</span>
           </label>
           <div className="grid md:grid-cols-3 gap-4 md:items-center md:justify-center" aria-labelledby="channels">
             {options.map((option) => (

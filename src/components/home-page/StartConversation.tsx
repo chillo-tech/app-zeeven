@@ -9,7 +9,7 @@ function StartConversation() {
     <section className='clear-both py-8 bg-gray-50'>
       <div className="container grid md:grid-cols-3 items-center">
         <div className="description py-10 col-span-2">
-          <span className='text-md font-light text-blue-900'>Commencez maintenant</span>
+          <span className='text-md font-light text-app-blue'>Commencez maintenant</span>
           <h2 className='flex flex-col font-bold text-5xl'>
             <span className='mb-2'>Entamez vos échanges</span>
             <span>avec ZEEVEN</span>

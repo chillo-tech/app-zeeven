@@ -1,4 +1,7 @@
 export const getFormattedDate = (entry: Date) => {
+  if (typeof entry === 'string') {
+    entry = new Date(entry)
+  }
 	const year = entry.getFullYear();
 	const month = `0${entry.getMonth() + 1}`.slice(-2);
 	const day = `0${entry.getDate()}`.slice(-2);
@@ -36,6 +39,9 @@ export const getDayAndMonthLabel = (entry: Date) => {
 	const months = ["Jan.", "Fev.", "Mars", "Avr.", "MaI", "Juin",
 		"Jul.", "Août", "Sep.", "Oct.", "Nov.", "Dec."
 	];
+  if (typeof entry === 'string') {
+    entry = new Date(entry)
+  }
 	return [days[entry.getDay()], months[entry.getMonth()]];
 }
 
@@ -49,3 +55,37 @@ export const getDisplayedDate = (entry: string = "") => {
 	return `${dayOfWeekLabel}, ${dayOfDate} ${monthLabel}`;
 
 };
+
+const getFormattedNumber = (entry: number) => {
+  return entry > 9 ? entry : `0${entry}`
+}
+export const getHumanDate = (entry: Date) => {
+	if (entry === null) {
+		return entry;
+	}
+
+  if (typeof entry === 'string') {
+    entry = new Date(entry)
+  }
+
+	const [dayOfDate, month, year] = getFormattedDate(entry).split('/');
+	const [dayOfWeekLabel, monthLabel] = getDayAndMonthLabel(entry);
+	return `${dayOfWeekLabel} ${dayOfDate} ${monthLabel} ${getFormattedNumber(entry.getHours())}:${getFormattedNumber(entry.getMinutes())}`;
+
+};
+
+export const tomorrow = () => {
+  const now = new Date();
+  now.setDate(now.getDate() + 1);
+  return
+}
+
+export const getStringAsDate = (entry: any) => {
+  if (entry === null) {
+		return entry;
+	}
+  if (typeof entry === 'string') {
+    entry = new Date(entry);
+  }
+  return entry;
+}

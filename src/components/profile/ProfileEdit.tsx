@@ -170,7 +170,7 @@ const ProfileEdit = ({endpoint, redirectUrl, data, method, buttonLabel = 'Enregi
 							</div>
 							<div className="mb-0 text-md mb-3">
 								<label htmlFor="phone"
-									   className="text-blue-800 w-full flex flex-col justify-between mb-2 text-md">Votre
+									   className="text-app-blue w-full flex flex-col justify-between mb-2 text-md">Votre
 									téléphone</label>
 								<div className="mt-1 flex flex-col md:flex-row">
 									<select {...register("phoneIndex")}

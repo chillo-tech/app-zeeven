@@ -11,8 +11,6 @@ type FormValues = {
 	messages: {
 		text: string,
 		date?: string,
-		time?: string,
-		timezone?: string,
 		informations?: { [key: string]: any },
 		ordre: number,
 		isSent?: boolean
@@ -29,7 +27,7 @@ function Messages() {
 	const [lastVariable, setLastVariable] = useState("");
 	const context = useContext(NewCampainContext);
 	const {
-		state: {stepIndex, campain: {messages = [{text: '', date: '', time: '', ordre: 1}]}},
+		state: {stepIndex, campain: {messages = [{text: '', ordre: 1}]}},
 		updateCampain,
 		previousStep
 	} = context;
@@ -95,7 +93,7 @@ function Messages() {
 						<div key={`message-${field.id}`}>
 							<label htmlFor="message"
 								   className="w-full flex flex-col justify-between mb-2 font-light">
-								<span className='text-blue-800 font-semibold'>Votre message</span>
+								<span className='text-app-blue font-semibold'>Votre message</span>
 								<span className="text-gray-500 text-sm">Vous pourrez définir la valeur des informations dans la suite</span>
 							</label>
 							<textarea rows={6} id="message"
@@ -152,13 +150,13 @@ function Messages() {
               {/**
 							<h2 className="w-full flex flex-col justify-between my-2 font-light">
 								<span
-									className='text-blue-800 font-semibold'>Quand voulez vous envoyer les messages</span>
+									className='text-app-blue font-semibold'>Quand voulez vous envoyer les messages</span>
 							</h2>
 							<div className="grid md:grid-cols-2 gap-4">
 								<div className="block">
 									<label htmlFor="date"
 										   className="w-full flex flex-col justify-between mb-2 font-light">
-										<span className='text-blue-800 font-semibold'>Date</span>
+										<span className='text-app-blue font-semibold'>Date</span>
 									</label>
 									<input id="date" type="date" min={getInputFormattedDate(new Date())}
 										   className="w-full border-gray-300 rounded-lg shadow-sm focus:border-indigo-500 focus:ring-indigo-5000 py-3"
@@ -172,7 +170,7 @@ function Messages() {
 								<div className="block">
 									<label htmlFor="time"
 										   className="w-full flex flex-col justify-between mb-2 font-light">
-										<span className='text-blue-800 font-semibold'>Heure</span>
+										<span className='text-app-blue font-semibold'>Heure</span>
 									</label>
 									<input type="time" id="time"
 										   className="w-full border-gray-300 rounded-lg shadow-sm focus:border-indigo-500 focus:ring-indigo-5000 py-3"

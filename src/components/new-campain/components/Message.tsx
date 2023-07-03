@@ -71,7 +71,7 @@ function Message() {
 					<div className="block">
 						<label htmlFor="message"
 							   className="w-full flex flex-col justify-between mb-2 text-md font-light">
-							<span className='text-blue-800 font-semibold'>Votre message</span>
+							<span className='text-app-blue font-semibold'>Votre message</span>
 							<span className="text-gray-500 text-sm">Vous pourrez définir la valeur des informations dans la suite</span>
 						</label>
 						<textarea rows={6} id="message"
