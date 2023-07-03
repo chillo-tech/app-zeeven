@@ -94,7 +94,7 @@ function QRCodeLink({ type,handleMenu }: any) {
       ) : null}
       {mutation.isIdle ? (
         <form noValidate className="block space-y-6" onSubmit={handleSubmit(onSubmit)}>
-          <div className="block py-3">
+          <div className="block">
             <input
               type="text"
               id="text"

@@ -104,7 +104,7 @@ function QRCodeVCARD({ type, handleMenu }: any) {
       {isSuccess ? (
         <div className="container mx-auto mb-10 overflow-hidden rounded-lg md:w-2/3">
           <div className="grid md:grid-cols-3">
-            <div className="md:col-span-2 px-4">
+            <div className="px-4 md:col-span-2">
               <Message
                 type="success"
                 firstMessage="Votre QR CODE a bien été généré"
@@ -124,7 +124,7 @@ function QRCodeVCARD({ type, handleMenu }: any) {
       ) : null}
       {mutation.isIdle ? (
         <form noValidate className="block space-y-6 py-6" onSubmit={handleSubmit(onSubmit)}>
-          <div className="mb-2 block flex items-center">
+          <div className="mb-2 block flex flex-col md:flex-row w-full md:items-center">
             <label htmlFor="name" className="input-label w-36 flex-none">
               Civilité
             </label>
@@ -139,12 +139,12 @@ function QRCodeVCARD({ type, handleMenu }: any) {
               <p className="text-red-500">{errors?.data?.civility?.message}</p>
             </div>
           </div>
-          <div className="mb-2 block flex items-center">
+          <div className="mb-2 block flex flex-col md:flex-row w-full md:items-center">
             <label htmlFor="name" className="input-label w-36 flex-none">
               Nom
             </label>
             <div className="grow" aria-labelledby="name">
-              <div className="flex gap-3">
+              <div className="flex gap-3 flex-col md:flex-row w-full">
                 <input
                   type="text"
                   id="firstName"
@@ -164,7 +164,7 @@ function QRCodeVCARD({ type, handleMenu }: any) {
               <p className="text-red-500">{errors?.data?.lastName?.message}</p>
             </div>
           </div>
-          <div className="mb-2 block flex">
+          <div className="mb-2 block flex flex-col md:flex-row w-full ">
             <label htmlFor="numeros" className="input-label w-36 flex-none">
               Numéros
             </label>
@@ -176,7 +176,7 @@ function QRCodeVCARD({ type, handleMenu }: any) {
                 className="input-form"
                 {...register('data.mobile')}
               />
-              <div className="mt-3 flex gap-3">
+              <div className="mt-3 flex flex-col md:flex-row w-full gap-2">
                 <input
                   type="text"
                   id="phone"
@@ -197,7 +197,7 @@ function QRCodeVCARD({ type, handleMenu }: any) {
               <p className="text-red-500">{errors?.data?.mobile?.message}</p>
             </div>
           </div>
-          <div className="mb-2 block flex items-center">
+          <div className="mb-2 block flex flex-col md:flex-row w-full md:items-center">
             <label htmlFor="email" className="input-label w-36 flex-none">
               Email
             </label>
@@ -212,12 +212,12 @@ function QRCodeVCARD({ type, handleMenu }: any) {
               <p className="text-red-500">{errors?.data?.email?.message}</p>
             </div>
           </div>
-          <div className="mb-2 block flex items-center">
+          <div className="mb-2 block flex flex-col md:flex-row w-full md:items-center">
             <label htmlFor="name" className="input-label w-36 flex-none">
               Emploi
             </label>
-            <div className="grow" aria-labelledby="name">
-              <div className="flex gap-3">
+            <div className="grow mt-3 md:flex sm:flex-col gap-2 md:gap-0" aria-labelledby="name">
+              <div className="flex flex-col md:flex-row gap-3">
                 <input
                   type="text"
                   id="company"
@@ -237,7 +237,7 @@ function QRCodeVCARD({ type, handleMenu }: any) {
               <p className="text-red-500">{errors?.data?.job?.message}</p>
             </div>
           </div>
-          <div className="mb-2 block flex">
+          <div className="mb-2 block flex flex-col md:flex-row">
             <label htmlFor="street" className="input-label w-36 flex-none">
               Adresse
             </label>
@@ -249,7 +249,7 @@ function QRCodeVCARD({ type, handleMenu }: any) {
                 className="input-form"
                 {...register('data.street')}
               />
-              <div className="mt-3 flex gap-3">
+              <div className="mt-3 flex flex-col md:flex-row gap-3">
                 <input
                   type="number"
                   id="zip"
@@ -268,7 +268,7 @@ function QRCodeVCARD({ type, handleMenu }: any) {
               <p className="text-red-500">{errors?.data?.street?.message}</p>
             </div>
           </div>
-          <div className="mb-2 block flex items-center">
+          <div className="mb-2 block flex flex-col md:flex-row w-full md:items-center">
             <label htmlFor="state" className="input-label w-36 flex-none">
               Etat/région
             </label>
@@ -283,7 +283,7 @@ function QRCodeVCARD({ type, handleMenu }: any) {
               <p className="text-red-500">{errors?.data?.state?.message}</p>
             </div>
           </div>
-          <div className="mb-2 block flex items-center">
+          <div className="mb-2 block flex flex-col md:flex-row w-full md:items-center">
             <label htmlFor="country" className="input-label w-36 flex-none">
               Pays
             </label>
@@ -298,7 +298,7 @@ function QRCodeVCARD({ type, handleMenu }: any) {
               <p className="text-red-500">{errors?.data?.country?.message}</p>
             </div>
           </div>
-          <div className="mb-2 block flex items-center">
+          <div className="mb-2 block flex flex-col md:flex-row w-full md:items-center">
             <label htmlFor="website" className="input-label w-36 flex-none">
               Site WEB
             </label>
@@ -314,8 +314,8 @@ function QRCodeVCARD({ type, handleMenu }: any) {
             </div>
           </div>
           <div className="flex justify-end">
-            <button type="submit" className="yellow-button">
-              <span>Générer le QR code</span>
+            <button type="submit" className="yellow-button !block w-full !text-center">
+              Générer le QR code
             </button>
           </div>
         </form>

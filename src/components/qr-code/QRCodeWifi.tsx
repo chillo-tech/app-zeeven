@@ -128,7 +128,7 @@ function QRCodeWifi({ type, handleMenu }: any) {
               </Switch>
             </div>
           </Switch.Group>
-          <div className="mb-2 block flex items-center">
+          <div className="mb-2 block flex flex-col md:flex-row md:items-center">
             <label htmlFor="name" className="input-label w-36 flex-none">
               Nom
             </label>
@@ -143,7 +143,7 @@ function QRCodeWifi({ type, handleMenu }: any) {
               <p className="text-red-500">{errors?.data?.name?.message}</p>
             </div>
           </div>
-          <div className="mb-2 block flex items-center">
+          <div className="mb-2 block flex flex-col  md:flex-row md:items-center">
             <label htmlFor="password" className="input-label w-36 flex-none">
               Mot de passe
             </label>
@@ -158,18 +158,18 @@ function QRCodeWifi({ type, handleMenu }: any) {
               <p className="text-red-500">{errors?.data?.password?.message}</p>
             </div>
           </div>
-          <div className="mb-2 block flex items-center">
+          <div className="mb-2 block flex flex-col md:flex-row md:items-center">
             <label htmlFor="Encodage" className="input-label w-36 flex-none">
               Encodage
             </label>
-            <div className="mx-auto flex w-full" aria-labelledby="Encodage">
+            <div className="md:mx-auto md:flex md:w-full" aria-labelledby="Encodage">
               <RadioGroup
                 value={encodage}
                 onChange={handleEncodage}
                 name="encodage"
                 defaultValue={''}
               >
-                <div className="flex w-full gap-2 rounded-md bg-white">
+                <div className="flex flex-col md:flex-row w-full gap-2 rounded-md bg-white">
                   {WIFI_ENCODAGE.map(({ label, value }: { label: string; value: string }) => (
                     <RadioGroup.Option
                       key={`encodage-${slugify(label)}`}
@@ -180,7 +180,7 @@ function QRCodeWifi({ type, handleMenu }: any) {
                           ? 'border-indigo-200 bg-app-blue text-white'
                           : 'border-blue-900 bg-white text-app-blue'
                       }
-                      justitfy-center relative flex cursor-pointer items-center rounded-lg border px-6 py-2
+                      justitfy-center relative md:flex cursor-pointer md:items-center rounded-lg border px-6 py-2
                     `}
                     >
                       {label}
@@ -191,9 +191,9 @@ function QRCodeWifi({ type, handleMenu }: any) {
               <p className="text-red-500">{errors?.data?.encodage?.message}</p>
             </div>
           </div>
-          <div className="flex">
-            <button type="submit" className="yellow-button">
-              <span>Générer le QR code</span>
+          <div className="md:flex">
+            <button type="submit" className="yellow-button !block w-full !text-center">
+              Générer le QR code
             </button>
           </div>
         </form>

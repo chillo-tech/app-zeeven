@@ -6,7 +6,7 @@ import ImageDisplay from '../image-display'
 
 function StartConversation() {
   return (
-    <section className='clear-both py-8 bg-gray-50'>
+    <section className='clear-both py-8 bg-gray-50 px-4 md:px-0'>
       <div className="container grid md:grid-cols-3 items-center">
         <div className="description py-10 col-span-2">
           <span className='text-md font-light text-app-blue'>Commencez maintenant</span>
