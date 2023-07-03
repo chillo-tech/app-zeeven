@@ -201,7 +201,7 @@ function Variables() {
         </form>
       </div>
       <div className="p-4 md:p-5">
-        <Preview text={messages[0].text} variables={updatedVariables} contacts={guests} />
+        <Preview text={messages[0].text} variables={updatedVariables} guests={guests} />
       </div>
     </section>
   );
