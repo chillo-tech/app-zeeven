@@ -25,6 +25,7 @@ function Metadata({entry}: any) {
   return (
     <Head>
       <title>{title}</title>
+      <meta name="referrer" content="origin" />
       <meta name="title" content={title} />
       <meta name="description" content={description} />
       <link rel="icon" href="/favicon.ico" />
