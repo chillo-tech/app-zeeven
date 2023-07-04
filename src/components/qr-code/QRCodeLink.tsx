@@ -86,7 +86,7 @@ function QRCodeLink({ type,handleMenu }: any) {
             <ImageDisplay
               base64={true}
               image={{ path: data,  title: 'zeeven qr code'  }}
-              wrapperClasses="relative w-full md:h-full h-70"
+              wrapperClasses="relative w-full md:h-full h-72"
               imageClasses="object-contain"
             />
           </div>
