@@ -1,7 +1,4 @@
 on:
-  push:
-    branches:
-      - feature/*
   workflow_dispatch:
 
 env:
@@ -19,11 +16,10 @@ jobs:
     - name: Create folder
       uses: appleboy/ssh-action@master
       with:
-        host: ${{ secrets.RECETTE_APPLICATIONS_HOST }}
-        port: ${{ secrets.RECETTE_APPLICATIONS_PORT }}
-        username: ${{ secrets.RECETTE_APPLICATIONS_USERNAME }}
-        password: ${{ secrets.RECETTE_APPLICATIONS_PASSWPRD }}
-        key: ${{ secrets.RECETTE_APPLICATIONS_SSH_PRIVATE_KEY }}
+        host: ${{ secrets.PROD_APPLICATIONS_HOST }}
+        port: ${{ secrets.PROD_APPLICATIONS_PORT }}
+        username: ${{ secrets.PROD_APPLICATIONS_USERNAME }}
+        key: ${{ secrets.PROD_APPLICATIONS_SSH_PRIVATE_KEY }}
         script: |
           sudo mkdir -p /opt/applications/zeeven/app-zeeven
           sudo chmod ugo+rwx /opt/applications/zeeven/app-zeeven
@@ -38,11 +34,10 @@ jobs:
         name: copy file via ssh password
         uses: appleboy/scp-action@master
         with:
-          host: ${{ secrets.RECETTE_APPLICATIONS_HOST }}
-          port: ${{ secrets.RECETTE_APPLICATIONS_PORT }}
-          username: ${{ secrets.RECETTE_APPLICATIONS_USERNAME }}
-          password: ${{ secrets.RECETTE_APPLICATIONS_PASSWPRD }}
-          key: ${{ secrets.RECETTE_APPLICATIONS_SSH_PRIVATE_KEY }}
+          host: ${{ secrets.PROD_APPLICATIONS_HOST }}
+          port: ${{ secrets.PROD_APPLICATIONS_PORT }}
+          username: ${{ secrets.PROD_APPLICATIONS_USERNAME }}
+          key: ${{ secrets.PROD_APPLICATIONS_SSH_PRIVATE_KEY }}
           source: "docker-compose.yml"
           target: "/opt/applications/zeeven/app-zeeven"
 
@@ -79,11 +74,10 @@ jobs:
     - name: Run container
       uses: appleboy/ssh-action@master
       with:
-        host: ${{ secrets.RECETTE_APPLICATIONS_HOST }}
-        port: ${{ secrets.RECETTE_APPLICATIONS_PORT }}
-        username: ${{ secrets.RECETTE_APPLICATIONS_USERNAME }}
-        password: ${{ secrets.RECETTE_APPLICATIONS_PASSWPRD }}
-        key: ${{ secrets.RECETTE_APPLICATIONS_SSH_PRIVATE_KEY }}
+        host: ${{ secrets.PROD_APPLICATIONS_HOST }}
+        port: ${{ secrets.PROD_APPLICATIONS_PORT }}
+        username: ${{ secrets.PROD_APPLICATIONS_USERNAME }}
+        key: ${{ secrets.PROD_APPLICATIONS_SSH_PRIVATE_KEY }}
         script: |
           docker compose -f /opt/applications/zeeven/app-zeeven/docker-compose.yml stop
           docker compose -f /opt/applications/zeeven/app-zeeven/docker-compose.yml rm -f
