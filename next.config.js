@@ -5,6 +5,7 @@ const nextConfig = {
   output: 'standalone',
   generateEtags: false,
   env: {
+    NEXT_PUBLIC_GOOGLE_ANALYTICS: process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS,
     BACKOFFICE_API: process.env.BACKOFFICE_API,
     BACKOFFICE_API_TOKEN: process.env.BACKOFFICE_API_TOKEN,
     APPLICATION_URL: process.env.APPLICATION_URL,

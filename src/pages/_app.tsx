@@ -1,30 +1,51 @@
-import '../styles/globals.css'
-import type { AppProps } from 'next/app'
-import { SessionProvider } from "next-auth/react"
-import ApplicationContextWrapper from '@/context/ApplicationContext'
-import { QueryClient, QueryClientProvider } from 'react-query'
-import { ReactQueryDevtools } from 'react-query/devtools'
+import ApplicationContextWrapper from '@/context/ApplicationContext';
+import { SessionProvider } from 'next-auth/react';
+import type { AppProps } from 'next/app';
+import Script from 'next/script';
+import { QueryClient, QueryClientProvider } from 'react-query';
+import { ReactQueryDevtools } from 'react-query/devtools';
+import '../styles/globals.css';
 
 const configs = {
   defaultOptions: {
     queries: {
       staleTime: 5,
       refetchOnWindowFocus: false,
-      refetchOnMount: false
+      refetchOnMount: false,
     },
   },
-}
-export default function App({ Component, pageProps: { dehydratedState, session, ...pageProps }}: AppProps) {
+};
+export default function App({
+  Component,
+  pageProps: { dehydratedState, session, ...pageProps },
+}: AppProps) {
   const queryClient = new QueryClient(configs);
 
   return (
-    <SessionProvider session={session}>
-      <ApplicationContextWrapper>
-        <QueryClientProvider client={queryClient}>
-          <Component {...pageProps} />
-          <ReactQueryDevtools initialIsOpen={false} />
-        </QueryClientProvider>
-      </ApplicationContextWrapper>
-    </SessionProvider>
-  )
+    <>
+      <Script
+        strategy="lazyOnload"
+        src={`https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS}`}
+      />
+
+      <Script strategy="lazyOnload" id="google-analytics">
+        {`
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', '${process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS}', {
+        page_path: window.location.pathname,
+        });
+    `}
+      </Script>
+      <SessionProvider session={session}>
+        <ApplicationContextWrapper>
+          <QueryClientProvider client={queryClient}>
+            <Component {...pageProps} />
+            <ReactQueryDevtools initialIsOpen={false} />
+          </QueryClientProvider>
+        </ApplicationContextWrapper>
+      </SessionProvider>
+    </>
+  );
 }
