@@ -83,6 +83,7 @@ jobs:
         username: ${{ secrets.PROD_APPLICATIONS_USERNAME }}
         key: ${{ secrets.PROD_APPLICATIONS_SSH_PRIVATE_KEY }}
         script: |
+          echo NEXT_PUBLIC_GOOGLE_MAP_API_KEY=${{ secrets.NEXT_PUBLIC_GOOGLE_MAP_API_KEY }} >> /opt/applications/zeeven/ms-zeeven/.env
           docker compose -f /opt/applications/zeeven/app-zeeven/docker-compose.yml stop
           docker compose -f /opt/applications/zeeven/app-zeeven/docker-compose.yml rm -f
           docker rmi simachille/app-zeeven:latest
