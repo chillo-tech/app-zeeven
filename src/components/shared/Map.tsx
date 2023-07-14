@@ -15,6 +15,8 @@ const Map = ({ data = [] }: { data: any[] }) => {
     return <p>Loading...</p>;
   }
 
+  console.log(process.env.NEXT_PUBLIC_GOOGLE_MAP_API_KEY)
+
   return (
     <>
       {loadError ? (
