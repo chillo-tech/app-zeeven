@@ -12,16 +12,9 @@ services:
     extra_hosts:
       - "host.docker.internal:host-gateway"
     environment:
-      - NEXT_PUBLIC_GOOGLE_MAP_API_KEY=NEXT_PUBLIC_GOOGLE_MAP_API_KEY
-      - APPLICATION_URL=APPLICATION_URL
-      - NEXTAUTH_URL=NEXTAUTH_URL
-    labels:
-      - "traefik.enable=true"
-      - "traefik.http.routers.app-zeeven.rule=Headers(`X-Host`, `app.zeeven.chillo.fr`)"
-      - "traefik.docker.network=applications-network"
-      - "traefik.http.middlewares.serviceheaders.headers.accesscontrolalloworiginlist=*" 
-      - "traefik.http.routers.service.middlewares=serviceheaders"
-
+      - NEXT_PUBLIC_GOOGLE_MAP_API_KEY=${NEXT_PUBLIC_GOOGLE_MAP_API_KEY}
+      - APPLICATION_URL=${APPLICATION_URL}
+      - NEXTAUTH_URL=${NEXTAUTH_URL}
     networks:
       - applications-network
 networks:
