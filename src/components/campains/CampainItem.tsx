@@ -3,7 +3,8 @@ import React from 'react'
 import {BsWhatsapp} from 'react-icons/bs';
 import {CiMail} from 'react-icons/ci';
 import {FaSms} from 'react-icons/fa';
-import {categoryFromLabel, getDisplayedDate, statusFromLabel} from '@/utils';
+import {categoryFromLabel, getDisplayedDate, slugify, statusFromLabel} from '@/utils';
+import Debug from '../shared/Debug';
 
 function CampainItem({item, index}: { item: any, index: number }) {
 	return (
@@ -12,7 +13,10 @@ function CampainItem({item, index}: { item: any, index: number }) {
       <p className='md:justify-start py-2 md:py-3 md:px-5 flex justify-between'>
         <span className='md:hidden'>Date</span>
         <span className='text-left'>
-          {getDisplayedDate(item.messages[0].date)}
+          {
+            item.messages[0].schedules.map((schedule: any, key: number) => <p key={`${key}-${slugify(schedule.date)}`}>{getDisplayedDate(schedule.date)}</p>)
+          }
+         
         </span>
       </p>
       <p className='md:justify-center py-2 md:py-3 md:px-5 flex justify-between'>

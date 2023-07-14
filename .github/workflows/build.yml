@@ -1,4 +1,8 @@
 on:
+  push:
+    branches:
+      - feature/*
+      - develop
   workflow_dispatch:
 
 env:

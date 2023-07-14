@@ -1,5 +1,6 @@
 import classNames from 'classnames';
 import Link from 'next/link';
+import { AiOutlineArrowRight } from 'react-icons/ai';
 import { RxTriangleRight } from 'react-icons/rx';
 interface Params {
   link?: string;
@@ -9,7 +10,7 @@ interface Params {
   button?: boolean;
   action?: any;
 }
-function OutlineLink({ link, label, button, action, classes, download }: Params) {
+function YellowLink({ link, label, button, action, classes, download }: Params) {
 
   return (
     <>
@@ -17,31 +18,31 @@ function OutlineLink({ link, label, button, action, classes, download }: Params)
         <button
           onClick={action}
           className={classNames(
-            'inline-block flex items-center rounded-lg border border-app-blue px-3 py-2 text-app-blue',
+            'yellow-button',
             classes
           )}
         >
+          {label}{' '}
           <span className="mr-2 rounded-full bg-app-yellow p-0">
-            <RxTriangleRight className="!m-0 text-3xl text-app-blue" />
-          </span>{' '}
-          {label}
+            <RxTriangleRight className="text-md ml-2 text-app-blue" />
+          </span>
         </button>
       ) : (
         <Link
           href={link || ''}
           className={classNames(
-            'inline-block flex items-center rounded-lg border border-app-blue px-3 py-2 text-app-blue',
+            'yellow-button',
             classes
           )}
         >
+          {label}{' '}
           <span className="mr-2 rounded-full bg-app-yellow p-0">
-            <RxTriangleRight className="!m-0 text-3xl text-app-blue" />
-          </span>{' '}
-          {label}
+            <AiOutlineArrowRight className="text-md ml-2 text-app-blue" />
+          </span>
         </Link>
       )}
     </>
   );
 }
 
-export default OutlineLink;
+export default YellowLink;

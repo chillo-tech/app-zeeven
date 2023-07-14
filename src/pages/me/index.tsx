@@ -11,11 +11,11 @@ import List from '@/components/search/List';
 function Compte() {
 	const [isError, setIsError] = useState(false);
 	const {isSuccess, isLoading, data: {data} = {}} = useQuery<any>({
-		queryKey: ["user-campainnnns"],
+		queryKey: ["user-campains"],
 		queryFn: () =>  fetchData({
       path: '/api/backend/event',
     }),
-    onError: (error: any) => {setIsError(true), handleError(error)},
+    onError: (error: any) => {handleError(error);setIsError(true)},
 	});
 	const router = useRouter();
 	return (

@@ -26,14 +26,14 @@ function DeletetableItem({children, classes, action, actionValue}: Props) {
 				<div className={classNames('grow')}>
 					{children}
 				</div>
-				<button type='button' className={classNames('flex-none px-6 py-4', {'bg-slate-200': deleteBlock})}
+				<button type='button' className={classNames('flex-none px-6 py-4', {'bg-slate-300': deleteBlock})}
 						onClick={() => toggleDeleteBlock(!deleteBlock)}>
 					<RiDeleteBin6Line className='text-red-600 text-lg'/>
 				</button>
 			</div>
 			{
 				deleteBlock ? (
-					<div className={classNames("flex w-full justify-end bg-slate-200 items-center py-3 px-2")}>
+					<div className={classNames("flex w-full justify-end bg-slate-300 items-center py-3 px-2")}>
 						<span className="mr-2">Confirmez vous cette action ? </span>
 						<button type='button' className={formStyles.outline__button__black}
 								onClick={() => toggleDeleteBlock(!deleteBlock)}>

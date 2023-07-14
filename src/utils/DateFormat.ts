@@ -33,12 +33,10 @@ const getWeekNumber = (entry: Date) => {
 	// Return array of year and week number
 
 }
-
+export const days = ['Dim.', 'Lun.', 'Mar.', 'Mer.', 'Jeu.', 'Ven.', 'Sam.'];
+export const months = ["Jan.", "Fev.", "Mars", "Avr.", "MaI", "Juin", "Jul.", "Août", "Sep.", "Oct.", "Nov.", "Dec."];
 export const getDayAndMonthLabel = (entry: Date) => {
-	const days = ['Dim.', 'Lun.', 'Mar.', 'Mer.', 'Jeu.', 'Ven.', 'Sam.'];
-	const months = ["Jan.", "Fev.", "Mars", "Avr.", "MaI", "Juin",
-		"Jul.", "Août", "Sep.", "Oct.", "Nov.", "Dec."
-	];
+
   if (typeof entry === 'string') {
     entry = new Date(entry)
   }

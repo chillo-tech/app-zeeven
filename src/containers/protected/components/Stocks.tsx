@@ -1,6 +1,6 @@
 import ImageDisplay from '@/components/image-display';
 import Icon from '@/components/shared/Icon';
-import { fetchData, handleError } from '@/services';
+import { fetchData, handleError, search } from '@/services';
 import { Channel } from '@/types/data';
 import axios from 'axios';
 import { useState } from 'react';
@@ -11,10 +11,10 @@ function Stocks() {
   useQuery<any>({
     queryKey: ['stocks'],
     queryFn: () =>
-      axios.get(
+      search(
         '/api/backend/stocks/statistics',
       ),
-    onError: handleError,
+      onError: (error: any) => {handleError(error)},
     onSuccess: (data) => {
       setstocks(data.data);
     },
