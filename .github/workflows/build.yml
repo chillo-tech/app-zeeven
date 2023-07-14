@@ -69,7 +69,6 @@ jobs:
           context: .
           push: true
           tags: simachille/app-zeeven:latest
-  
   run-container:
     name: "Run container"
     runs-on: ubuntu-latest
