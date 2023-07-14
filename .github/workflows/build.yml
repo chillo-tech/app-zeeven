@@ -20,10 +20,10 @@ jobs:
     - name: Create folder
       uses: appleboy/ssh-action@master
       with:
-        host: ${{ secrets.PROD_APPLICATIONS_HOST }}
-        port: ${{ secrets.PROD_APPLICATIONS_PORT }}
-        username: ${{ secrets.PROD_APPLICATIONS_USERNAME }}
-        key: ${{ secrets.PROD_APPLICATIONS_SSH_PRIVATE_KEY }}
+        host: ${{ secrets.APPLICATIONS_HOST }}
+        port: ${{ secrets.APPLICATIONS_PORT }}
+        username: ${{ secrets.APPLICATIONS_USERNAME }}
+        key: ${{ secrets.APPLICATIONS_SSH_PRIVATE_KEY }}
         script: |
           sudo mkdir -p /opt/applications/zeeven/app-zeeven
           sudo chmod ugo+rwx /opt/applications/zeeven/app-zeeven
@@ -38,10 +38,10 @@ jobs:
         name: copy file via ssh password
         uses: appleboy/scp-action@master
         with:
-          host: ${{ secrets.PROD_APPLICATIONS_HOST }}
-          port: ${{ secrets.PROD_APPLICATIONS_PORT }}
-          username: ${{ secrets.PROD_APPLICATIONS_USERNAME }}
-          key: ${{ secrets.PROD_APPLICATIONS_SSH_PRIVATE_KEY }}
+          host: ${{ secrets.APPLICATIONS_HOST }}
+          port: ${{ secrets.APPLICATIONS_PORT }}
+          username: ${{ secrets.APPLICATIONS_USERNAME }}
+          key: ${{ secrets.APPLICATIONS_SSH_PRIVATE_KEY }}
           source: "docker-compose.yml"
           target: "/opt/applications/zeeven/app-zeeven"
 
@@ -77,10 +77,10 @@ jobs:
     - name: Run container
       uses: appleboy/ssh-action@master
       with:
-        host: ${{ secrets.PROD_APPLICATIONS_HOST }}
-        port: ${{ secrets.PROD_APPLICATIONS_PORT }}
-        username: ${{ secrets.PROD_APPLICATIONS_USERNAME }}
-        key: ${{ secrets.PROD_APPLICATIONS_SSH_PRIVATE_KEY }}
+        host: ${{ secrets.APPLICATIONS_HOST }}
+        port: ${{ secrets.APPLICATIONS_PORT }}
+        username: ${{ secrets.APPLICATIONS_USERNAME }}
+        key: ${{ secrets.APPLICATIONS_SSH_PRIVATE_KEY }}
         script: |
           echo NEXT_PUBLIC_GOOGLE_MAP_API_KEY=${{ secrets.NEXT_PUBLIC_GOOGLE_MAP_API_KEY }} >> /opt/applications/zeeven/app-zeeven/.env
           echo NEXTAUTH_URL=${{ secrets.NEXTAUTH_URL }} >> /opt/applications/zeeven/app-zeeven/.env
