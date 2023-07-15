@@ -55,6 +55,15 @@ export const getUrl = ({ current, url, pattern = 'qr-code' }: Params) => {
 export const formattedNumber = (value: string) => {
   return String(value).replace(/(.)(?=(\d{3})+$)/g, '$1 ');
 };
+
+export const downloadBase64File = (base64Data: string, contentType: string, fileName: string) => {
+  const linkSource = `data:${contentType};base64,${base64Data}`;
+  const downloadLink = document.createElement('a');
+  downloadLink.href = linkSource;
+  downloadLink.download = fileName;
+  downloadLink.click();
+};
+
 export const frequenceLabel = (frequence: string) => {
   switch (frequence) {
     case 'MONTH':

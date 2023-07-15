@@ -89,11 +89,17 @@ const ACCOUNT_CATEGORIESLINKS = [
   {
     label: 'QRCODE',
     url: '/me/qr-code',
+  }
+];
+const ACCOUNT_PAGES_LINKS = [
+  {
+    label: 'Tarifs',
+    url: '/tarifs',
   },
   {
     label: 'Mon compte',
     url: '/me/mon-compte',
-  },
+  }
 ];
 const DESCRIPTION = [
   {
@@ -235,4 +241,5 @@ export {
   isValidUrl,
   ACCOUNT_CATEGORIESLINKS,
   WIFI_ENCODAGE,
+  ACCOUNT_PAGES_LINKS
 };

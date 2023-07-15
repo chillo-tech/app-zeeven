@@ -10,28 +10,28 @@ function CampainItem({item, index}: { item: any, index: number }) {
 	return (
 		<div className={`grid md:grid-cols-5 md:items-center px-3 md:px-0 py-3 md:py-0 mb-2 md:mb-0 ${index % 2 === 1 ? 'bg-blue-50' : 'bg-white'}`}
 			 key={`${item.slug}-${index}`}>
-      <p className='md:justify-start py-2 md:py-3 md:px-5 flex justify-between'>
+      <div className='md:justify-start py-2 md:py-3 md:px-5 flex justify-between'>
         <span className='md:hidden'>Date</span>
-        <span className='text-left'>
+        <p className='text-left'>
           {
-            item.messages[0].schedules.map((schedule: any, key: number) => <p key={`${key}-${slugify(schedule.date)}`}>{getDisplayedDate(schedule.date)}</p>)
+            item.messages[0].schedules.map((schedule: any, key: number) => <span key={`${key}-${slugify(schedule.date)}`}>{getDisplayedDate(schedule.date)}</span>)
           }
          
-        </span>
-      </p>
-      <p className='md:justify-center py-2 md:py-3 md:px-5 flex justify-between'>
+        </p>
+      </div>
+      <div className='md:justify-center py-2 md:py-3 md:px-5 flex justify-between'>
         <span className='md:hidden'>Categorie</span>
         <span className='text-left'>
         {categoryFromLabel(item.category.label)}
         </span>
-      </p>
-      <p className='md:justify-center py-2 md:py-3 md:px-5 flex justify-between'>
+      </div>
+      <div className='md:justify-center py-2 md:py-3 md:px-5 flex justify-between'>
         <span className='md:hidden'>Contacts</span>
         <span className='text-left'>
          {item.guests ? item.guests.length : 0}
         </span>
-      </p>
-      <p className='md:justify-center py-2 md:py-3 md:px-5 flex justify-between'>
+      </div>
+      <div className='md:justify-center py-2 md:py-3 md:px-5 flex justify-between'>
         <span className='md:hidden'>Cannaux</span>
         <span className='text-left flex'>
             {item.channels.map((channelItem: any, channelIndex: number) => {
@@ -43,10 +43,10 @@ function CampainItem({item, index}: { item: any, index: number }) {
                                 key={`channelIndex-${channelIndex}`}/>;
           })}
         </span>
-      </p>
-      <p className='md:justify-center py-2 md:py-3 md:px-5 flex justify-end'>
+      </div>
+      <div className='md:justify-center py-2 md:py-3 md:px-5 flex justify-end'>
 			  <Link className="text-app-blue font-semibold text-center" href={`/me/message/${item.slug}`}>Afficher</Link>
-      </p>
+      </div>
         {
           /** 
             <span className='md:justify-center py-2 md:py-3 md:px-5'>Transmis</span>

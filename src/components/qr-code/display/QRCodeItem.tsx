@@ -1,23 +1,20 @@
 import ImageDisplay from '@/components/image-display';
 import OutlineLink from '@/components/shared/OutlineLink';
 import YellowLink from '@/components/shared/YellowLink';
-import { QR_CODES_TYPES, getDisplayedDate } from '@/utils';
+import { QR_CODES_TYPES, downloadBase64File, getDisplayedDate } from '@/utils';
 import classNames from 'classnames';
 
 function QRCodeItem({ entry, index, withDetail = true }: any) {
-  const downloadBase64File= (base64Data: string, contentType: string, fileName: string) =>{
-    const linkSource = `data:${contentType};base64,${base64Data}`;
-    const downloadLink = document.createElement("a");
-    downloadLink.href = linkSource;
-    downloadLink.download = fileName;
-    downloadLink.click();
-  }
+
   return (
     <>
       <article
-        className={classNames('md:grid text-center md:text-left items-center px-2 py-2 grid-cols-1  md:grid-cols-6 items-center', {
-          'bg-app-light-blue': index % 2 === 0,
-        })}
+        className={classNames(
+          'grid-cols-1 items-center items-center px-2 py-2 text-center md:grid  md:grid-cols-6 md:text-left',
+          {
+            'bg-app-light-blue': index % 2 === 0,
+          }
+        )}
       >
         <ImageDisplay
           base64={true}
@@ -42,13 +39,24 @@ function QRCodeItem({ entry, index, withDetail = true }: any) {
             <span className="col-span-2">{getDisplayedDate(entry.creation)}</span>
           </p>
         </div>
-        <h2 className="text-center text-6xl font-extrabold text-black py-2 md:py-0">
+        <h2 className="py-2 text-center text-6xl font-extrabold text-black md:py-0">
           {('0' + entry.scans).slice(-2)}
           <span className="text-sm font-normal">scans</span>
         </h2>
         <p>
-          <OutlineLink button={true} action={()=> downloadBase64File(entry.file, 'image/png', `${entry.publicId}.png`)} label="Télécharger" classes="w-full justify-center"/> 
-          {withDetail ? (<YellowLink label="Afficher" link={`/me/qr-code/${entry.id}`} classes="w-full justify-center mt-2"/>) : null }
+          {withDetail ? (
+            <YellowLink
+              label="Afficher"
+              link={`/me/qr-code/${entry.id}`}
+              classes="w-full justify-center mb-2"
+            />
+          ) : null}
+          <OutlineLink
+            button={true}
+            action={() => downloadBase64File(entry.file, 'image/png', `${entry.publicId}.png`)}
+            label="Télécharger"
+            classes="w-full justify-center"
+          />
         </p>
       </article>
     </>

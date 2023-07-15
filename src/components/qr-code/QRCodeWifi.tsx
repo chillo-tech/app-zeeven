@@ -9,6 +9,7 @@ import { useMutation } from 'react-query';
 import * as yup from 'yup';
 import Message from '../Message';
 import ImageDisplay from '../image-display';
+import QRCodeSuccessMessage from './QRCodeSuccessMessage';
 
 export type Message = {
   name: string;
@@ -88,25 +89,7 @@ function QRCodeWifi({ type, handleMenu }: any) {
         </div>
       ) : null}
       {isSuccess ? (
-        <div className="container mx-auto mb-10 overflow-hidden rounded-lg md:w-2/3">
-          <div className="grid md:grid-cols-2">
-              <Message
-                type="success"
-                firstMessage="Votre QR CODE a bien été généré"
-                secondMessage="Inscrivez vous pour recevoir des statistiques personnalisées"
-                action={() => router.push('/')}
-                actionLabel="Retourner à l'accueil"
-              />
-            <div>
-            <ImageDisplay
-              base64={true}
-              image={{ path: data, title: 'zeeven qr code' }}
-              wrapperClasses="relative w-full md:h-full h-52"
-              imageClasses="object-contain"
-            />
-            </div>
-          </div>
-        </div>
+        <QRCodeSuccessMessage data={data}/> 
       ) : null}
       {mutation.isIdle ? (
         <form noValidate className="block space-y-6 py-6" onSubmit={handleSubmit(onSubmit)}>
@@ -169,7 +152,7 @@ function QRCodeWifi({ type, handleMenu }: any) {
                 name="encodage"
                 defaultValue={''}
               >
-                <div className="flex flex-col md:flex-row w-full gap-2 rounded-md bg-white">
+                <div className="flex w-full flex-col gap-2 rounded-md bg-white md:flex-row">
                   {WIFI_ENCODAGE.map(({ label, value }: { label: string; value: string }) => (
                     <RadioGroup.Option
                       key={`encodage-${slugify(label)}`}
@@ -180,7 +163,7 @@ function QRCodeWifi({ type, handleMenu }: any) {
                           ? 'border-indigo-200 bg-app-blue text-white'
                           : 'border-blue-900 bg-white text-app-blue'
                       }
-                      justitfy-center relative md:flex cursor-pointer md:items-center rounded-lg border px-6 py-2
+                      justitfy-center relative cursor-pointer rounded-lg border px-6 py-2 md:flex md:items-center
                     `}
                     >
                       {label}

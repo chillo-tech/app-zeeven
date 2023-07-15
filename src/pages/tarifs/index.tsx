@@ -75,23 +75,23 @@ function Tarifs() {
                         <div
                           key={`tarifs-values-${related_page_id.id}-${pricing_id.id}`}
                           className={classNames(
+                            'text-center',
                             'border border-blue-200',
-                            'relative rounded-2xl rounded-xl bg-white p-8 shadow-lg',
-                            'ring-white ring-opacity-60 ring-offset-2 ring-offset-blue-400 focus:outline-none focus:ring-2'
+                            'relative rounded-2xl rounded-xl p-8',
+                            'ring-offset-blue-100 focus:outline-none focus:ring-2',
+                            {
+                              'text-white bg-app-blue shadow-lg' : pricing_id?.popular,
+                              'ring-white ring-opacity-60 ring-offset-2 bg-white text-gray-600' : !pricing_id?.popular 
+                            },
                           )}
                         >
-                          {pricing_id?.popular ? (
-                            <span className="absolute top-0 -translate-y-1/2 translate-x-3/4 rounded-full bg-app-blue px-8 py-1 text-sm font-semibold text-white">
-                              Populaire
-                            </span>
-                          ) : null}
-                          <h3 className="font-dark text-center text-2xl font-semibold uppercase text-gray-600">
+                          <h3 className="font-dark text-center text-2xl font-semibold uppercase">
                             {pricing_id?.label}
                           </h3>
-                          <p className="h-6 text-center text-sm text-gray-600  opacity-75">
+                          <p className="h-6 text-center text-sm opacity-75">
                             {pricing_id?.sublabel}
                           </p>
-                          <h2 className="mt-12 text-center text-5xl font-extrabold text-black">
+                          <h2 className="mt-12 text-center text-5xl font-extrabold">
                             {pricing_id?.value} {pricing_id?.unit}{' '}
                             {pricing_id?.frequence ? (
                               <span className="text-sm font-normal">/{frequenceLabel(pricing_id?.frequence)}</span>
@@ -99,7 +99,7 @@ function Tarifs() {
                           </h2>
                           <RenderHtmlContent
                             content={pricing_id?.description}
-                            classes="text-center text-md text-gray-600 opacity-75 mb-4"
+                            classes="text-center text-md opacity-75 mb-4"
                           />
 
                           <Link
@@ -109,15 +109,14 @@ function Tarifs() {
                             Choisir cette offre
                           </Link>
                           {pricing_id?.items && pricing_id?.items.length ? (
-                            <p className="mt-10 text-xl font-extrabold text-black">Inclus</p>
+                            <p className="mt-10 text-xl font-extrabold">Inclus</p>
                           ) : null}
                           <ul className="text-md mb-20">
                             {pricing_id?.items.map(({ item_id }: any) => (
                               <li
-                                className="flex items-center py-1"
+                                className="py-1"
                                 key={`tarifs-values-${related_page_id.id}-${pricing_id.id}-${item_id.id}`}
                               >
-                                <AiOutlineCheckCircle className="mr-2 text-app-blue" />
                                 {item_id?.label}
                               </li>
                             ))}

@@ -8,6 +8,7 @@ import { useForm } from 'react-hook-form';
 import { useMutation } from 'react-query';
 import Message from '../Message';
 import ImageDisplay from '../image-display';
+import QRCodeSuccessMessage from './QRCodeSuccessMessage';
 
 export type Message = {
   name: string;
@@ -72,25 +73,7 @@ function QRCodeLink({ type,handleMenu }: any) {
         </div>
       ) : null}
       {isSuccess ? (
-        <div className="container mx-auto mb-10 overflow-hidden rounded-lg md:w-2/3">
-          <div className="grid md:grid-cols-3">
-            <div className="md:col-span-2">
-              <Message
-                type="success"
-                firstMessage="Votre QR CODE a bien été généré"
-                secondMessage="Inscrivez vous pour recevoir des statistiques personnalisées"
-                action={() => router.push('/')}
-                actionLabel="Retourner à l'accueil"
-              />
-            </div>
-            <ImageDisplay
-              base64={true}
-              image={{ path: data,  title: 'zeeven qr code'  }}
-              wrapperClasses="relative w-full md:h-full h-72"
-              imageClasses="object-contain"
-            />
-          </div>
-        </div>
+        <QRCodeSuccessMessage data={data}/> 
       ) : null}
       {mutation.isIdle ? (
         <form noValidate className="block space-y-6" onSubmit={handleSubmit(onSubmit)}>

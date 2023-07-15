@@ -1,7 +1,7 @@
 import Message from '@/components/Message';
 import AreaChart from '@/components/shared/AreaChart';
-import Debug from '@/components/shared/Debug';
 import Map from '@/components/shared/Map';
+import PieClart from '@/components/shared/PieChart';
 import { handleError, search } from '@/services';
 import { capitalize } from '@/utils';
 import { useState } from 'react';
@@ -57,27 +57,32 @@ function QRcodeStatistics({ id }: { id: number }) {
             </div>
           </article>
           <div className="W-FULL mt-4 rounded-md bg-white p-6 text-center text-6xl font-extrabold text-black">
-            <AreaChart />
+            <AreaChart data={data} />
           </div>
           <article className="mt-6 grid gap-4 md:grid-cols-2">
-            <div className=" overflow-hidden rounded-md bg-white text-6xl font-extrabold text-black">
-              <Map data={data} />
-            </div>
-            <div className="rounded-md bg-white p-6 font-light text-black text-lg">
-              <h3 className='pb-2 mb-2 font-bold text-app-blue border-b border-app-blue text-xl'>Villes</h3>
-              {
-              Object.entries(data
-                .map((entry: any) => entry.city)
-                .reduce(function (acc: any, curr: string) {
-                  return acc[curr] ? ++acc[curr] : (acc[curr] = 1), acc;
-                }, {}))
-                .map(([key, value]) => (
-                  <p className="text-left flex mb-2" key={key}>
-                    <span className='font-bold w-28'>{capitalize(key)} :</span> {`${value}`}
-                  </p>
-                ))}
+            <div className="rounded-md bg-white p-6 text-lg font-light text-black">
+              <h3 className="mb-2 border-b border-app-blue pb-2 text-xl font-bold text-app-blue">
+                Villes
+              </h3>
+              {Object.entries(
+                data
+                  .map((entry: any) => entry.city)
+                  .reduce(function (acc: any, curr: string) {
+                    return acc[curr] ? ++acc[curr] : (acc[curr] = 1), acc;
+                  }, {})
+              ).map(([key, value]) => (
+                <p className="mb-2 flex text-left" key={key}>
+                  <span className="w-28 font-bold">{capitalize(key)} :</span> {`${value}`}
+                </p>
+              ))}
+            </div>{' '}
+            <div className=" overflow-hidden rounded-md bg-white p-4 font-extrabold text-black">
+              <PieClart data={data} />
             </div>
           </article>
+          <div className="W-FULL mt-4 overflow-hidden rounded-md bg-white text-center text-6xl font-extrabold text-black">
+            <Map data={data} />
+          </div>
         </>
       ) : null}
     </div>

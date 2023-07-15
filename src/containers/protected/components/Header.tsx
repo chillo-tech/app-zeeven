@@ -1,4 +1,4 @@
-import { ACCOUNT_CATEGORIESLINKS } from '@/utils';
+import { ACCOUNT_CATEGORIESLINKS, ACCOUNT_PAGES_LINKS } from '@/utils';
 import { signOut, useSession } from 'next-auth/react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
@@ -62,7 +62,7 @@ function Header() {
           </button>
         </div>
         <div className="second">
-          <nav className="container mx-auto">
+          <nav className="container mx-auto flex justify-between flex-col md:flex-row">
             <ul className="flex">
               {ACCOUNT_CATEGORIESLINKS.map((categoryLink, index) => (
                 <li key={`link-${index}`}>
@@ -73,6 +73,20 @@ function Header() {
                     href={categoryLink.url}
                   >
                     {categoryLink.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+            <ul className="flex">
+              {ACCOUNT_PAGES_LINKS.map((pageLink, index) => (
+                <li key={`link-${index}`}>
+                  <Link
+                    className={`block px-5 py-3 text-center text-gray-500 ${
+                      router.pathname === pageLink.url ? 'border-b-4 border-blue-900' : ''
+                    }`}
+                    href={pageLink.url}
+                  >
+                    {pageLink.label}
                   </Link>
                 </li>
               ))}
