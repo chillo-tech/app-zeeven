@@ -9,6 +9,8 @@ import { useMutation } from 'react-query';
 import Message from '../Message';
 import ImageDisplay from '../image-display';
 import QRCodeSuccessMessage from './QRCodeSuccessMessage';
+import { downloadBase64File } from '@/utils';
+import OutlineLink from '../shared/OutlineLink';
 
 export type Message = {
   name: string;
@@ -51,12 +53,20 @@ function QRCodeLink({ type,handleMenu }: any) {
   const {
     register,
     handleSubmit,
+    watch,
     formState: { errors },
   } = useForm<Message>({
     mode: 'onChange',
     defaultValues: { type },
     resolver: yupResolver(schema),
   });
+  const watchMessage = watch("data.url");
+  const onChange=(event) => {
+        if(watchMessage.match(/https?:\/\/[^\s]+/){
+        mutation.mutate(data);
+        }
+
+  }
 
   const onSubmit = (data: Message) => mutation.mutate(data);
   return (
@@ -84,9 +94,29 @@ function QRCodeLink({ type,handleMenu }: any) {
               placeholder="https://exemple.com"
               className="focus:ring-indigo-5000 w-full rounded-lg border-gray-300 text-xl shadow-sm focus:border-indigo-500"
               {...register('data.url')}
+              onChange={handleSubmit(onChange)}
+
             />
             <p className="text-red-500">{errors?.data?.url?.message}</p>
           </div>
+          {watchMessage &&(
+          <>
+          <div className='flex flex-col'>
+                              <ImageDisplay
+                                base64={true}
+                                image={{ path: data, title: 'zeeven qr code' }}
+                                wrapperClasses="relative w-full md:h-full h-52"
+                                imageClasses="object-contain"
+                              />
+                              <OutlineLink
+                                button={true}
+                                action={() => downloadBase64File(data, 'image/png', `qr-code.png`)}
+                                label="Télécharger"
+                                classes="w-full justify-center mt-4"
+                              />
+          </div>
+          </>
+          )}
           <div className="flex">
             <button type="submit" className="yellow-button">
               <span>Générer le QR code</span>

@@ -134,7 +134,7 @@ function QRCode() {
                           classes="mb-4"
                         />
                       </div>
-                      <OutlineLink label="Génrer un QR CODE" link="/qr-code" />
+                      <OutlineLink label="Générer un QR CODE" link="/qr-code" />
                       <div className="absolute bottom-2 right-2 h-16 w-16">
                         <ImageDisplay
                           wrapperClasses="h-full relative overflow-hidden"
