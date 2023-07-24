@@ -1,27 +1,28 @@
 import { add, handleError } from '@/services';
-import { URL_PATTERN, isValidUrl } from '@/utils';import * as yup from 'yup';
+import { isValidUrl, slugify } from '@/utils';
+import * as yup from 'yup';
 
+import { downloadBase64File } from '@/utils';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useRouter } from 'next/router';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useMutation } from 'react-query';
 import Message from '../Message';
 import ImageDisplay from '../image-display';
-import QRCodeSuccessMessage from './QRCodeSuccessMessage';
-import { downloadBase64File } from '@/utils';
 import OutlineLink from '../shared/OutlineLink';
+import QRCodeSuccessMessage from './QRCodeSuccessMessage';
 
 export type Message = {
   name: string;
-  organisation: string;
+  organisation?: string;
   type: string;
   data: {
     url: string;
   };
 };
 
-function QRCodeLink({ type,handleMenu }: any) {
+function QRCodeLink({ type, handleMenu }: any) {
   const [isError, setIsError] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
   const [data, setData] = useState({});
@@ -31,7 +32,7 @@ function QRCodeLink({ type,handleMenu }: any) {
       handleMenu(false);
       setIsError(true), handleError(error);
     },
-    onSuccess: ({data}: any) => {
+    onSuccess: ({ data }: any) => {
       handleMenu(false);
       setIsSuccess(true);
       setData(data);
@@ -39,17 +40,17 @@ function QRCodeLink({ type,handleMenu }: any) {
   });
   const router = useRouter();
   const schema = yup
-  .object({
-    type: yup.string().trim().required('Ce champ est requis').default(type),
-    data: yup.object({
-      url: yup
-        .string()
-        .trim()
-        .test('is-url-valid', 'Url invalide', (value) => isValidUrl(value|| ''))
-        .required('Ce champ est requis'),
-    }),
-  })
-  .required();
+    .object({
+      type: yup.string().trim().required('Ce champ est requis').default(type),
+      data: yup.object({
+        url: yup
+          .string()
+          .trim()
+          .test('is-url-valid', 'Url invalide', (value) => isValidUrl(value || ''))
+          .required('Ce champ est requis'),
+      }),
+    })
+    .required();
   const {
     register,
     handleSubmit,
@@ -60,15 +61,35 @@ function QRCodeLink({ type,handleMenu }: any) {
     defaultValues: { type },
     resolver: yupResolver(schema),
   });
-  const watchMessage = watch("data.url");
-  const onChange=(event) => {
+  const watchMessage = watch('data.url');
+  /**const onChange=(event) => {
         if(watchMessage.match(/https?:\/\/[^\s]+/){
         mutation.mutate(data);
         }
 
-  }
+  }**/
 
   const onSubmit = (data: Message) => mutation.mutate(data);
+
+  useEffect(() => {
+    const subscription = watch((value, options) => {
+      const { name, type } = options;
+      const isValid = errors?.data?.url;
+      const v = value?.data?.url;
+      if (!isValid) {
+        const data = {
+          name: `${slugify(value?.data?.url)}` || 'name',
+          type: value?.type || 'type',
+          data: {
+            url: v || 'url',
+          },
+        };
+        mutation.mutate(data);
+      }
+    });
+    return () => subscription.unsubscribe();
+  }, [watch]);
+
   return (
     <div className="py-3">
       {isError ? (
@@ -82,9 +103,7 @@ function QRCodeLink({ type,handleMenu }: any) {
           />
         </div>
       ) : null}
-      {isSuccess ? (
-        <QRCodeSuccessMessage data={data}/> 
-      ) : null}
+      {isSuccess ? <QRCodeSuccessMessage data={data} /> : null}
       {mutation.isIdle ? (
         <form noValidate className="block space-y-6" onSubmit={handleSubmit(onSubmit)}>
           <div className="block">
@@ -94,28 +113,26 @@ function QRCodeLink({ type,handleMenu }: any) {
               placeholder="https://exemple.com"
               className="focus:ring-indigo-5000 w-full rounded-lg border-gray-300 text-xl shadow-sm focus:border-indigo-500"
               {...register('data.url')}
-              onChange={handleSubmit(onChange)}
-
             />
             <p className="text-red-500">{errors?.data?.url?.message}</p>
           </div>
-          {watchMessage &&(
-          <>
-          <div className='flex flex-col'>
-                              <ImageDisplay
-                                base64={true}
-                                image={{ path: data, title: 'zeeven qr code' }}
-                                wrapperClasses="relative w-full md:h-full h-52"
-                                imageClasses="object-contain"
-                              />
-                              <OutlineLink
-                                button={true}
-                                action={() => downloadBase64File(data, 'image/png', `qr-code.png`)}
-                                label="Télécharger"
-                                classes="w-full justify-center mt-4"
-                              />
-          </div>
-          </>
+          {watchMessage && (
+            <>
+              <div className="flex flex-col">
+                <ImageDisplay
+                  base64={true}
+                  image={{ path: data, title: 'zeeven qr code' }}
+                  wrapperClasses="relative w-full md:h-full h-52"
+                  imageClasses="object-contain"
+                />
+                <OutlineLink
+                  button={true}
+                  action={() => downloadBase64File(data, 'image/png', `qr-code.png`)}
+                  label="Télécharger"
+                  classes="w-full justify-center mt-4"
+                />
+              </div>
+            </>
           )}
           <div className="flex">
             <button type="submit" className="yellow-button">
