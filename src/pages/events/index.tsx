@@ -64,10 +64,7 @@ function Resa(this: any) {
         <title>Mariage d'Alioum Sali et Khadija Bello</title>
         <meta name="description" content="Soyez des nôtres" />
       </Head>
-      <video className="video" autoPlay muted loop id="myVideo">
-        <source src={'back'} type="video/mp4" />
-      </video>
-
+    
       <section className="mx-auto w-11/12 pb-20 pt-10 md:w-1/2">
         <h1 className="mb-2 text-center text-4xl font-extrabold text-app-blue">
           Mariage d'Alioum Sali et Khadija Bello
