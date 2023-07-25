@@ -912,7 +912,7 @@ function Resa(this: any) {
 
                 <button
                   type="submit"
-                  className="w-full rounded-md border-app-yellow bg-app-yellow px-4 py-2 text-app-blue"
+                  className="w-full font-bold text-xs uppercase shadow-md rounded-md border-app-yellow  bg-gradient-to-r from-yellow-700 via-yellow-500 to-yellow-800 px-4 py-2 text-app-blue"
                 >
                   <span>Confirmer ma présence</span>
                 </button>
