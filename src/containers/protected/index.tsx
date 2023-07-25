@@ -11,7 +11,7 @@ function ProtectedLayout({children}: {children: any}) {
       <div className="container mx-auto">
         <Stocks />
         <main className='lg:grid lg:grid-cols-12 lg:gap-x-5 mt-2 mb-10'>
-          <section className='space-y-6 sm:px-6 lg:px-0 lg:col-span-12'>
+          <section className='space-y-2 sm:px-2 lg:px-0 lg:col-span-12'>
             {children}
           </section>
         </main>

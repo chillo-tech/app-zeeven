@@ -35,7 +35,7 @@ function ScheduleEdit({ update }: any) {
     let selectedDate = new Date(date);
     selectedDate.setHours(Number(hours.trim()));
     selectedDate.setMinutes(Number(seconds.trim()));
-    update({ date: selectedDate, timezone: Intl.DateTimeFormat().resolvedOptions().timeZone });
+    update({ date: selectedDate, time, timezone: Intl.DateTimeFormat().resolvedOptions().timeZone });
   };
 
   return (

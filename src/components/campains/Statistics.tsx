@@ -45,14 +45,14 @@ function Statistics({id}:{id: number}) {
           <div className="grid grid-rows-2 text-center items-center justify-center">
             <Emoji symbol="&#128522;" />
             <h3 className="text-purple-500 text-xl py-2 flex flex-col font-semibold">
-              <span>{data["SENT"]}</span>
+              <span>{data["SENT"]|| 0}</span>
               <span>Envoyés</span>
             </h3>
           </div>
           <div className="grid grid-rows-2 text-center items-center justify-center">
             <Emoji symbol="&#128516;" />
             <h3 className="text-blue-500 text-xl py-2 flex flex-col font-semibold">
-              <span>{Number(data["DELIVERED"]) > Number(data["SENT"]) ? data["SENT"] : data["DELIVERED"]}</span>
+              <span>{(Number(data["DELIVERED"]) > Number(data["SENT"]) ? data["SENT"] : data["DELIVERED"]) || 0}</span>
               <span>Reçus</span>
             </h3>
           </div>
