@@ -1,6 +1,7 @@
 import {useQuery} from 'react-query';
 import Statistics from '@/components/campains/Statistics';
 import Guests from '@/components/guests/Guests';
+import Tables from '@/components/tables/Tables';
 import Message from '@/components/Message';
 import {Tabs} from '@/components/Tabs/Index';
 import ProtectedLayout from '@/containers/protected';
@@ -51,6 +52,9 @@ function CampainDetail({id}:{id: number}) {
 					<Tabs.Group aria-label="Tabs with icons" style="fullWidth">
 						<Tabs.Item title="Contacts">
 							<Guests/>
+						</Tabs.Item>
+						<Tabs.Item title="Tables">
+							<Tables/>
 						</Tabs.Item>
 						
 					</Tabs.Group>
