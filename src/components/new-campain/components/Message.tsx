@@ -22,11 +22,11 @@ const schema = yup.object({
 
 
 function Message() {
-
 	const [showInformation, setShowInformation] = useState(false);
 	const messageRef = useRef({selectionStart: 0, selectionEnd: 0, value: ''});
 	const context = useContext(NewCampainContext);
-	const {state: {stepIndex, campain: {message}}, updateCampain, previousStep} = context;
+	const {state, updateCampain, previousStep} = context;
+  const {stepIndex, campain: {message, contacts}} = state;
 	const {register, handleSubmit, watch, setValue, formState: {errors}} = useForm<FormValues>({
 		defaultValues: {message},
 		mode: "onChange",
@@ -127,7 +127,7 @@ function Message() {
 				</form>
 			</div>
 			<div className='md:p-5 p-4'>
-				<Preview text={currentMessage}/>
+				<Preview text={currentMessage} guests={contacts}/>
 			</div>
 		</section>
 	)

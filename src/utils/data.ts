@@ -211,11 +211,28 @@ const isValidUrl = (url: string) => {
   }
   return true;
 };
-
+const CHANNELS = [
+  {
+     "label": "Email",
+     "image": "email.png",
+     "value": "EMAIL"
+  },
+  {
+     "label": "SMS",
+     "image": "sms.png",
+     "value": "SMS"
+  },
+  {
+     "label": "Whatsapp",
+     "image": "whatsapp.png",
+     "value": "WHATSAPP"
+  }
+]
 export {
   variableFieldType,
   isUserInformation,
   variableWithoutTemplate,
+  CHANNELS,
   GLOBAL_ERROR,
   REQUIRED_FIELD_ERROR_MESSAGE,
   SET_STATE,
