@@ -15,14 +15,14 @@ import { useMutation, useQuery } from 'react-query';
 import * as yup from 'yup';
 const presences = [
   {
-    id: "1",
-    value: "1",
+    id: '1',
+    value: '1',
     label: 'Oui',
     sublabel: 'Avec plaisir',
   },
   {
-    id: "0",
-    value: "0",
+    id: '0',
+    value: '0',
     label: 'Non',
     sublabel: 'Avec beaucoup de regrets',
   },
@@ -30,17 +30,17 @@ const presences = [
 const civilites = [
   {
     id: 1,
-    value: 'Monsieur',
+    value: '1',
     label: 'Monsieur',
   },
   {
     id: 2,
-    value: 'Madame',
+    value: '2',
     label: 'Madame',
   },
   {
     id: 2,
-    value: 'Monsieur & Madame',
+    value: '3',
     label: 'Monsieur & Madame',
   },
 ];
@@ -85,11 +85,11 @@ function EventGuests({ id }: any) {
       setData(data.data.data);
     },
   });
-	const handleSuccess = (error: any) => {
-		error.preventDefault();
-		mutation.reset();
-		router.push('/');
-	}
+  const handleSuccess = (error: any) => {
+    error.preventDefault();
+    mutation.reset();
+    router.push('/');
+  };
   const mutation = useMutation({
     mutationFn: (message: any) => pattchData(`/api/backoffice/Event/${data.id}`, message),
   });
@@ -107,26 +107,26 @@ function EventGuests({ id }: any) {
     resolver: yupResolver(schema),
   });
   const onSubmit = (data: Message) => {
-    const guestQuery: any = {guests: {create: [{guest_id: data}]}}
+    const guestQuery: any = { guests: { create: [{ guest_id: data }] } };
     mutation.mutate(guestQuery);
   };
   const watchFields = watch(['presence', 'civility']);
-  const handleRadioButton = (name: ("presence" | "civility"), value: any) =>  {
+  const handleRadioButton = (name: 'presence' | 'civility', value: any) => {
     setValue(name, value);
     trigger(name);
 
-    if(name === "presence" && value === "0") {
-      setValue("children", "0");
-      trigger("children");
-      setValue("adults", "0");
-      trigger("adults");
+    if (name === 'presence' && value === '0') {
+      setValue('children', '0');
+      trigger('children');
+      setValue('adults', '0');
+      trigger('adults');
     }
 
-    if(name === "presence" && value === "1") {
-      setValue("children", "");
-      setValue("adults", "");
+    if (name === 'presence' && value === '1') {
+      setValue('children', '');
+      setValue('adults', '');
     }
-  }
+  };
   const [selectedRadioButn, setSelectedRadioBtn] = React.useState('M');
   const isRadioSelected = (value: string): boolean => true;
 
@@ -234,7 +234,9 @@ function EventGuests({ id }: any) {
                   <div>
                     <RadioGroup
                       value={civility}
-                      onChange={(value) => { handleRadioButton('civility', value)}}
+                      onChange={(value) => {
+                        handleRadioButton('civility', value);
+                      }}
                       name="civility"
                     >
                       <RadioGroup.Label>Votre civilité</RadioGroup.Label>
@@ -1003,6 +1005,8 @@ function EventGuests({ id }: any) {
                   >
                     Enregistrer
                   </button>
+
+                  <RenderHtmlContent content={data.message} classes="text-center text-2xl font-extralight" />
                 </form>
               ) : null}
             </article>
@@ -1010,19 +1014,22 @@ function EventGuests({ id }: any) {
         </div>
         <div
           className={classNames(
-            'flex flex-col justify-between border-l border-gray-200 md:col-span-2'
+            'flex flex-col justify-between md:col-span-2 md:border-l md:border-gray-200',
+            'order-first md:order-last'
           )}
         >
           <div className="p-2">
-            <p className="flex items-end justify-end">
+            <p className="flex items-center justify-center md:items-end md:justify-end">
               <ImageDisplay
                 wrapperClasses="h-20 w-32 relative overflow-hidden"
                 imageClasses="object-contain "
                 image={data.icon}
               />
             </p>
-            <h3 className={classNames('text-right text-2xl font-extrabold')}>{data.name}</h3>
-            <RenderHtmlContent content={data.address} classes="text-right" />
+            <h3 className={classNames('text-center text-2xl font-extrabold md:text-right')}>
+              {data.name}
+            </h3>
+            <RenderHtmlContent content={data.address} classes="text-center md:text-right" />
           </div>
           <ImageDisplay
             wrapperClasses="h-32 relative overflow-hidden"
