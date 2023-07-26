@@ -116,6 +116,19 @@ const TARIF_FIELDS =  `
       pages.related_page_id.prices.pricing_id.items.item_id.id,
       pages.related_page_id.prices.pricing_id.items.item_id.label
     `;
+const EVENT_FIELDS =  `
+      id,
+      name,
+      address,
+      fontcolor,
+      bottoncolor,
+      bottonfontcolor,
+      backgroundcolor,
+      message,
+      image.*,
+      cover.*,
+      icon.*
+    `;
 const MENUFULL =  `
       id,
       label,
@@ -142,4 +155,4 @@ const ENTREPRISE =  `
 `;
 const PARTIAL_SPACES = `${base},${image},${prix},${type},slug`;
 
-export {MENU, MENUFULL, PARTIAL_SPACES, ENTREPRISE,PAGE_FIELDS, TARIF_FIELDS};
+export {MENU, MENUFULL, PARTIAL_SPACES, ENTREPRISE,PAGE_FIELDS, TARIF_FIELDS,EVENT_FIELDS};
