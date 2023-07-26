@@ -107,17 +107,19 @@ function Resa(this: any) {
                 className="flex flex-col space-y-6"
                 onSubmit={handleSubmit(onSubmit)}
               >
-                <h1 className="mb-2 text-center text-4xl font-extrabold" style={{color: "8c8e91"}}>
+                <h1 className="mb-2 text-4xl uppercase text-center font-extrabold" style={{color: "8c8e91"}}>
                   Mariage d'Alioum Sali et Khadija Bello
                 </h1>
                 <h3 className="text-center text-lg text-app-blue">
                   Nous vous prions de nous honorer de votre présence à notre mariage qui se
-                  déroulera du 09 Août au 13 Août 2023 à Yaoundé! 
-                  <br />
-                  Bien vouloir remplir ce formulaire pour recevoir votre invitation{' '}
-                  <strong>(à conserver)</strong> par email ou numéro de téléphone.
-                  <br />
+                  déroulera du <br/><strong>09 Août au 13 Août 2023 à Yaoundé!</strong> 
+                  <br/>
+                  <hr></hr>
+                  <p className="mt-3">Bien vouloir remplir ce formulaire pour recevoir votre invitation{' '}
+                  <strong>(à conserver)</strong> par email ou numéro de téléphone.</p>
+                  
                 </h3>
+                <hr></hr>
                 <div className="block">
                   <label
                     className="text-xs uppercase w-full mr-2 flex flex-col justify-between font-bold md:flex-row"
