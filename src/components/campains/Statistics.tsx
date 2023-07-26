@@ -5,8 +5,8 @@ import { useQuery } from 'react-query';
 import { search } from '@/services/crud';
 function Statistics({id}:{id: number}) {
   const [data, setData] = useState<any>(null);
-  const handleStatistics = (data: any[]) => {
-    const results = data.reduce(
+  const handleStatistics = (entry: any[]) => {
+    const results = entry.reduce(
       (accumulator: any, currentValue: any) => {
         const status = currentValue["status"];
         if (accumulator[status]) {
@@ -18,9 +18,6 @@ function Statistics({id}:{id: number}) {
       },
       {}
     );
-    console.log('====================================');
-    console.log({results});
-    console.log('====================================');
     setData(results);
   }
   const { query: { slug }} = useRouter();
