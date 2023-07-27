@@ -15,6 +15,7 @@ import Image from 'next/image';
 import { useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { BiBold, BiChevronUp, BiItalic, BiPlusCircle } from 'react-icons/bi';
+import { BsArrowLeftShort } from 'react-icons/bs';
 import { FaIdCard } from 'react-icons/fa';
 import { RxCrossCircled } from 'react-icons/rx';
 import * as yup from 'yup';
@@ -75,6 +76,7 @@ function Invitation() {
 
   const [lastVariable, setLastVariable] = useState('');
   const [schedules, setSchedules] = useState<Schedule[]>([]);
+  const [selectedTemplate, setSelectedTemplate] = useState();
 
   const {
     register,
@@ -190,7 +192,7 @@ function Invitation() {
       <h1 className="text-4xl font-semibold text-app-blue">Invitations pour votre évènement</h1>
 
       <div className="bg-white p-4 shadow">
-        <Disclosure>
+        <Disclosure defaultOpen={true}>
           {({ open }) => (
             <>
               <Disclosure.Button className="flex w-full justify-between rounded-t-md bg-slate-100 px-4 py-2 text-left font-light text-app-blue focus:outline-none focus-visible:ring focus-visible:ring-purple-500 focus-visible:ring-opacity-75">
@@ -201,11 +203,22 @@ function Invitation() {
                   className={`text-xl ${open ? 'rotate-180 transform' : ''} h-5 w-5 text-app-blue`}
                 />
               </Disclosure.Button>
-              <Disclosure.Panel className="rounded-b-md bg-slate-100 px-4 pb-2 text-gray-500 "></Disclosure.Panel>
+              <Disclosure.Panel className="rounded-b-md bg-slate-100 px-4 pb-2 text-gray-500 ">
+                {!selectedTemplate ? 
+                (<div>
+                  <p className="flex items-center justify-start">
+                    <button type="button" onClick={() =>setSelectedTemplate(undefined)} className='blue-link underline'>
+                      <BsArrowLeftShort /> Choisir un autre
+                    </button>
+                  </p>
+                </div>): 
+                (<div>List</div>)
+                }
+              </Disclosure.Panel>
             </>
           )}
         </Disclosure>
-        <Disclosure as="div" className="mt-2">
+        <Disclosure as="div" className="mt-2" defaultOpen={true}>
           {({ open }) => (
             <>
               <Disclosure.Button className="flex w-full justify-between rounded-t-md bg-slate-100 px-4 py-2 text-left font-light text-app-blue focus:outline-none focus-visible:ring focus-visible:ring-purple-500 focus-visible:ring-opacity-75">
