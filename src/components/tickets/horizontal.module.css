@@ -1,0 +1,117 @@
+.wrapper {
+  width: 529px;
+  height: 204px;
+  padding: 10px;
+  display: grid;
+  grid-template-rows: repeat(6, 1fr);
+  grid-template-columns: repeat(6, 1fr);
+  grid-template-areas:
+    'one one one one two two'
+    'one one one one two two'
+    'one one one one two two'
+    'one one one one two two'
+    'one one one one two two'
+    'one one one one two two';
+}
+.separator {
+  padding: 0 5px
+}
+.data {
+  grid-area: one;
+  display: flex;
+  background-size: cover;
+  overflow: hidden;
+  border-radius: 6px;
+}
+.image {
+  grid-area: two;
+  padding-left: 7px;
+  display: flex;
+}
+.inner {
+  flex: 1;
+  border-radius: 6px;
+  padding: 10px;
+  position: relative;
+  display: flex;
+  flex-direction: column; 
+  justify-content: space-between;
+}
+
+.dataInner {
+  position: relative;
+  display: flex; 
+  flex-direction: column; 
+  justify-content: space-between;
+  flex: 1;
+  border-radius: 6px;
+  overflow: hidden;
+}
+.dataInnerContent {
+  flex-direction: column; 
+  justify-content: space-between; 
+  display: flex; 
+  position: absolute; 
+  inset: 0; 
+  padding: 20px;
+}
+.dataInnerMessage {
+  margin: 0 !important; 
+  padding: 0 !important; 
+  font-size: 10px
+}
+
+.dataInnerMessageTitle {
+  font-size: 22px;
+  font-weight: bolder;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+.dataInnerMessageDateAddress {
+  font-weight: 200;
+  margin: 0 0 5px;
+}
+
+.dataInnerMessageDateAddressDate {
+  margin: 0 !important; padding: 0 !important; font-weight: 200
+}
+
+.imageInner {
+  flex: 1;
+  border-radius: 6px;
+  padding: 10px;
+  background-color: #ffffff;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-content: center;
+  align-items: center;
+}
+.innerImageWrapper {
+  width: 80%;
+  height: 90px;
+  position: relative;
+}
+.imageInnerName {
+  padding: 0; 
+  margin: 0;
+  text-align: center;
+}
+
+.imageInnerTicketLabelNumber {
+  padding: 0;
+  margin: 0; 
+  font-size: small; 
+  text-align: center;
+}
+
+.imageInnerTicketNumber {
+  display: block;
+  font-size: 20px; 
+  font-weight: 900;
+}
+
+.imageInnerImage {
+  object-fit: contain;
+}

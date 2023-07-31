@@ -17,7 +17,10 @@ const SET_STATE = 'SET_STATE';
 const RESET_CAMPAIN = 'RESET_CAMPAIN';
 const SET_NB_STEPS = 'SET_NB_STEPS';
 const UPDATE_DATA = 'UPDATE_DATA';
-
+const TICKET_TYPE = {
+  horirontal: 'horirontal',
+  vertical: 'vertical',
+};
 const WIFI_ENCODAGE = [
   {
     label: 'Aucun',
@@ -258,5 +261,6 @@ export {
   isValidUrl,
   ACCOUNT_CATEGORIESLINKS,
   WIFI_ENCODAGE,
-  ACCOUNT_PAGES_LINKS
+  ACCOUNT_PAGES_LINKS,
+  TICKET_TYPE
 };

@@ -1,9 +1,12 @@
 import ScheduleEdit from '@/components/new-campain/components/dates/ScheduleEdit';
+import Debug from '@/components/shared/Debug';
+import SelectTemplate from '@/components/tickets/Index';
 import ProtectedLayout from '@/containers/protected';
 import {
   CHANNELS,
   INFORMATIONS,
   getHumanDate,
+  getDateWithTime,
   getInputFormattedDate,
   getStringAsDate,
 } from '@/utils';
@@ -14,18 +17,12 @@ import Head from 'next/head';
 import Image from 'next/image';
 import { useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { BiBold, BiChevronUp, BiItalic, BiPlusCircle } from 'react-icons/bi';
-import { BsArrowLeftShort } from 'react-icons/bs';
-import { FaIdCard } from 'react-icons/fa';
+import { BiChevronUp, BiPlusCircle } from 'react-icons/bi';
 import { RxCrossCircled } from 'react-icons/rx';
 import * as yup from 'yup';
 type Schedule = {
   date: string;
   time: string;
-};
-type StyleParams = {
-  type: string;
-  value?: string;
 };
 type FormValues = {
   address: string;
@@ -33,6 +30,12 @@ type FormValues = {
   test: string;
   channels: string[];
   schedules: Schedule[];
+  template: {
+    id: string;
+    reference: string;
+    params: {
+    }
+  },
   active: {
     date: string;
     time: string;
@@ -65,6 +68,10 @@ const schema = yup
       date: yup.string().required('Merci de sélectionner une date'),
       time: yup.string().required('Merci de définir une heure de send'),
     }),
+    template: yup.object({
+      reference: yup.string().nullable().required('Merci de sélectionner un template'),
+      id: yup.string(),
+    }),
   })
   .required();
 
@@ -73,10 +80,7 @@ function Invitation() {
   now.setDate(now.getDate() + 1);
   const messageRef = useRef<HTMLTextAreaElement | null>();
   const [formVisible, setFormVisible] = useState(true);
-
-  const [lastVariable, setLastVariable] = useState('');
   const [schedules, setSchedules] = useState<Schedule[]>([]);
-  const [selectedTemplate, setSelectedTemplate] = useState();
 
   const {
     register,
@@ -88,6 +92,7 @@ function Invitation() {
   } = useForm<FormValues>({
     defaultValues: {
       address: '',
+      schedules: [],
       channels: [],
       active: {
         date: getInputFormattedDate(now),
@@ -103,45 +108,7 @@ function Invitation() {
   });
   const watchAllFields = watch();
   const { ref, ...rest } = register('message');
-  const currentMessage = watch('message');
   const channelsValues = watch('channels', []);
-  const [showInformation, setShowInformation] = useState(false);
-
-  const updateStyle = ({ type, value }: StyleParams) => {
-    const start = messageRef.current?.selectionStart || 0;
-    const end = messageRef.current?.selectionEnd || 0;
-    const currentFieldValue = messageRef.current?.value || '';
-    let fieldValue = currentFieldValue;
-
-    const valueBeforeSelection = currentFieldValue.substring(0, start);
-    const valueAfterSelection = currentFieldValue.substring(end, currentFieldValue.length + 1);
-    const selection = currentFieldValue.substring(start, end);
-
-    if (lastVariable !== 'BOLD' && type === 'BOLD' && selection.length) {
-      fieldValue =
-        lastVariable === 'ITALIC'
-          ? `${valueBeforeSelection}**${selection}**${valueAfterSelection}`
-          : `${valueBeforeSelection} **${selection}** ${valueAfterSelection}`;
-    }
-
-    if (lastVariable !== 'ITALIC' && type === 'ITALIC' && selection.length) {
-      fieldValue =
-        lastVariable === 'BOLD'
-          ? `${valueBeforeSelection}*${selection}*${valueAfterSelection}`
-          : `${valueBeforeSelection} *${selection}* ${valueAfterSelection}`;
-    }
-
-    if (type === 'VARIABLE') {
-      fieldValue = `${valueBeforeSelection} {{${value}}}${
-        selection.length ? selection + valueAfterSelection : valueAfterSelection
-      }`;
-      setShowInformation(false);
-    }
-    setLastVariable(type);
-    setValue('message', fieldValue);
-    trigger('message');
-  };
-
   const removeSchedule = (scheduleToRemove: any) => {
     const uniqueSchedules = schedules.filter(
       (schedule: any) => schedule.date !== scheduleToRemove.date
@@ -178,10 +145,14 @@ function Invitation() {
     setFormVisible(false);
   };
 
+  const handleTemplate = (template: any) => {
+    console.log(template);
+    
+    setValue('template', template);
+    trigger('template');
+  };
   const onSubmit = (data: any) => {
-    console.log('====================================');
     console.log(data);
-    console.log('====================================');
   };
   return (
     <ProtectedLayout>
@@ -203,17 +174,9 @@ function Invitation() {
                   className={`text-xl ${open ? 'rotate-180 transform' : ''} h-5 w-5 text-app-blue`}
                 />
               </Disclosure.Button>
-              <Disclosure.Panel className="rounded-b-md bg-slate-100 px-4 pb-2 text-gray-500 ">
-                {!selectedTemplate ? 
-                (<div>
-                  <p className="flex items-center justify-start">
-                    <button type="button" onClick={() =>setSelectedTemplate(undefined)} className='blue-link underline'>
-                      <BsArrowLeftShort /> Choisir un autre
-                    </button>
-                  </p>
-                </div>): 
-                (<div>List</div>)
-                }
+              <Disclosure.Panel className="rounded-b-md bg-slate-100 px-4 pb-6 text-gray-500 ">
+              <SelectTemplate data={watchAllFields} onTemplateSelected={handleTemplate}/>
+              <p className="text-red-500">{errors?.template?.reference?.message}</p>
               </Disclosure.Panel>
             </>
           )}
@@ -231,7 +194,7 @@ function Invitation() {
               </Disclosure.Button>
               <Disclosure.Panel className="rounded-b-md bg-slate-100 px-4 pb-2 text-gray-500 ">
                 <div className="rounded-md bg-white">
-                  <div className="bg-slate-100 px-4 py-4">
+                  <div className="bg-white px-4 py-4">
                     <h2 className="flex w-full flex-col justify-between text-lg font-light lg:text-xl">
                       <span className="font-semibold text-app-blue">Dates de votre évènement</span>
                     </h2>
@@ -253,7 +216,7 @@ function Invitation() {
                                 .map((schedule: Schedule, index: number) => (
                                   <li key={`schedule-${index}`}>
                                     <span className="outline-blue-button">
-                                      {getHumanDate(new Date(schedule.date))}{' '}
+                                      {getHumanDate(getDateWithTime(schedule.date, schedule.time))}
                                       <button
                                         type="button"
                                         onClick={() => removeSchedule(schedule)}
@@ -282,7 +245,7 @@ function Invitation() {
                       <p className="text-red-500">{errors?.schedules?.message}</p>
                     </div>
                   </div>
-                  <div className="bg-white px-4 py-4">
+                  <div className="bg-slate-100 px-4 py-4">
                     <h2 className="flex w-full flex-col justify-between text-lg font-light lg:text-xl">
                       <span className="font-semibold text-app-blue">
                         L&apos;invitation sera active &agrave; partir de
@@ -324,7 +287,7 @@ function Invitation() {
                       </div>
                     </div>
                   </div>
-                  <div className="bg-slate-100 px-4 py-4">
+                  <div className="bg-white px-4 py-4">
                     <div className="form-wrapper">
                       <div className="">
                         <label
@@ -345,7 +308,7 @@ function Invitation() {
                       </div>
                     </div>
                   </div>
-                  <div className="bg-white px-4 py-4">
+                  <div className="bg-slate-100 px-4 py-4">
                     <div className="block">
                       <label
                         htmlFor="channels"
@@ -458,54 +421,6 @@ function Invitation() {
                           }}
                         />
                         <p className="text-red-500">{errors?.message?.message}</p>
-                        <div className="flex flex-col items-center justify-between md:flex-row">
-                          <p>Charactères: {currentMessage ? currentMessage.length : 0}</p>
-                          <div className="buttons flex items-center">
-                            <button
-                              type="button"
-                              className="text-lg"
-                              onClick={() => updateStyle({ type: 'BOLD' })}
-                            >
-                              <BiBold className="p-0" size={25} />
-                            </button>
-                            <button
-                              type="button"
-                              className="px-3 text-lg"
-                              onClick={() => updateStyle({ type: 'ITALIC' })}
-                            >
-                              <BiItalic className="p-0 font-extralight" size={25} />
-                            </button>
-                            <div className="information relative">
-                              <button
-                                type="button"
-                                className="relative z-20 flex items-center rounded-full border border-gray-400 px-2"
-                                onClick={() => setShowInformation(!showInformation)}
-                              >
-                                <FaIdCard className="mr-1" /> Ajouter une information
-                              </button>
-                              {showInformation ? (
-                                <ul className="informations absolute bottom-0 left-0 right-0 z-10 bg-white pb-10 transition duration-1000">
-                                  {INFORMATIONS.map(({ label, value }, index) => (
-                                    <li className="information" key={`information-${index}`}>
-                                      <button
-                                        type="button"
-                                        className="w-full border-b border-slate-200 px-3 py-1 text-left"
-                                        onClick={() =>
-                                          updateStyle({
-                                            type: 'VARIABLE',
-                                            value,
-                                          })
-                                        }
-                                      >
-                                        {label}
-                                      </button>
-                                    </li>
-                                  ))}
-                                </ul>
-                              ) : null}
-                            </div>
-                          </div>
-                        </div>
                       </div>
                     </div>
                   </div>

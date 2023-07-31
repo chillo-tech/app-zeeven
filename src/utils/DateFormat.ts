@@ -87,3 +87,16 @@ export const getStringAsDate = (entry: any) => {
   }
   return entry;
 }
+
+export const getDateWithTime = (date: any, time: string) => {
+  if (date === null) {
+		return date;
+	}
+
+  const hours = Number(time.split(':')[0]);
+  const minutes = Number(time.split(':')[1]);
+
+  date.setHours(hours);
+  date.setMinutes(minutes);
+  return date;
+}
