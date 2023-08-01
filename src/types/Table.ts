@@ -5,5 +5,6 @@ export interface Table {
 	position?: string,
 	type: string,
 	description: string,
+  number?: number;
 	active?: boolean
 };

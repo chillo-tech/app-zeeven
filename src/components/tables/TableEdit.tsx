@@ -1,15 +1,7 @@
-import { Table } from '@/types/Table';
+import { Table } from '@/types';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm } from 'react-hook-form';
 import * as yup from 'yup';
-export type Table = {
-  id?: string;
-  name: string;
-  position?: string;
-  type: string;
-  description: string;
-  active?: boolean;
-};
 
 const schema = yup
   .object({
@@ -17,6 +9,7 @@ const schema = yup
     name: yup.string().required('Ce champ est requis'),
     type: yup.string().required('Ce champ est requis'),
     position: yup.string(),
+    number: yup.number(),
     active: yup.bool(),
   })
   .required();
@@ -29,7 +22,7 @@ function TableEdit({ handleSubmit }: { handleSubmit: Function }) {
     formState: { errors },
   } = useForm<Table>({
     resolver: yupResolver(schema),
-    defaultValues: { id: '', name: '', position: '', type: '', active: true, description: '' },
+    defaultValues: { id: '', name: '', position: '', type: '', active: true, description: '', number: 0 },
   });
   const onSubmit = (data: Table) => {
     reset();
