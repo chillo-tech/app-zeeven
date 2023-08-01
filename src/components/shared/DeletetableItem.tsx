@@ -14,7 +14,7 @@ type Props = {
 
 function DeletetableItem({children, classes, action, actionValue}: Props) {
 	const [deleteBlock, toggleDeleteBlock] = useState(false);
-	const handleDelete = (event:  React.ChangeEvent<HTMLInputElement>) => {
+	const handleDelete = (event: any) => {
     event.stopPropagation();
 		toggleDeleteBlock(false);
 		if (action) {
