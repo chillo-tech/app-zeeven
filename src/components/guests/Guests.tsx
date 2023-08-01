@@ -1,83 +1,101 @@
-import React, {useState} from 'react'
-import GuestEdit from './GuestEdit';
-import {useRouter} from 'next/router';
-import GuestList from './GuestList';
-import {AiOutlineUserAdd} from 'react-icons/ai';
-import {Guest} from '@/types/Guest';
-import {useMutation, useQuery, useQueryClient} from 'react-query';
 import Message from '@/components/Message';
-import {deleteItem, search} from '@/services/crud';
 import { handleError } from '@/services';
+import { add, deleteItem, search } from '@/services/crud';
+import { Guest } from '@/types/Guest';
+import { AxiosError } from 'axios';
+import { useRouter } from 'next/router';
+import { useState } from 'react';
+import { AiOutlineUserAdd } from 'react-icons/ai';
+import { useMutation, useQuery, useQueryClient } from 'react-query';
+import GuestEdit from './GuestEdit';
+import GuestList from './GuestList';
 
 function Guests() {
-	const queryClient = useQueryClient();
+  const queryClient = useQueryClient();
 
-	const router = useRouter();
-	const {query: {id = '', slug}} = router;
+  const router = useRouter();
+  const {
+    query: { id = '', slug },
+  } = router;
+  const [eventId, setEventId] = useState<String>(
+    (slug as string).substring((slug as string)?.lastIndexOf('-') + 1)
+  );
+  const [formVisible, setFormVisible] = useState(false);
+  const [isError, setIsError] = useState(false);
+  const mutation = useMutation({
+    mutationFn: ({ eventId, guestId }: any) => deleteItem(`/api/backend/event/${eventId}/guest/${guestId}`),
+    onSuccess: () => queryClient.invalidateQueries(['user-campains', slug, 'guests']),
+    onError: (error: any) => {
+      setIsError(true), handleError(error);
+    },
+  });
+  const addMutation = useMutation({
+    mutationKey: ['user-campains', slug, 'add-guest'],
+    mutationFn: (item: Guest) => add(`/api/backend/event/${eventId}/guest`, item),
+    onError: (error: AxiosError) => {
+      setIsError(true), handleError(error);
+    },
+    onSuccess: () => queryClient.invalidateQueries(['user-campains', slug, 'guests']),
+  });
+  const onSubmit = async (item: Guest) => {
+    setFormVisible(false);
+    try {
+      addMutation.mutate(item);
+    } catch (error) {}
+  };
 
-	const [guests, setGuests] = useState([]);
-	const [formVisible, setFormVisible] = useState(false);
-	const [isError, setIsError] = useState(false);
-	const mutation = useMutation({
-		mutationFn: ({eventId, guestId}: any) => deleteItem(`event/${eventId}/guest/${guestId}`),
-		onSuccess: () => queryClient.invalidateQueries(["user-campains", slug, "contacts"]),
-    onError: (error: any) => {setIsError(true), handleError(error)}
-	});
-	const onSubmit = async (profile: Guest) => {
-		setFormVisible(false);
-		try {
+  const deleteGuest = (guestId?: string) => {
+    const eventId = `${(slug as string).substring((slug as string)?.lastIndexOf('-') + 1)}`;
+    mutation.mutate({ eventId, guestId });
+  };
 
-		} catch (error) {
-		} 
-	};
-	const deleteGuest = (guestId?: string) => {
-		const eventId = `${(slug as string).substring((slug as string)?.lastIndexOf('-') + 1)}`;
-		mutation.mutate({eventId, guestId});
-	}
-
-	const {isSuccess, isLoading, data: {data} = []} = useQuery<any>({
-		queryKey: ["user-campains", slug, "contacts"],
-		queryFn: () => search(`/api/backend/event/${(slug as string).substring((slug as string)?.lastIndexOf('-') + 1)}/guest`),
-    onError: (error: any) => {setIsError(true), handleError(error)},
-		refetchOnWindowFocus: false,
-	});
-	return (
-		<article className='flex flex-col p-3'>
-			{isLoading ? (
-					<Message
-						type="loading"
-						firstMessage='Un instant'
-						secondMessage='Nous chargeons vos informations'
-					/>)
-				: null
-			}
-			{isError ? (
-					<Message
-						type="error"
-						firstMessage='Une erreur est survenue, nous allons la résoudre sous peu'
-						secondMessage='Veuillez prendre contact avec nous'
-					/>)
-				: null
-			}
-			{isSuccess && data ? (
-					<>
-						<div className="border-b-2 border-blue-500 flex justify-between items-center">
-							<span className='text-app-blue'>
-							  Vos contacts ({data.length})
-							</span>
-              {/** 
-							<button type='button' onClick={() => setFormVisible(!formVisible)}>
-								<AiOutlineUserAdd className='text-2xl text-app-blue'/>
-							</button>
-              */}
-						</div>
-						{formVisible ? <GuestEdit handleSubmit={onSubmit}/> : null}
-						{data.length ? <GuestList guests={data} deleteGuest={deleteGuest}/> : null}
-					</>
-				)
-				: null}
-		</article>
-	)
+  const {
+    isSuccess,
+    isLoading,
+    data: { data } = [],
+  } = useQuery<any>({
+    queryKey: ['user-campains', slug, 'guests'],
+    queryFn: () =>
+      search(
+        `/api/backend/event/${(slug as string).substring(
+          (slug as string)?.lastIndexOf('-') + 1
+        )}/guest`
+      ),
+    onError: (error: any) => {
+      setIsError(true), handleError(error);
+    },
+    refetchOnWindowFocus: false,
+  });
+  return (
+    <article className="flex flex-col p-3">
+      {isLoading ? (
+        <Message
+          type="loading"
+          firstMessage="Un instant"
+          secondMessage="Nous chargeons vos informations"
+        />
+      ) : null}
+      {isError ? (
+        <Message
+          type="error"
+          firstMessage="Une erreur est survenue, nous allons la résoudre sous peu"
+          secondMessage="Veuillez prendre contact avec nous"
+        />
+      ) : null}
+      {isSuccess && data ? (
+        <>
+          <div className="flex items-center justify-between border-b-2 border-blue-500">
+            <span className="text-app-blue">Vos contacts ({data.length})</span>
+            <button type="button" onClick={() => setFormVisible(!formVisible)}>
+              <AiOutlineUserAdd className="text-2xl text-app-blue" />
+            </button>
+          </div>
+          {formVisible ? <GuestEdit handleSubmit={onSubmit} /> : null}
+          {data.length ? <GuestList guests={data} deleteGuest={deleteGuest} /> : null}
+        </>
+      ) : null}
+    </article>
+  );
 }
 
-export default Guests
+export default Guests;

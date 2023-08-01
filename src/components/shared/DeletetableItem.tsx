@@ -14,7 +14,8 @@ type Props = {
 
 function DeletetableItem({children, classes, action, actionValue}: Props) {
 	const [deleteBlock, toggleDeleteBlock] = useState(false);
-	const handleDelete = () => {
+	const handleDelete = (event:  React.ChangeEvent<HTMLInputElement>) => {
+    event.stopPropagation();
 		toggleDeleteBlock(false);
 		if (action) {
 			action(actionValue);
@@ -36,7 +37,7 @@ function DeletetableItem({children, classes, action, actionValue}: Props) {
 					<div className={classNames("flex w-full justify-end bg-slate-300 items-center py-3 px-2")}>
 						<span className="mr-2">Confirmez vous cette action ? </span>
 						<button type='button' className={formStyles.outline__button__black}
-								onClick={() => toggleDeleteBlock(!deleteBlock)}>
+								onClick={(event) => {event.stopPropagation(); toggleDeleteBlock(!deleteBlock)}}>
 							Annuler
 						</button>
 						<button type='button' className={formStyles.button__red} onClick={handleDelete}>

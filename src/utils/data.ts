@@ -17,7 +17,18 @@ const SET_STATE = 'SET_STATE';
 const RESET_CAMPAIN = 'RESET_CAMPAIN';
 const SET_NB_STEPS = 'SET_NB_STEPS';
 const UPDATE_DATA = 'UPDATE_DATA';
-
+const PROFILE_CATEGORIES: any = [
+  {
+    label: 'Contacts',
+    slug: 'contact',
+    url: ''
+  },
+  {
+    label: 'Tables',
+    slug: 'table',
+    url: ''
+  }
+];
 const WIFI_ENCODAGE = [
   {
     label: 'Aucun',
@@ -216,6 +227,7 @@ export {
   variableFieldType,
   isUserInformation,
   variableWithoutTemplate,
+  PROFILE_CATEGORIES,
   GLOBAL_ERROR,
   REQUIRED_FIELD_ERROR_MESSAGE,
   SET_STATE,

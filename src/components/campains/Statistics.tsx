@@ -18,9 +18,6 @@ function Statistics({id}:{id: number}) {
       },
       {}
     );
-    console.log('====================================');
-    console.log({results});
-    console.log('====================================');
     setData(results);
   }
   const { query: { slug }} = useRouter();
