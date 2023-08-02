@@ -65,7 +65,7 @@ function TableEdit({ handleSubmit }: { handleSubmit: Function }) {
       </div>
       <div className="text-md mb-0">
         <label htmlFor="field-3" className="text-md mb-2 flex w-full flex-col justify-between">
-          Prosition
+          Position
         </label>
         <div className="mt-1">
           <input

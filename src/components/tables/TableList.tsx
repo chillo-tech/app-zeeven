@@ -19,7 +19,7 @@ function TableList({items, deleteItem}: Props) {
 					(item, index) => (
 						<DeletetableItem classes="border-b border-slate-100" data={item}
 										 action={deleteItem} actionValue={item.publicId} key={`${item.publicId}-${index}`}>
-							<article className={classNames("grid md:grid-cols-5 text-gray-800")}>
+							<article className={classNames("grid md:grid-cols-3 text-center text-gray-800")}>
 								<span className='py-1 px-1'>{capitalize(item.type)}</span>
 								<span className='py-1 px-1'>{item.name}</span>
 								<span className='capitalize py-1'>{item.position}</span>
