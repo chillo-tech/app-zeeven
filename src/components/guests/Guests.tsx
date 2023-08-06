@@ -10,20 +10,22 @@ import { useMutation, useQuery, useQueryClient } from 'react-query';
 import GuestEdit from './GuestEdit';
 import GuestList from './GuestList';
 
-function Guests() {
+function Guests({ handleGuests }: any) {
   const queryClient = useQueryClient();
 
   const router = useRouter();
   const {
-    query: { id = '', slug },
+    query: { slug },
   } = router;
-  const [eventId, setEventId] = useState<String>(
+  const [eventId] = useState<String>(
     (slug as string).substring((slug as string)?.lastIndexOf('-') + 1)
   );
   const [formVisible, setFormVisible] = useState(false);
   const [isError, setIsError] = useState(false);
+  const [data, setData] = useState([]);
   const mutation = useMutation({
-    mutationFn: ({ eventId, guestId }: any) => deleteItem(`/api/backend/event/${eventId}/guest/${guestId}`),
+    mutationFn: ({ eventId, guestId }: any) =>
+      deleteItem(`/api/backend/event/${eventId}/guest/${guestId}`),
     onSuccess: () => queryClient.invalidateQueries(['user-campains', slug, 'guests']),
     onError: (error: any) => {
       setIsError(true), handleError(error);
@@ -49,11 +51,7 @@ function Guests() {
     mutation.mutate({ eventId, guestId });
   };
 
-  const {
-    isSuccess,
-    isLoading,
-    data: { data } = [],
-  } = useQuery<any>({
+  const { isSuccess, isLoading } = useQuery<any>({
     queryKey: ['user-campains', slug, 'guests'],
     queryFn: () =>
       search(
@@ -61,6 +59,10 @@ function Guests() {
           (slug as string)?.lastIndexOf('-') + 1
         )}/guest`
       ),
+    onSuccess: ({ data }: any) => {
+      setData(data);
+      handleGuests(data);
+    },
     onError: (error: any) => {
       setIsError(true), handleError(error);
     },

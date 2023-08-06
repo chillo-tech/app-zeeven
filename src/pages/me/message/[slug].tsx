@@ -14,6 +14,7 @@ import { useQuery } from 'react-query';
 
 function CampainDetail({ id }: { id: number }) {
   const [isError, setIsError] = useState(false);
+  const [contacts, setContacts] = useState([]);
   const {
     isSuccess,
     isLoading,
@@ -95,9 +96,9 @@ function CampainDetail({ id }: { id: number }) {
                   {(()=> {
                     switch (slug) {
                       case 'contact':
-                        return  <Guests/>
+                        return  <Guests handleGuests={setContacts}/>
                       case 'table':
-                        return  <Tables/>
+                        return  <Tables contacts={contacts}/>
                     }
                   })()}
                 </Tab.Panel>

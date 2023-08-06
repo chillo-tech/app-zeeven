@@ -10,10 +10,11 @@ import { AiFillCheckCircle, AiOutlinePlusCircle } from 'react-icons/ai';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
 import TableEdit from './TableEdit';
 import TableList from './TableList';
+import TablePlan from './plan/TablePlan';
 
 const vues = ['Tables', 'Plan de table'];
 
-function Tables() {
+function Tables({contacts}: any) {
   const queryClient = useQueryClient();
 
   const router = useRouter();
@@ -127,7 +128,7 @@ function Tables() {
               {data.length ? <TableList items={data} deleteItem={deleteItemFromList} /> : null}
             </>
           ) : (
-            <div>plan</div>
+            <TablePlan tables={data} contacts={contacts} slug={slug}/>
           )}
         </>
       ) : null}

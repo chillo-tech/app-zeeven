@@ -1,5 +1,5 @@
-import React, {useContext, useState} from 'react'
-import BottomBar from './BottomBar'
+import React, {useContext, useState} from 'react';
+import BottomBar from './BottomBar';
 import {NewCampainContext} from '@/context/NewCampainContext';
 import {getDisplayedDate} from '@/utils/DateFormat';
 import Preview from './Preview';
@@ -18,7 +18,6 @@ function Recap() {
 
 	const mutation = useMutation({
     mutationFn: ((campain) => add("/api/backend/event", campain)),
-		//mutationFn: ((campain: any) => add("/api/backend/event", campain)),
     onError: (error: AxiosError) => {setIsError(true), handleError(error)}
 	});
 	const router = useRouter()
@@ -26,7 +25,6 @@ function Recap() {
     setIsError(false);
 		error.preventDefault();
 		mutation.reset();
-		//router.push('/');
 	}
 	const handleSuccess = (error: any) => {
 		error.preventDefault();
