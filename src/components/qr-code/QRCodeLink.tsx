@@ -10,7 +10,6 @@ import { useForm } from 'react-hook-form';
 import { useMutation } from 'react-query';
 import Message from '../Message';
 import ImageDisplay from '../image-display';
-import OutlineLink from '../shared/OutlineLink';
 import QRCodeSuccessMessage from './QRCodeSuccessMessage';
 
 export type Message = {
@@ -124,12 +123,6 @@ function QRCodeLink({ type, handleMenu }: any) {
                   image={{ path: data, title: 'zeeven qr code' }}
                   wrapperClasses="relative w-full md:h-full h-52"
                   imageClasses="object-contain"
-                />
-                <OutlineLink
-                  button={true}
-                  action={() => downloadBase64File(data, 'image/png', `qr-code.png`)}
-                  label="Télécharger"
-                  classes="w-full justify-center mt-4"
                 />
               </div>
             </>
