@@ -4,15 +4,13 @@ import { add, deleteItem, search } from '@/services/crud';
 import { Guest } from '@/types/Guest';
 import { AxiosError } from 'axios';
 import { useRouter } from 'next/router';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { AiOutlineUserAdd } from 'react-icons/ai';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
 import GuestEdit from './GuestEdit';
 import GuestList from './GuestList';
 
-function Guests({ handleGuests }: any) {
-  const queryClient = useQueryClient();
-
+function Guests({ handleItemEdit, event }: any) {
   const router = useRouter();
   const {
     query: { slug },
@@ -22,11 +20,11 @@ function Guests({ handleGuests }: any) {
   );
   const [formVisible, setFormVisible] = useState(false);
   const [isError, setIsError] = useState(false);
-  const [data, setData] = useState([]);
+  const [data, setData] = useState(event.guests || []);
   const mutation = useMutation({
     mutationFn: ({ eventId, guestId }: any) =>
       deleteItem(`/api/backend/event/${eventId}/guest/${guestId}`),
-    onSuccess: () => queryClient.invalidateQueries(['user-campains', slug, 'guests']),
+    onSuccess: handleItemEdit,
     onError: (error: any) => {
       setIsError(true), handleError(error);
     },
@@ -37,7 +35,7 @@ function Guests({ handleGuests }: any) {
     onError: (error: AxiosError) => {
       setIsError(true), handleError(error);
     },
-    onSuccess: () => queryClient.invalidateQueries(['user-campains', slug, 'guests']),
+    onSuccess: handleItemEdit,
   });
   const onSubmit = async (item: Guest) => {
     setFormVisible(false);
@@ -52,6 +50,7 @@ function Guests({ handleGuests }: any) {
   };
 
   const { isSuccess, isLoading } = useQuery<any>({
+    enabled: false,
     queryKey: ['user-campains', slug, 'guests'],
     queryFn: () =>
       search(
@@ -60,14 +59,18 @@ function Guests({ handleGuests }: any) {
         )}/guest`
       ),
     onSuccess: ({ data }: any) => {
-      setData(data);
-      handleGuests(data);
+      //setData(data);
+      //handleGuests(data);
     },
     onError: (error: any) => {
       setIsError(true), handleError(error);
     },
     refetchOnWindowFocus: false,
   });
+  useEffect(() => {
+    setData(event.guests)
+  }, [event])
+  
   return (
     <article className="flex flex-col p-3">
       {isLoading ? (
@@ -84,7 +87,7 @@ function Guests({ handleGuests }: any) {
           secondMessage="Veuillez prendre contact avec nous"
         />
       ) : null}
-      {isSuccess && data ? (
+      {data ? (
         <>
           <div className="flex items-center justify-between border-b-2 border-blue-500">
             <span className="text-app-blue">Vos contacts ({data.length})</span>

@@ -5,8 +5,12 @@ import { useEffect, useState } from 'react';
 import { DragDropContext } from 'react-beautiful-dnd';
 import { useMutation, useQueryClient } from 'react-query';
 import TablePlanColumn from './TablePlanColumn';
+import { useRouter } from 'next/router';
 
-function TablePlan({ tables, contacts, slug }: any) {
+function TablePlan({ tables, slug, event}: any) {
+  const router = useRouter();
+  const [contacts] = useState(event.guests || []);
+  const [plan] = useState(event.plan || {});
   const [data, setData] = useState({ tablesOrder: [], tables: {}, contacts: {} });
   const queryClient = useQueryClient();
   const [isError, setIsError] = useState(false);
@@ -83,6 +87,7 @@ function TablePlan({ tables, contacts, slug }: any) {
   const handleSuccess = (error: any) => {
     error.preventDefault();
     mutation.reset();
+    router.push('/me');
   };
 
   const savePlan = () => {
@@ -95,36 +100,39 @@ function TablePlan({ tables, contacts, slug }: any) {
     mutation.reset();
   };
   useEffect(() => {
-    let params = {
-      contacts: {},
-      tables: {},
-      tablesOrder: [],
-    };
-    const contactsParams = contacts.reduce(
-      (accumulator: any, contact: any) => ({ ...accumulator, [contact.publicId]: contact }),
-      {}
-    );
-    const tablesParams = tables.reduce(
-      (accumulator: any, table: any, currentIndex: number) => ({
-        ...accumulator,
-        [table.publicId]: {
-          ...table,
-          contactIds: currentIndex == 0 ? contacts.map((contact: any) => contact['publicId']) : [],
-        },
-      }),
-      {}
-    );
-
-    const tablesOrderParams = tables.map((table: any) => table.publicId);
-    params = {
-      ...params,
-      contacts: contactsParams,
-      tables: tablesParams,
-      tablesOrder: tablesOrderParams,
-    };
-
-    setData(params);
-  }, [tables, contacts]);
+    if(plan && Object.keys(plan).length > 0) {
+      setData(plan);
+    } else {
+      let params = {
+        contacts: {},
+        tables: {},
+        tablesOrder: [],
+      };
+      const contactsParams = contacts.reduce(
+        (accumulator: any, contact: any) => ({ ...accumulator, [contact.publicId]: contact }),
+        {}
+      );
+      const tablesParams = tables.reduce(
+        (accumulator: any, table: any, currentIndex: number) => ({
+          ...accumulator,
+          [table.publicId]: {
+            ...table,
+            contactIds: currentIndex == 0 ? contacts.map((contact: any) => contact['publicId']) : [],
+          },
+        }),
+        {}
+      );
+  
+      const tablesOrderParams = tables.map((table: any) => table.publicId);
+      params = {
+        ...params,
+        contacts: contactsParams,
+        tables: tablesParams,
+        tablesOrder: tablesOrderParams,
+      };
+      setData(params);
+    }
+  }, [tables, contacts, plan]);
 
   return (
     <>

@@ -10,24 +10,35 @@ import { Tab } from '@headlessui/react';
 import classNames from 'classnames';
 import Head from 'next/head';
 import { useState } from 'react';
-import { useQuery } from 'react-query';
+import { useQuery, useQueryClient } from 'react-query';
 
 function CampainDetail({ id }: { id: number }) {
   const [isError, setIsError] = useState(false);
-  const [contacts, setContacts] = useState([]);
+  const queryClient = useQueryClient();
+  const [data, setData] = useState([])
+
   const {
     isSuccess,
     isLoading,
-    data: { data } = {},
+    
+    refetch
   } = useQuery<any>({
     queryKey: ['user-campains', id],
     queryFn: () => search(`/api/backend/event/${id}`),
     enabled: !!id,
     refetchOnWindowFocus: false,
+    onSuccess: ({data}) => {
+
+      setData(data);
+    },
     onError: (error: any) => {
       setIsError(true), handleError(error);
     },
   });
+
+  const handleItemEdit = () => {
+    refetch();
+  }
   return (
     <ProtectedLayout>
       <Head>
@@ -52,9 +63,9 @@ function CampainDetail({ id }: { id: number }) {
           actionLabel="Retourner à l'accueil"
         />
       ) : null}
-      {isSuccess && data ? (
+      {data ? (
         <section className="">
-          <h1 className="mb-3 text-4xl font-semibold text-app-blue">{data.name}</h1>
+          <h1 className="mb-3 text-4xl font-semibold text-app-blue">{data?.name}</h1>
           <Statistics id={id} />
           {/** 
 					<Tabs.Group aria-label="Tabs with icons" style="fullWidth">
@@ -96,9 +107,9 @@ function CampainDetail({ id }: { id: number }) {
                   {(()=> {
                     switch (slug) {
                       case 'contact':
-                        return  <Guests handleGuests={setContacts}/>
+                        return  <Guests event={data} handleItemEdit={handleItemEdit} />
                       case 'table':
-                        return  <Tables contacts={contacts}/>
+                        return  <Tables event={data} handleItemEdit={handleItemEdit}/>
                     }
                   })()}
                 </Tab.Panel>
