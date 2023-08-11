@@ -125,7 +125,7 @@ function Tables({ handleItemEdit, event }: any) {
               {data.length ? <TableList items={data} deleteItem={deleteItemFromList} /> : null}
             </>
           ) : (
-            <TablePlan tables={data} event={event} slug={slug} />
+            <TablePlan tables={data} event={event} slug={slug} handleItemEdit={handleItemEdit}/>
           )}
         </>
       ) : null}

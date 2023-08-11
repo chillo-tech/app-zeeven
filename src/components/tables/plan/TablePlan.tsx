@@ -7,7 +7,7 @@ import { useMutation, useQueryClient } from 'react-query';
 import TablePlanColumn from './TablePlanColumn';
 import { useRouter } from 'next/router';
 
-function TablePlan({ tables, slug, event}: any) {
+function TablePlan({ tables, slug, event, handleItemEdit}: any) {
   const router = useRouter();
   const [contacts] = useState(event.guests || []);
   const [plan] = useState(event.plan || {});
@@ -24,9 +24,10 @@ function TablePlan({ tables, slug, event}: any) {
         item
       ),
     onError: (error: AxiosError) => {
-      setIsError(true), handleError(error);
+      setIsError(true); 
+      handleError(error);
     },
-    onSuccess: () => queryClient.invalidateQueries(['user-campains', slug]),
+    onSuccess: handleItemEdit,
   });
   const onDragEnd = (result: any) => {
     const { destination, source, draggableId } = result;
@@ -38,11 +39,9 @@ function TablePlan({ tables, slug, event}: any) {
       return;
     }
 
-    const sourceKey = `${source.droppableId}`;
-    const originTable = (data.tables as any)[sourceKey];
-    const destinationKey = `${destination.droppableId}`;
-    const destinationTable = (data.tables as any)[destinationKey];
-
+    const originTable = (data.tables as any)[`${source.droppableId}`];
+    const destinationTable = (data.tables as any)[`${destination.droppableId}`];
+    
     if (originTable === destinationTable) {
       const newContactIds = Array.from(originTable.contactIds);
       newContactIds.splice(source.index, 1);
@@ -62,14 +61,15 @@ function TablePlan({ tables, slug, event}: any) {
       return;
     }
 
-    const originContactIds = Array.from(originTable.contactIds);
-    originContactIds.splice(source.index, 1);
+    let originContactIds = Array.from(originTable.contactIds);
+    originContactIds = originContactIds.filter(item => item !== draggableId);
     const newOrigin = {
       ...originTable,
       contactIds: originContactIds,
     };
-    const destinationContactIds = Array.from(destinationTable.contactIds || []);
-    destinationContactIds.splice(destination.index, 1, draggableId);
+    const destinationContactIds = destinationTable.contactIds ? Array.from(destinationTable.contactIds) : [];
+    
+    destinationContactIds.push(draggableId);
     const newDestination = {
       ...destinationTable,
       contactIds: destinationContactIds,

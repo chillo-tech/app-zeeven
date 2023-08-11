@@ -18,7 +18,9 @@ function TablePlanColumn({ table, contacts }: any) {
               {...provided.droppableProps}
               
             >
-            <h3 className="text-ellipsis overflow-hidden whitespace-nowrap uppercase py-1 pl-1 font-bold text-xl">{table.name}</h3>
+            <h3 className="text-ellipsis overflow-hidden whitespace-nowrap uppercase py-1 pl-1 font-bold text-xl">
+              {table.name}
+            </h3>
               {contacts.map((contact: any, key: number) => (
                <TablePlanItem contact={contact}  key={`${contact.id}-${table.id}-${key}`} index={key}/>
               ))}
