@@ -1,7 +1,7 @@
 import React, {useContext, useState} from 'react';
 import BottomBar from './BottomBar';
 import {NewCampainContext} from '@/context/NewCampainContext';
-import {getDisplayedDate} from '@/utils/DateFormat';
+import {getDisplayedDate, getFormattedTime} from '@/utils/DateFormat';
 import Preview from './Preview';
 import {useMutation} from 'react-query';
 import {add, handleError} from '@/services';
@@ -69,8 +69,8 @@ function Recap() {
 					actionLabel="Retourner à l'accueil"
 				/>) : null}
 			{mutation.isIdle ? (
-				<div className='grid grid-cols-1 md:grid-cols-2 md:gap-0 gap-2'>
-					<div className=" md:p-5 p-4 border-r-2 border-slate-300">
+				<div className='grid grid-cols-1 md:grid-cols-3 md:gap-0 gap-2'>
+					<div className="md:p-5 p-4 border-r-2 border-slate-300 col-span-2">
 						<div className="block">
 							<label htmlFor="recap"
 								   className="w-full flex flex-col justify-between mb-2 text-md lg:text-xl font-light">
@@ -82,8 +82,9 @@ function Recap() {
 								<div className="py-5">
 									<p>Merci pour votre confiance <span
 										className="font-bold">{campain?.utilisateur?.name}</span></p>
-									<p>Votre message sera transmis
-										le {getDisplayedDate(campain.messages[0].date)} à {campain.messages[0].time}</p>
+									<p>Le premier message sera transmis 
+										{`le ${getDisplayedDate(campain.messages[0].schedules[0].date)} à ${getFormattedTime(new Date(campain.messages[0].schedules[0].date))}`}
+                  </p>
 									<p>Votre message sera transmis à {campain?.guests?.length} personne(s)</p>
 								</div>
 							</div>

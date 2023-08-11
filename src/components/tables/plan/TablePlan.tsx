@@ -37,8 +37,11 @@ function TablePlan({ tables, slug, event}: any) {
     if (destination.droppableId === source.droppableId && destination.index === source.index) {
       return;
     }
-    const originTable = data.tables[source.droppableId];
-    const destinationTable = data.tables[destination.droppableId];
+
+    const sourceKey = `${source.droppableId}`;
+    const originTable = (data.tables as any)[sourceKey];
+    const destinationKey = `${destination.droppableId}`;
+    const destinationTable = (data.tables as any)[destinationKey];
 
     if (originTable === destinationTable) {
       const newContactIds = Array.from(originTable.contactIds);
@@ -65,7 +68,7 @@ function TablePlan({ tables, slug, event}: any) {
       ...originTable,
       contactIds: originContactIds,
     };
-    const destinationContactIds = Array.from(destinationTable.contactIds);
+    const destinationContactIds = Array.from(destinationTable.contactIds || []);
     destinationContactIds.splice(destination.index, 1, draggableId);
     const newDestination = {
       ...destinationTable,
@@ -177,9 +180,10 @@ function TablePlan({ tables, slug, event}: any) {
               <div className="tables grid gap-4 md:grid-cols-4">
                 {data['tablesOrder'].map((tableId) => {
                   const table = data.tables[tableId];
-                  const contacts = (table['contactIds'] as any[]).map(
-                    (contactId) => (data.contacts as any)[contactId]
-                  );
+                  let contacts: any[] = [];
+                  let contactIds = table['contactIds'] || [];
+                  
+                  contacts = (contactIds as any[]).map((contactId: any) => (data.contacts as any)[contactId]);
                   return (
                     <TablePlanColumn key={table['publicId']} table={table} contacts={contacts} />
                   );

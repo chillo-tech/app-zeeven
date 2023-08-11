@@ -6,5 +6,6 @@ export interface Table {
 	type: string,
 	description: string,
   number?: number;
+	deletable?: boolean;
 	active?: boolean
 };

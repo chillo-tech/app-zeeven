@@ -16,7 +16,7 @@ function Statistics({id}:{id: number}) {
         }
         return accumulator;
       },
-      {}
+      {SENT: 0, DELIVERED: 0}
     );
     setData(results);
   }

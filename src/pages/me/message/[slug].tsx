@@ -1,4 +1,5 @@
 import Message from '@/components/Message';
+import Metadata from '@/components/Metadata';
 import Statistics from '@/components/campains/Statistics';
 import Guests from '@/components/guests/Guests';
 import Tables from '@/components/tables/Tables';
@@ -8,27 +9,24 @@ import { search } from '@/services/crud';
 import { PROFILE_CATEGORIES } from '@/utils';
 import { Tab } from '@headlessui/react';
 import classNames from 'classnames';
-import Head from 'next/head';
 import { useState } from 'react';
 import { useQuery, useQueryClient } from 'react-query';
 
 function CampainDetail({ id }: { id: number }) {
   const [isError, setIsError] = useState(false);
-  const queryClient = useQueryClient();
-  const [data, setData] = useState([])
+  const [data, setData] = useState<any>();
 
   const {
     isSuccess,
     isLoading,
-    
-    refetch
+
+    refetch,
   } = useQuery<any>({
     queryKey: ['user-campains', id],
     queryFn: () => search(`/api/backend/event/${id}`),
     enabled: !!id,
     refetchOnWindowFocus: false,
-    onSuccess: ({data}) => {
-
+    onSuccess: ({ data }) => {
       setData(data);
     },
     onError: (error: any) => {
@@ -38,15 +36,15 @@ function CampainDetail({ id }: { id: number }) {
 
   const handleItemEdit = () => {
     refetch();
-  }
+  };
   return (
     <ProtectedLayout>
-      <Head>
-        <title>Informations sur votre évènement</title>
-        <meta name="description" content="Informez nos contacts de vos évènements" />
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
-
+      <Metadata
+        entry={{
+          title: 'Informations sur votre évènement',
+          description: 'Informez nos contacts de vos évènements',
+        }}
+      />
       {isLoading ? (
         <Message
           type="loading"
@@ -63,19 +61,10 @@ function CampainDetail({ id }: { id: number }) {
           actionLabel="Retourner à l'accueil"
         />
       ) : null}
-      {data ? (
+      {(data && Object.keys(data).length)? (
         <section className="">
-          <h1 className="mb-3 text-4xl font-semibold text-app-blue">{data?.name}</h1>
+          <h1 className="mb-3 text-4xl font-semibold text-app-blue">{data.name}</h1>
           <Statistics id={id} />
-          {/** 
-					<Tabs.Group aria-label="Tabs with icons" style="fullWidth">
-						<Tabs.Item title="Contacts">
-							<Guests/>
-						</Tabs.Item>
-						
-					</Tabs.Group>
-          <Tab.Group>
-          */}
           <Tab.Group>
             <Tab.List className="flex space-x-1 rounded-xl bg-blue-900/20 p-1">
               {PROFILE_CATEGORIES.map(({ label }: any) => (
@@ -104,12 +93,12 @@ function CampainDetail({ id }: { id: number }) {
                     'ring-white ring-opacity-60 ring-offset-2 ring-offset-blue-400 focus:outline-none focus:ring-2'
                   )}
                 >
-                  {(()=> {
+                  {(() => {
                     switch (slug) {
                       case 'contact':
-                        return  <Guests event={data} handleItemEdit={handleItemEdit} />
+                        return <Guests event={data} handleItemEdit={handleItemEdit} />;
                       case 'table':
-                        return  <Tables event={data} handleItemEdit={handleItemEdit}/>
+                        return <Tables event={data} handleItemEdit={handleItemEdit} />;
                     }
                   })()}
                 </Tab.Panel>

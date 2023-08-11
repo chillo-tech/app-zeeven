@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import classNames from 'classnames';
-import {RiDeleteBin6Line} from 'react-icons/ri';
+import {RiDeleteBin6Line, RiStopCircleFill} from 'react-icons/ri';
 import formStyles from '@/styles/Form.module.css';
 
 type Props = {
@@ -9,10 +9,12 @@ type Props = {
 	odd?: 0,
 	action?: (actionValue?: any) => any,
 	actionValue?: any,
-	classes?: string
+	classes?: string,
+	showButton?: boolean
+  
 };
 
-function DeletetableItem({children, classes, action, actionValue}: Props) {
+function DeletetableItem({children, classes, action, actionValue, showButton = true}: Props) {
 	const [deleteBlock, toggleDeleteBlock] = useState(false);
 	const handleDelete = (event: any) => {
     event.stopPropagation();
@@ -27,10 +29,18 @@ function DeletetableItem({children, classes, action, actionValue}: Props) {
 				<div className={classNames('grow')}>
 					{children}
 				</div>
-				<button type='button' className={classNames('flex-none px-6 py-4', {'bg-slate-300': deleteBlock})}
-						onClick={() => toggleDeleteBlock(!deleteBlock)}>
-					<RiDeleteBin6Line className='text-red-600 text-lg'/>
-				</button>
+        {
+          showButton ? (
+            <button type='button' className={classNames('flex-none px-6 py-4', {'bg-slate-300': deleteBlock})}
+                onClick={() => toggleDeleteBlock(!deleteBlock)}>
+              <RiDeleteBin6Line className='text-red-600 text-lg'/>
+            </button>
+          ): (
+            <span className="px-6 py-4">
+              <RiStopCircleFill className='text-gray-600 text-lg'/>
+            </span>
+          )
+        }
 			</div>
 			{
 				deleteBlock ? (

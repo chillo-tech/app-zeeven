@@ -4,9 +4,9 @@ import { add, deleteItem, search } from '@/services/crud';
 import { Guest } from '@/types/Guest';
 import { AxiosError } from 'axios';
 import { useRouter } from 'next/router';
-import { useState, useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { AiOutlineUserAdd } from 'react-icons/ai';
-import { useMutation, useQuery, useQueryClient } from 'react-query';
+import { useMutation, useQuery } from 'react-query';
 import GuestEdit from './GuestEdit';
 import GuestList from './GuestList';
 
@@ -68,9 +68,9 @@ function Guests({ handleItemEdit, event }: any) {
     refetchOnWindowFocus: false,
   });
   useEffect(() => {
-    setData(event.guests)
-  }, [event])
-  
+    setData(event.guests);
+  }, [event]);
+
   return (
     <article className="flex flex-col p-3">
       {isLoading ? (

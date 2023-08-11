@@ -17,7 +17,7 @@ function TableList({items, deleteItem}: Props) {
 				.sort((a: Table, b: Table) => a.name.localeCompare(b.name))
 				.map(
 					(item, index) => (
-						<DeletetableItem classes="border-b border-slate-100" data={item}
+						<DeletetableItem classes="border-b border-slate-100" data={item} showButton={item.deletable}
 										 action={deleteItem} actionValue={item.publicId} key={`${item.publicId}-${index}`}>
 							<article className={classNames("grid md:grid-cols-3 text-center text-gray-800")}>
 								<span className='py-1 px-1'>{capitalize(item.type)}</span>
