@@ -21,6 +21,23 @@ const TICKET_TYPE = {
   horirontal: 'horirontal',
   vertical: 'vertical',
 };
+const PROFILE_CATEGORIES: any = [
+  {
+    label: 'Contacts',
+    slug: 'contact',
+    url: ''
+  },
+  {
+    label: 'Invitations',
+    slug: 'invitation',
+    url: ''
+  },
+  {
+    label: 'Tables',
+    slug: 'table',
+    url: ''
+  }
+];
 const WIFI_ENCODAGE = [
   {
     label: 'Aucun',
@@ -236,6 +253,7 @@ export {
   isUserInformation,
   variableWithoutTemplate,
   CHANNELS,
+  PROFILE_CATEGORIES,
   GLOBAL_ERROR,
   REQUIRED_FIELD_ERROR_MESSAGE,
   SET_STATE,

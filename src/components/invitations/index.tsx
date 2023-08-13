@@ -3,7 +3,7 @@ import { useRouter } from 'next/router';
 import React from 'react'
 import { AiOutlinePlusCircle } from "react-icons/ai";
 
-function Invitations() {
+function Invitations({event, handleItemEdit}: any) {
 
 	const router = useRouter();
 	const {query: {id = '', slug}} = router;

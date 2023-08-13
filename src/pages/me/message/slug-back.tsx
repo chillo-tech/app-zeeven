@@ -2,7 +2,6 @@ import Message from '@/components/Message';
 import Metadata from '@/components/Metadata';
 import Statistics from '@/components/campains/Statistics';
 import Guests from '@/components/guests/Guests';
-import Invitations from '@/components/invitations';
 import Tables from '@/components/tables/Tables';
 import ProtectedLayout from '@/containers/protected';
 import { handleError } from '@/services';
@@ -100,8 +99,6 @@ function CampainDetail({ id }: { id: number }) {
                         return <Guests event={data} handleItemEdit={handleItemEdit} />;
                       case 'table':
                         return <Tables event={data} handleItemEdit={handleItemEdit} />;
-                      case 'invitation':
-                          return <Invitations event={data} handleItemEdit={handleItemEdit} />;
                     }
                   })()}
                 </Tab.Panel>

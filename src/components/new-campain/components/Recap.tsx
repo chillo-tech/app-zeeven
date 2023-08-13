@@ -22,26 +22,22 @@ function Recap() {
   const { data: sessionData } = useSession();
   const [isError, setIsError] = useState(false);
 
-  const mutation = useMutation({
-    mutationFn: (campain) => add('/api/backend/event', campain),
-    //mutationFn: ((campain: any) => add("/api/backend/event", campain)),
-    onError: (error: AxiosError) => {
-      setIsError(true), handleError(error);
-    },
-  });
-  const router = useRouter();
-  const pageError = (error: any) => {
+	const mutation = useMutation({
+    mutationFn: ((campain) => add("/api/backend/event", campain)),
+    onError: (error: AxiosError) => {setIsError(true), handleError(error)}
+	});
+	const router = useRouter()
+	const pageError = (error: any) => {
     setIsError(false);
-    error.preventDefault();
-    mutation.reset();
-    //router.push('/');
-  };
-  const handleSuccess = (error: any) => {
-    error.preventDefault();
-    mutation.reset();
-    reset();
-    router.push('/');
-  };
+		error.preventDefault();
+		mutation.reset();
+	}
+	const handleSuccess = (error: any) => {
+		error.preventDefault();
+		mutation.reset();
+		reset();
+		router.push('/');
+	}
 
   const onSubmit = (event: React.ChangeEvent<HTMLFormElement>): void => {
     event.preventDefault();
@@ -54,79 +50,64 @@ function Recap() {
     }
   };
 
-  return (
-    <section className="rounded-lg border border-slate-200 bg-white shadow-sm">
-      {mutation.isLoading ? (
-        <Message
-          type="loading"
-          firstMessage="Un instant"
-          secondMessage="Nous enregistrons votre demande"
-        />
-      ) : null}
-      {isError ? (
-        <Message
-          type="error"
-          firstMessage="Une erreur est survenue, nous allons la résoudre sous peu"
-          secondMessage="Veuillez prendre contact avec nous"
-          action={pageError}
-          actionLabel="Retourner à l'accueil"
-        />
-      ) : null}
-      {mutation.isSuccess ? (
-        <Message
-          type="success"
-          firstMessage="Nous avons enregistré votre demande."
-          secondMessage="Vous allez recevoir sous peu les informations sur votre demande"
-          action={handleSuccess}
-          actionLabel="Retourner à l'accueil"
-        />
-      ) : null}
-      {mutation.isIdle ? (
-        <div className="grid grid-cols-1 gap-2 md:grid-cols-2 md:gap-0">
-          <div className=" border-r-2 border-slate-300 p-4 md:p-5">
-            <div className="block">
-              <label
-                htmlFor="recap"
-                className="text-md mb-2 flex w-full flex-col justify-between font-light lg:text-xl"
-              >
-                <span className="font-semibold text-app-blue">Validez tout</span>
-                <span className="text-sm text-gray-500">
-                  Votre message et ceux à qui il sera transmis
-                </span>
-              </label>
-              <div aria-describedby="recap">
-                <div className="py-5">
-                  <p>
-                    Merci pour votre confiance{' '}
-                    <span className="font-bold">{campain?.utilisateur?.name}</span>
+	return (
+		<section className='rounded-lg bg-white border border-slate-200 shadow-sm'>
+			{mutation.isLoading ? (
+				<Message
+					type="loading"
+					firstMessage='Un instant'
+					secondMessage='Nous enregistrons votre demande'
+				/>) : null}
+			{isError ? (
+				<Message
+					type="error"
+					firstMessage='Une erreur est survenue, nous allons la résoudre sous peu'
+					secondMessage='Veuillez prendre contact avec nous'
+					action={pageError}
+					actionLabel="Retourner à l'accueil"
+				/>) : null}
+			{mutation.isSuccess ? (
+				<Message
+					type="success"
+					firstMessage='Nous avons enregistré votre demande.'
+					secondMessage='Vous allez recevoir sous peu les informations sur votre demande'
+					action={handleSuccess}
+					actionLabel="Retourner à l'accueil"
+				/>) : null}
+			{mutation.isIdle ? (
+				<div className='grid grid-cols-1 md:grid-cols-3 md:gap-0 gap-2'>
+					<div className="md:p-5 p-4 border-r-2 border-slate-300 col-span-2">
+						<div className="block">
+							<label htmlFor="recap"
+								   className="w-full flex flex-col justify-between mb-2 text-md lg:text-xl font-light">
+								<span className='text-app-blue font-semibold'>Validez tout</span>
+								<span
+									className="text-gray-500 text-sm">Votre message et ceux à qui il sera transmis</span>
+							</label>
+							<div aria-describedby='recap'>
+								<div className="py-5">
+									<p>Merci pour votre confiance <span
+										className="font-bold">{campain?.utilisateur?.name}</span></p>
+									<p>Le premier message sera transmis 
+										{`le ${getDisplayedDate(campain.messages[0].schedules[0].date)} à ${getFormattedTime(new Date(campain.messages[0].schedules[0].date))}`}
                   </p>
-                  <div className='my-5'>
-                    Votre message sera transmis
-                    <ul className='ml-5'>
-                      {campain.messages[0].schedules.map((schedule: any, index: number) => (
-                        <li key={`${slugify(schedule.date)}-${index}`}>
-                          Le {getDisplayedDate(schedule.date)} à {getFormattedTime(new Date(schedule.date))}
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                  <p>Votre message sera transmis à {campain?.guests?.length} personne(s)</p>
-                </div>
-              </div>
-            </div>
-            <form onSubmit={onSubmit}>
-              <BottomBar
-                stepIndex={stepIndex}
-                nextDisabled={false}
-                previousStep={previousStep}
-                nextLabel="Tout est ok pour moi"
-              />
-            </form>
-          </div>
-          <div className="p-4 md:p-5">
-            <Preview
-              text={campain.messages[0].text}
-              guests={campain?.guests || []}
+									<p>Votre message sera transmis à {campain?.guests?.length} personne(s)</p>
+								</div>
+							</div>
+						</div>
+						<form onSubmit={onSubmit}>
+							<BottomBar
+								stepIndex={stepIndex}
+								nextDisabled={false}
+								previousStep={previousStep}
+								nextLabel="Tout est ok pour moi"
+							/>
+						</form>
+					</div>
+					<div className='md:p-5 p-4'>
+						<Preview 
+              text={campain.messages[0].text} 
+              guests={campain?.guests||[]} 
               variables={campain.messages[0].informations}
             />
           </div>
