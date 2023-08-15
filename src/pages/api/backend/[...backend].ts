@@ -52,9 +52,6 @@ async function handler(
           return;
         } 
         const {data: {message} = {message: ''}} = response;
-        console.log('====================================');
-        console.log(message, status, response.status);
-        console.log('====================================');
         res.status(status||response.status).json({ message});
         return;
       }

@@ -1,7 +1,8 @@
+import Metadata from '@/components/Metadata';
 import ScheduleEdit from '@/components/new-campain/components/dates/ScheduleEdit';
-import Debug from '@/components/shared/Debug';
-import SelectTemplate from '@/components/tickets/Index';
+import SelectTemplate from '@/components/tickets';
 import ProtectedLayout from '@/containers/protected';
+import { ApplicationContext } from '@/context/ApplicationContext';
 import {
   CHANNELS,
   INFORMATIONS,
@@ -10,29 +11,34 @@ import {
   getInputFormattedDate,
   getStringAsDate,
 } from '@/utils';
+import { handleError } from '@/services';
 import { Disclosure } from '@headlessui/react';
 import { yupResolver } from '@hookform/resolvers/yup';
 import classNames from 'classnames';
-import Head from 'next/head';
 import Image from 'next/image';
-import { useRef, useState } from 'react';
+import { useContext, useEffect, useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { BiChevronUp, BiPlusCircle } from 'react-icons/bi';
 import { RxCrossCircled } from 'react-icons/rx';
 import * as yup from 'yup';
+import { useQuery } from 'react-query';
+import { search } from '@/services/crud';
+import Debug from '@/components/shared/Debug';
+
 type Schedule = {
   date: string;
   time: string;
 };
 type FormValues = {
-  address: string;
-  message: string;
   test: string;
   channels: string[];
-  schedules: Schedule[];
   template: {
     id: string;
-    reference: string;
+    title: string;
+    name: string;
+    address: string;
+    text: string;
+    schedules: Schedule[];
     params: {
     }
   },
@@ -47,19 +53,7 @@ type FormValues = {
 };
 const schema = yup
   .object({
-    address: yup.string().required('Merci de saisir une adresse'),
-    message: yup.string(),
     channels: yup.array().of(yup.string()).min(1, 'Merci de sélectionner un canal'),
-    schedules: yup
-      .array()
-      .of(
-        yup.object({
-          date: yup.string().required('Merci de saisir une adresse'),
-          time: yup.string(),
-        })
-      )
-      .required('Merci de saisir une date')
-      .min(1, 'Merci de saisir une date'),
     active: yup.object({
       date: yup.string().required('Merci de sélectionner une date'),
       time: yup.string().required('Merci de définir une heure de active'),
@@ -69,19 +63,49 @@ const schema = yup
       time: yup.string().required('Merci de définir une heure de send'),
     }),
     template: yup.object({
-      reference: yup.string().nullable().required('Merci de sélectionner un template'),
+      name: yup.string().nullable().required('Merci de sélectionner un template'),
+      title: yup.string().required('Le titre de votre billet est vide'),
+      address: yup.string().required('Merci de saisir une adresse'),
+      text: yup.string(),
       id: yup.string(),
+      schedules: yup
+      .array()
+      .of(
+        yup.object({
+          date: yup.string().required('Merci de saisir une adresse'),
+          time: yup.string(),
+        })
+      )
+      .required('Merci de saisir une date')
+      .min(1, 'Merci de saisir une date'),
     }),
   })
   .required();
 
-function Invitation() {
+function Invitation({ id }: { id: number }) {
   const now = new Date();
   now.setDate(now.getDate() + 1);
   const messageRef = useRef<HTMLTextAreaElement | null>();
   const [formVisible, setFormVisible] = useState(true);
   const [schedules, setSchedules] = useState<Schedule[]>([]);
+  const [isError, setIsError] = useState(false);
+  const [data, setData] = useState<any>();
+  const {updateData} = useContext(ApplicationContext);
 
+  useQuery<any>({
+    queryKey: ['user-campains', id],
+    queryFn: () => search(`/api/backend/event/${id}`),
+    enabled: !!id,
+    refetchOnWindowFocus: false,
+    onSuccess: ({ data }) => {
+      setData(data);
+      updateData({event: data});
+    },
+    onError: (error: any) => {
+      setIsError(true);
+      handleError(error);
+    },
+  });
   const {
     register,
     handleSubmit,
@@ -91,8 +115,6 @@ function Invitation() {
     formState: { errors },
   } = useForm<FormValues>({
     defaultValues: {
-      address: '',
-      schedules: [],
       channels: [],
       active: {
         date: getInputFormattedDate(now),
@@ -102,12 +124,17 @@ function Invitation() {
         date: getInputFormattedDate(now),
         time: '00:00',
       },
+      template: {
+        address: '',
+        text: "Tenue correcte exigée",
+        schedules: [],
+      }
     },
     mode: 'onChange',
     resolver: yupResolver(schema),
   });
   const watchAllFields = watch();
-  const { ref, ...rest } = register('message');
+  const { ref, ...rest } = register("template.text");
   const channelsValues = watch('channels', []);
   const removeSchedule = (scheduleToRemove: any) => {
     const uniqueSchedules = schedules.filter(
@@ -115,8 +142,8 @@ function Invitation() {
     );
     setSchedules(uniqueSchedules);
 
-    setValue('schedules', uniqueSchedules);
-    trigger('schedules');
+    setValue('template.schedules', uniqueSchedules);
+    trigger('template');
 
     if (!uniqueSchedules.length) {
       setFormVisible(true);
@@ -132,7 +159,6 @@ function Invitation() {
               getStringAsDate(entry.date).getTime() === getStringAsDate(item.date).getTime()
           )
         ) {
-          console.log(item);
           accumulator.push(item);
         }
         return accumulator;
@@ -140,34 +166,31 @@ function Invitation() {
       []
     );
     setSchedules(uniqueSchedules);
-    setValue('schedules', uniqueSchedules);
-    trigger('schedules');
+    setValue('template.schedules', uniqueSchedules);
+    trigger('template');
     setFormVisible(false);
   };
 
-  const handleTemplate = (template: any) => {
-    console.log(template);
-    
+  const handleTemplate = (name: any) => {
+    const template = {...watchAllFields["template"], name, title: data?.name};    
     setValue('template', template);
     trigger('template');
   };
   const onSubmit = (data: any) => {
     console.log(data);
   };
+
   return (
     <ProtectedLayout>
-      <Head>
-        <title>Tickets pour évènements</title>
-        <meta name="description" content="Tickets pour évènements" />
-      </Head>
-      <h1 className="text-4xl font-semibold text-app-blue">Invitations pour votre évènement</h1>
+      <Metadata entry={{title: "Tickets pour évènements" , description: "Tickets pour évènements"}}/>
+      <h1 className="text-3xl font-semibold text-app-blue">Invitations pour votre évènement {data?.name}</h1>
 
       <div className="bg-white p-4 shadow">
         <Disclosure defaultOpen={true}>
           {({ open }) => (
             <>
               <Disclosure.Button className="flex w-full justify-between rounded-t-md bg-slate-100 px-4 py-2 text-left font-light text-app-blue focus:outline-none focus-visible:ring focus-visible:ring-purple-500 focus-visible:ring-opacity-75">
-                 <span className='font-semibold text-app-blue flex w-full flex-col justify-between text-lg font-light lg:text-xl'>
+                <span className='font-semibold text-app-blue flex w-full flex-col justify-between text-lg font-light lg:text-xl'>
                   Template
                 </span>
                 <BiChevronUp
@@ -175,8 +198,8 @@ function Invitation() {
                 />
               </Disclosure.Button>
               <Disclosure.Panel className="rounded-b-md bg-slate-100 px-4 pb-6 text-gray-500 ">
-              <SelectTemplate data={watchAllFields} onTemplateSelected={handleTemplate}/>
-              <p className="text-red-500">{errors?.template?.reference?.message}</p>
+                <SelectTemplate data={watchAllFields} onTemplateSelected={handleTemplate} event={data}/>
+                <p className="text-red-500">{errors?.template?.name?.message}</p>
               </Disclosure.Panel>
             </>
           )}
@@ -242,7 +265,7 @@ function Invitation() {
                         </>
                       ) : null}
 
-                      <p className="text-red-500">{errors?.schedules?.message}</p>
+                      <p className="text-red-500">{errors?.template?.schedules?.message}</p>
                     </div>
                   </div>
                   <div className="bg-slate-100 px-4 py-4">
@@ -302,9 +325,9 @@ function Invitation() {
                           type="text"
                           id="address"
                           className="focus:ring-indigo-5000 w-full rounded-md border-gray-300 py-3 shadow-sm focus:border-indigo-500"
-                          {...register('address')}
+                          {...register('template.address')}
                         />
-                        <p className="text-red-500">{errors?.address?.message}</p>
+                        <p className="text-red-500">{errors?.template?.address?.message}</p>
                       </div>
                     </div>
                   </div>
@@ -402,7 +425,7 @@ function Invitation() {
                     <div className="form-wrapper">
                       <div className="">
                         <label
-                          htmlFor="address"
+                          htmlFor="text"
                           className="text-md mb-2 flex w-full flex-col justify-between font-light lg:text-xl"
                         >
                           <span className="font-semibold text-app-blue">
@@ -411,16 +434,16 @@ function Invitation() {
                         </label>
                         <textarea
                           rows={6}
-                          id="message"
+                          id="text"
                           className="focus:ring-indigo-5000 w-full rounded-lg border-gray-300 py-3 shadow-sm focus:border-indigo-500"
                           {...rest}
-                          name="message"
+                          name="template.text"
                           ref={(e) => {
                             ref(e);
                             messageRef.current = e; // you can still assign to ref
                           }}
                         />
-                        <p className="text-red-500">{errors?.message?.message}</p>
+                        <p className="text-red-500">{errors?.template?.text?.message}</p>
                       </div>
                     </div>
                   </div>
@@ -430,6 +453,8 @@ function Invitation() {
           )}
         </Disclosure>
         <form noValidate className="pb-4" onSubmit={handleSubmit(onSubmit)}>
+
+          <Debug data={watchAllFields} />
           <div className="mt-2 flex items-center justify-between font-extralight">
             <button
               type="submit"
@@ -445,3 +470,9 @@ function Invitation() {
 }
 
 export default Invitation;
+
+export async function getServerSideProps(context: any) {
+  const { params } = context;
+  const id = params['slug'].substring(params['slug'].lastIndexOf('-') + 1);
+  return { props: { ...params, id, slug: params['slug'] } };
+}

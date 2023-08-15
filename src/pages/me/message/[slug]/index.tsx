@@ -5,22 +5,22 @@ import Guests from '@/components/guests/Guests';
 import Invitations from '@/components/invitations';
 import Tables from '@/components/tables/Tables';
 import ProtectedLayout from '@/containers/protected';
+import { ApplicationContext } from '@/context/ApplicationContext';
 import { handleError } from '@/services';
 import { search } from '@/services/crud';
 import { PROFILE_CATEGORIES } from '@/utils';
 import { Tab } from '@headlessui/react';
 import classNames from 'classnames';
-import { useState } from 'react';
-import { useQuery, useQueryClient } from 'react-query';
+import { useContext, useState } from 'react';
+import { useQuery } from 'react-query';
 
 function CampainDetail({ id }: { id: number }) {
   const [isError, setIsError] = useState(false);
   const [data, setData] = useState<any>();
+  const {updateData} = useContext(ApplicationContext);
 
   const {
-    isSuccess,
     isLoading,
-
     refetch,
   } = useQuery<any>({
     queryKey: ['user-campains', id],
@@ -29,9 +29,11 @@ function CampainDetail({ id }: { id: number }) {
     refetchOnWindowFocus: false,
     onSuccess: ({ data }) => {
       setData(data);
+      updateData({event: data});
     },
     onError: (error: any) => {
-      setIsError(true), handleError(error);
+      setIsError(true);
+      handleError(error);
     },
   });
 

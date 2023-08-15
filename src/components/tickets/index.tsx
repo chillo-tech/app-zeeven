@@ -1,15 +1,20 @@
 import { TICKET_TYPE } from '@/utils';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { AiOutlineArrowLeft } from 'react-icons/ai';
-import Vertical from './Vertical';
+import ImageDisplay from '../image-display';
 import Horizontal from './Horizontal';
-function SelectTemplate({ template, data, onTemplateSelected }: any) {
+import Vertical from './Vertical';
+function SelectTemplate({ data, onTemplateSelected, event }: any) {
   const { horirontal, vertical } = TICKET_TYPE;
-  const [selectedTemplate, setSelectedTemplate] = useState(template);
-  const handleTemplateSelection = (reference: any) => {
-    setSelectedTemplate(reference);
-    onTemplateSelected({reference})
-  }
+  const [selectedTemplate, setSelectedTemplate] = useState(data?.template?.name);
+  const [baseEnv, setBaseEnv] = useState(process.env.NEXT_PUBLIC_ASSETS_ENDPOINT);
+  const handleTemplateSelection = (name: any) => {
+    setSelectedTemplate(name);
+    onTemplateSelected(name);
+  };
+  useEffect(() => {
+    setBaseEnv(process.env.NEXT_PUBLIC_ASSETS_ENDPOINT);
+  }, []);
   const fieldWrapper = (() => {
     switch (selectedTemplate) {
       case horirontal:
@@ -23,8 +28,8 @@ function SelectTemplate({ template, data, onTemplateSelected }: any) {
               >
                 <AiOutlineArrowLeft className="mr-1" /> Modifier
               </button>
-              <div className="flex items-center justify-center">
-                <Horizontal data={data}/>
+              <div className="flex flex-col items-center justify-center">
+                <Horizontal data={data} event={event} template={selectedTemplate} />
               </div>
             </div>
           </>
@@ -40,27 +45,35 @@ function SelectTemplate({ template, data, onTemplateSelected }: any) {
               <AiOutlineArrowLeft className="mr-1" />
               Modifier
             </button>
-            <div className="flex items-center justify-center">
-              <Vertical />
+            <div className="flex flex-col items-center justify-center">
+              <Vertical data={data} event={event} template={selectedTemplate} />
             </div>
           </div>
         );
       default:
         return (
           <div className="grid md:grid-cols-2">
-            <button
-              type="button"
-              className="border border-blue-900 bg-blue-900 p-4"
-              onClick={() => handleTemplateSelection(vertical)}
-            >
-              Vertical
+            <button type="button" onClick={() => handleTemplateSelection(horirontal)}>
+              <ImageDisplay
+                wrapperClasses="relative h-64 items-center flex"
+                local="true"
+                imageClasses="object-contain"
+                image={{
+                  path: `${baseEnv}/templates/horizontal.png`,
+                  title: "ZEEVEN ticket template"
+                }}
+              />
             </button>
-            <button
-              type="button"
-              className="border border-blue-900 bg-blue-900 p-4"
-              onClick={() => handleTemplateSelection(horirontal)}
-            >
-              Horizontal
+            <button type="button" onClick={() => handleTemplateSelection(vertical)}>
+              <ImageDisplay
+                wrapperClasses="relative h-64 items-center flex"
+                local="true"
+                imageClasses="object-contain"
+                image={{
+                  path: `${baseEnv}/templates/vertical.png`,
+                  title: "ZEEVEN ticket template"
+                }}
+              />
             </button>
           </div>
         );
