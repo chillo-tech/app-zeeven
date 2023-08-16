@@ -14,12 +14,11 @@ function ImageDisplay({
   const getPath =() => {
     if(local) {
       return  image.path
-    }
-    if(base64) {
+    } else if(base64) {
       return `data:image/jpg;base64,${image.path}`
+    } else {
+      return `${process.env.APPLICATION_URL}/assets/${image.id}`;
     }
-
-    return `${process.env.APPLICATION_URL}/assets/${image.id}`;
   }
 
   return (

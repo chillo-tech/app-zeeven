@@ -1,7 +1,7 @@
 import Metadata from '@/components/Metadata';
 import RenderHtmlContent from '@/components/RenderHtmlContent';
 import ImageDisplay from '@/components/image-display';
-import QRCodeLink from '@/components/qr-code/QRCodeLink';
+import QRCodeText from '@/components/qr-code/QRCodeText';
 import QRCodeVCARD from '@/components/qr-code/QRCodeVCARD';
 import QRCodeWifi from '@/components/qr-code/QRCodeWifi';
 import Debug from '@/components/shared/Debug';
@@ -84,7 +84,7 @@ function QRCode() {
                   >
                     {
                       {
-                        LINK: <QRCodeLink type="LINK" handleMenu={setDisplayMenu} />,
+                        LINK: <QRCodeText type="LINK" handleMenu={setDisplayMenu} />,
                         WIFI: <QRCodeWifi type="WIFI" handleMenu={setDisplayMenu} />,
                         VCARD: <QRCodeVCARD type="VCARD" handleMenu={setDisplayMenu} />,
                       }[value]

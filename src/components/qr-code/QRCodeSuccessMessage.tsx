@@ -1,8 +1,6 @@
 import { useRouter } from 'next/router';
 import Message from '../Message';
-import ImageDisplay from '../image-display';
-import OutlineLink from '../shared/OutlineLink';
-import { downloadBase64File } from '@/utils';
+import QRCodePrevisualisation from './QRCodePrevisualisation';
 
 function QRCodeSuccessMessage({ data }: any) {
   const router = useRouter();
@@ -16,20 +14,7 @@ function QRCodeSuccessMessage({ data }: any) {
           action={() => router.push('/')}
           actionLabel="Retourner à l'accueil"
         />
-        <div className='flex flex-col'>
-          <ImageDisplay
-            base64={true}
-            image={{ path: data, title: 'zeeven qr code' }}
-            wrapperClasses="relative w-full md:h-full h-52"
-            imageClasses="object-contain"
-          />
-          <OutlineLink
-            button={true}
-            action={() => downloadBase64File(data, 'image/png', `qr-code.png`)}
-            label="Télécharger"
-            classes="w-full justify-center mt-4"
-          />
-        </div>
+        <QRCodePrevisualisation data={data}/>
       </div>
     </div>
   );
