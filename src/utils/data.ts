@@ -18,7 +18,7 @@ const RESET_CAMPAIN = 'RESET_CAMPAIN';
 const SET_NB_STEPS = 'SET_NB_STEPS';
 const UPDATE_DATA = 'UPDATE_DATA';
 const TICKET_TYPE = {
-  horirontal: 'horirontal',
+  horizontal: 'horizontal',
   vertical: 'vertical',
 };
 const PROFILE_CATEGORIES: any = [

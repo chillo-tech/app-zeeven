@@ -44,8 +44,9 @@ function DeletetableItem({children, classes, action, actionValue, showButton = t
 			</div>
 			{
 				deleteBlock ? (
-					<div className={classNames("flex w-full justify-end bg-slate-300 items-center py-3 px-2")}>
+					<div className={classNames("flex flex-col md:flex-row w-full justify-end bg-slate-300 items-center py-3 px-2")}>
 						<span className="mr-2">Confirmez vous cette action ? </span>
+            <div>
 						<button type='button' className={formStyles.outline__button__black}
 								onClick={(event) => {event.stopPropagation(); toggleDeleteBlock(!deleteBlock)}}>
 							Annuler
@@ -53,6 +54,7 @@ function DeletetableItem({children, classes, action, actionValue, showButton = t
 						<button type='button' className={formStyles.button__red} onClick={handleDelete}>
 							Supprimer
 						</button>
+            </div>
 					</div>
 				) : false
 			}

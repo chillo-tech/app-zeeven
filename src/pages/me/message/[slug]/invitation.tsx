@@ -10,20 +10,23 @@ import {
   getDateWithTime,
   getInputFormattedDate,
   getStringAsDate,
+  getDateFromDateAndTime,
 } from '@/utils';
 import { handleError } from '@/services';
 import { Disclosure } from '@headlessui/react';
 import { yupResolver } from '@hookform/resolvers/yup';
 import classNames from 'classnames';
 import Image from 'next/image';
-import { useContext, useEffect, useRef, useState } from 'react';
+import { useContext, useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { BiChevronUp, BiPlusCircle } from 'react-icons/bi';
 import { RxCrossCircled } from 'react-icons/rx';
 import * as yup from 'yup';
-import { useQuery } from 'react-query';
-import { search } from '@/services/crud';
-import Debug from '@/components/shared/Debug';
+import { useMutation, useQuery } from 'react-query';
+import { add, search } from '@/services/crud';
+import { AxiosError } from 'axios';
+import Message from '@/components/Message';
+import { useRouter } from 'next/router';
 
 type Schedule = {
   date: string;
@@ -82,7 +85,8 @@ const schema = yup
   })
   .required();
 
-function Invitation({ id }: { id: number }) {
+function Invitation({ id, slug }: { id: number, slug: String }) {
+  
   const now = new Date();
   now.setDate(now.getDate() + 1);
   const messageRef = useRef<HTMLTextAreaElement | null>();
@@ -91,6 +95,7 @@ function Invitation({ id }: { id: number }) {
   const [isError, setIsError] = useState(false);
   const [data, setData] = useState<any>();
   const {updateData} = useContext(ApplicationContext);
+	const router = useRouter();
 
   useQuery<any>({
     queryKey: ['user-campains', id],
@@ -170,21 +175,79 @@ function Invitation({ id }: { id: number }) {
     trigger('template');
     setFormVisible(false);
   };
+	const handleSuccess = () => {
+		mutation.reset();
+		router.push(`/me/message/${slug}`);
+	}
+  
+	const pageError = (error: any) => {
+    setIsError(false);
+		mutation.reset();
+	}
 
   const handleTemplate = (name: any) => {
     const template = {...watchAllFields["template"], name, title: data?.name};    
     setValue('template', template);
     trigger('template');
   };
-  const onSubmit = (data: any) => {
-    console.log(data);
+  const mutation = useMutation({
+    mutationKey: ['user-campains', slug, 'invitation-guest'],
+    mutationFn: (item: any) => add(
+      `/api/backend/event/${id}/invitation`, 
+      JSON.stringify({
+        ...item, 
+        template: {
+            ...item.template,
+            schedules: item.template.schedules.map(
+              (schedule: any) => ({
+                ...schedule, 
+                date: getDateFromDateAndTime(schedule.date, schedule.time)
+              })
+            )
+        },
+        active: getDateFromDateAndTime(item.send.date, item.send.time),
+        send: getDateFromDateAndTime(item.send.date, item.send.time)
+      })
+    ),
+    onError: (error: AxiosError) => {
+      setIsError(true), handleError(error);
+    },
+    onSuccess: handleSuccess,
+  });
+  const onSubmit = async (item: FormValues) => {
+    setFormVisible(false);
+    try {
+      mutation.mutate(item);
+    } catch (error) {}
   };
 
   return (
     <ProtectedLayout>
       <Metadata entry={{title: "Tickets pour évènements" , description: "Tickets pour évènements"}}/>
       <h1 className="text-3xl font-semibold text-app-blue">Invitations pour votre évènement {data?.name}</h1>
-
+			{mutation.isLoading ? (
+				<Message
+					type="loading"
+					firstMessage='Un instant'
+					secondMessage='Nous enregistrons votre demande'
+				/>) : null}
+			{isError ? (
+				<Message
+					type="error"
+					firstMessage='Une erreur est survenue, nous allons la résoudre sous peu'
+					secondMessage='Veuillez prendre contact avec nous'
+					action={pageError}
+					actionLabel="Retourner à l'accueil"
+				/>) : null}
+			{mutation.isSuccess ? (
+				<Message
+					type="success"
+					firstMessage='Nous avons enregistré votre demande.'
+					secondMessage='Vous allez recevoir sous peu les informations sur votre demande'
+					action={handleSuccess}
+					actionLabel="Retourner à l'accueil"
+				/>) : null}
+			{mutation.isIdle ? (
       <div className="bg-white p-4 shadow">
         <Disclosure defaultOpen={true}>
           {({ open }) => (
@@ -453,8 +516,6 @@ function Invitation({ id }: { id: number }) {
           )}
         </Disclosure>
         <form noValidate className="pb-4" onSubmit={handleSubmit(onSubmit)}>
-
-          <Debug data={watchAllFields} />
           <div className="mt-2 flex items-center justify-between font-extralight">
             <button
               type="submit"
@@ -464,7 +525,7 @@ function Invitation({ id }: { id: number }) {
             </button>
           </div>
         </form>
-      </div>
+      </div>): null}
     </ProtectedLayout>
   );
 }

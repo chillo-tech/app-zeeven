@@ -5,7 +5,7 @@ import ImageDisplay from '../image-display';
 import Horizontal from './Horizontal';
 import Vertical from './Vertical';
 function SelectTemplate({ data, onTemplateSelected, event }: any) {
-  const { horirontal, vertical } = TICKET_TYPE;
+  const { horizontal, vertical } = TICKET_TYPE;
   const [selectedTemplate, setSelectedTemplate] = useState(data?.template?.name);
   const [baseEnv, setBaseEnv] = useState(process.env.NEXT_PUBLIC_ASSETS_ENDPOINT);
   const handleTemplateSelection = (name: any) => {
@@ -17,7 +17,7 @@ function SelectTemplate({ data, onTemplateSelected, event }: any) {
   }, []);
   const fieldWrapper = (() => {
     switch (selectedTemplate) {
-      case horirontal:
+      case horizontal:
         return (
           <>
             <div className="flex flex-col text-sm">
@@ -53,7 +53,7 @@ function SelectTemplate({ data, onTemplateSelected, event }: any) {
       default:
         return (
           <div className="grid md:grid-cols-2">
-            <button type="button" onClick={() => handleTemplateSelection(horirontal)}>
+            <button type="button" onClick={() => handleTemplateSelection(horizontal)}>
               <ImageDisplay
                 wrapperClasses="relative h-64 items-center flex"
                 local="true"
