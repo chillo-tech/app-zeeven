@@ -42,15 +42,18 @@ async function handler(
     }
   } catch (error: any) {
     const axiosError = error as Error | AxiosError;
+    
     if(axios.isAxiosError(axiosError)){
       const axiosError = error as Error | AxiosError;
       if(axios.isAxiosError(axiosError)){
-        const {status, response} = error;
-      
+        const {status, response} = error;      
         if(status === 401 || (response && response.status && response.status === 401)) {
           res.status(401).json({ message: "Veuillez vous connecter" });
           return;
-        }
+        } 
+        const {data: {message} = {message: ''}} = response;
+        res.status(status||response.status).json({ message});
+        return;
       }
       return Promise.reject(error);
     }

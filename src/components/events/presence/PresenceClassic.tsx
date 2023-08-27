@@ -1,17 +1,15 @@
 import Message from '@/components/Message';
 import RenderHtmlContent from '@/components/RenderHtmlContent';
 import ImageDisplay from '@/components/image-display';
-import Layout from '@/containers/opened';
-import { fetchData, handleError, pattchData } from '@/services';
-import { EVENT_FIELDS, PHONE_ERROR_MESSAGE } from '@/utils';
+import { pattchData } from '@/services';
+import { PHONE_ERROR_MESSAGE } from '@/utils';
 import { RadioGroup } from '@headlessui/react';
 import { yupResolver } from '@hookform/resolvers/yup';
 import classNames from 'classnames';
-import Head from 'next/head';
 import { useRouter } from 'next/router';
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { useMutation, useQuery } from 'react-query';
+import { useMutation } from 'react-query';
 import * as yup from 'yup';
 const presences = [
   {
@@ -70,6 +68,7 @@ const schema = yup
   })
   .required();
 function PresenceClassic({ data }: any) {
+  const router = useRouter();
   const [presence, setPresence] = useState();
   const [civility, setCivility] = useState();
   const handleSuccess = (error: any) => {
@@ -80,7 +79,6 @@ function PresenceClassic({ data }: any) {
   const mutation = useMutation({
     mutationFn: (message: any) => pattchData(`/api/backoffice/Event/${data.id}`, message),
   });
-  const router = useRouter();
   const {
     register,
     handleSubmit,
@@ -97,7 +95,7 @@ function PresenceClassic({ data }: any) {
     const guestQuery: any = { guests: { create: [{ guest_id: data }] } };
     mutation.mutate(guestQuery);
   };
-  const watchFields = watch(['presence', 'civility']);
+  
   const handleRadioButton = (name: 'presence' | 'civility', value: any) => {
     setValue(name, value);
     trigger(name);
@@ -117,11 +115,6 @@ function PresenceClassic({ data }: any) {
       setValue('partner', '');
     }
   };
-  const [selectedRadioButn, setSelectedRadioBtn] = React.useState('M');
-  const isRadioSelected = (value: string): boolean => true;
-
-  const handleRadioClick = (e: React.ChangeEvent<HTMLInputElement>): void =>
-    setSelectedRadioBtn(e.currentTarget.value);
 
   return (
       <section

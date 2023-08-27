@@ -28,7 +28,7 @@ export const tabGroupStyleClasses: Record<TabStyle, string> = {
 
 export const tabItemStyleClasses: Record<TabStyle, Record<TabItemStatus, string>> = {
   default: {
-    active: 'bg-gray-100 text-blue-600 dark:bg-gray-800 dark:text-blue-500',
+    active: 'bg-blue-100 text-blue-600 dark:bg-blue-800 dark:text-blue-500',
     notActive:
       'text-gray-500 hover:bg-gray-50 hover:text-gray-600 dark:text-gray-400 dark:hover:bg-gray-800  dark:hover:text-gray-300',
   },

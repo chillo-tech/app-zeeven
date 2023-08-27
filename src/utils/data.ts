@@ -17,7 +17,34 @@ const SET_STATE = 'SET_STATE';
 const RESET_CAMPAIN = 'RESET_CAMPAIN';
 const SET_NB_STEPS = 'SET_NB_STEPS';
 const UPDATE_DATA = 'UPDATE_DATA';
-
+const TICKET_TYPE = {
+  horizontal: 'horizontal',
+  vertical: 'vertical',
+};
+const PROFILE_CATEGORIES: any = [
+  {
+    label: 'Contacts',
+    slug: 'contact',
+    url: ''
+  },
+  {
+    label: 'Invitations',
+    slug: 'invitation',
+    url: ''
+  },
+  {
+    label: 'Tables',
+    slug: 'table',
+    url: ''
+  }
+];
+const EVENT_PROFILE_CATEGORIES =  {
+  "contact": true,
+  "guest": false,
+  "nvitation": false,
+  "schedule": false ,
+  "table": false
+}
 const WIFI_ENCODAGE = [
   {
     label: 'Aucun',
@@ -211,11 +238,30 @@ const isValidUrl = (url: string) => {
   }
   return true;
 };
-
+const CHANNELS = [
+  {
+     "label": "Email",
+     "image": "email.png",
+     "value": "EMAIL"
+  },
+  {
+     "label": "SMS",
+     "image": "sms.png",
+     "value": "SMS"
+  },
+  {
+     "label": "Whatsapp",
+     "image": "whatsapp.png",
+     "value": "WHATSAPP"
+  }
+]
 export {
   variableFieldType,
   isUserInformation,
   variableWithoutTemplate,
+  CHANNELS,
+  EVENT_PROFILE_CATEGORIES,
+  PROFILE_CATEGORIES,
   GLOBAL_ERROR,
   REQUIRED_FIELD_ERROR_MESSAGE,
   SET_STATE,
@@ -241,5 +287,6 @@ export {
   isValidUrl,
   ACCOUNT_CATEGORIESLINKS,
   WIFI_ENCODAGE,
-  ACCOUNT_PAGES_LINKS
+  ACCOUNT_PAGES_LINKS,
+  TICKET_TYPE
 };

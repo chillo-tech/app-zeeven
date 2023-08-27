@@ -7,6 +7,7 @@ import Message from '@/components/Message';
 import Empty from '@/components/search/Empty';
 import {useRouter} from 'next/router';
 import List from '@/components/search/List';
+import Metadata from '@/components/Metadata';
 
 function Compte() {
 	const [isError, setIsError] = useState(false);
@@ -20,11 +21,8 @@ function Compte() {
 	const router = useRouter();
 	return (
 		<ProtectedLayout>
-			<Head>
-				<title>Informez nos contacts de vos évènements</title>
-				<meta name="description" content="Informez nos contacts de vos évènements"/>
-				<link rel="icon" href="/favicon.ico"/>
-			</Head>
+      <Metadata entry={{title: "Informez nos contacts de vos évènements", description: "Informez nos contacts de vos évènements"}}
+      />
 			<section className='shadow sm:rounded-md sm:overflow-hidden min-h-fit md:bg-white md:py-6 md:px-4 sm:p-6'>
 				{isLoading ? (
 						<Message

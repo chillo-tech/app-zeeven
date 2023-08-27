@@ -27,10 +27,11 @@ function Messages() {
 	const [lastVariable, setLastVariable] = useState("");
 	const context = useContext(NewCampainContext);
 	const {
-		state: {stepIndex, campain: {messages = [{text: '', ordre: 1}]}},
+		state,
 		updateCampain,
 		previousStep
 	} = context;
+  const {stepIndex, campain: {guests, messages = [{text: '', ordre: 1}]}} = state;
 	const {setValue, watch, register, formState: {errors}, control, handleSubmit} = useForm<FormValues>(
 		{
 			defaultValues: {
@@ -195,7 +196,7 @@ function Messages() {
 				</form>
 			</div>
 			<div className='md:p-5 p-4'>
-				<Preview text={currentMessage}/>
+				<Preview text={currentMessage} guests={guests}/>
 			</div>
 		</section>
 	)

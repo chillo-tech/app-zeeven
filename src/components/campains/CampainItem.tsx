@@ -8,11 +8,19 @@ import Debug from '../shared/Debug';
 
 function CampainItem({item, index}: { item: any, index: number }) {
 	return (
-		<div className={`grid md:grid-cols-5 md:items-center px-3 md:px-0 py-3 md:py-0 mb-2 md:mb-0 ${index % 2 === 1 ? 'bg-blue-50' : 'bg-white'}`}
-			 key={`${item.slug}-${index}`}>
+		<div className={`grid md:grid-cols-6 md:items-center px-3 md:px-0 py-3 md:py-0 mb-2 md:mb-0 ${index % 2 === 1 ? 'bg-blue-50' : 'bg-white'}`}
+			 key={`${item.slug}-${index}`}> 
       <div className='md:justify-start py-2 md:py-3 md:px-5 flex justify-between'>
+       <span className='md:hidden'>Nom</span>
+       <p className='text-left'>
+         {
+           item.name
+         }
+       </p>
+     </div>
+      <div className='md:justify-start py-2 md:py-3 md:px-5 flex justify-between md:justify-center items-center md:flex-col'>
         <span className='md:hidden'>Date</span>
-        <p className='text-left'>
+        <p className="flex flex-col items-center justify-center">
           {
             item.messages[0].schedules.map((schedule: any, key: number) => <span key={`${key}-${slugify(schedule.date)}`}>{getDisplayedDate(schedule.date)}</span>)
           }

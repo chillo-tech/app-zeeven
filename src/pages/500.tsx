@@ -1,6 +1,6 @@
 import React from 'react'
 import {useRouter} from "next/router";
-import Layout from '../containers/opened';
+import OpenedLayout from '@/containers/opened';
 
 function PageNotFound() {
 	const router = useRouter();
@@ -8,7 +8,7 @@ function PageNotFound() {
 		router.push('/');
 	}
   return (
-    <Layout>
+    <OpenedLayout>
         <section className='container mx-auto py-32 md:my-auto flex flex-col justify-center'>
           <div className='bg-white p-5 rounded-xl text-app-blue text-lg w-3/4 mx-auto'>
             <p className='text-center my-5'>Désolé, une erreur est survenue</p>
@@ -20,7 +20,7 @@ function PageNotFound() {
             </p>
           </div>
         </section>
-    </Layout>
+    </OpenedLayout>
   )
 }
 

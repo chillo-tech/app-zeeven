@@ -92,8 +92,6 @@ function PresenceWithPartner({ data }: any) {
     reValidateMode: 'onChange',
     resolver: yupResolver(schema),
   });
-  console.log(errors);
-  
   const onSubmit = (data: Message) => {
     const guestQuery: any = { guests: { create: [{ guest_id: data }] } };
     mutation.mutate(guestQuery);
