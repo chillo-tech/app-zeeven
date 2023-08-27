@@ -38,6 +38,13 @@ const PROFILE_CATEGORIES: any = [
     url: ''
   }
 ];
+const EVENT_PROFILE_CATEGORIES =  {
+  "contact": true,
+  "guest": false,
+  "nvitation": false,
+  "schedule": false ,
+  "table": false
+}
 const WIFI_ENCODAGE = [
   {
     label: 'Aucun',
@@ -253,6 +260,7 @@ export {
   isUserInformation,
   variableWithoutTemplate,
   CHANNELS,
+  EVENT_PROFILE_CATEGORIES,
   PROFILE_CATEGORIES,
   GLOBAL_ERROR,
   REQUIRED_FIELD_ERROR_MESSAGE,

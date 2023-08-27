@@ -79,8 +79,8 @@ const schema = yup
           time: yup.string(),
         })
       )
-      .required('Merci de saisir une date')
-      .min(1, 'Merci de saisir une date'),
+      .required('Merci de saisir une date et cliquer sur ajouter')
+      .min(1, 'Merci de saisir une dat et cliquer sur ajouter'),
     }),
   })
   .required();
@@ -103,8 +103,14 @@ function Invitation({ id, slug }: { id: number, slug: String }) {
     enabled: !!id,
     refetchOnWindowFocus: false,
     onSuccess: ({ data }) => {
-      setData(data);
-      updateData({event: data});
+      const { params: {invitation}} = data as any
+      console.log({invitation})
+      if(invitation) {
+        setData(data);
+        updateData({event: data});
+      } else {
+        router.push(`/404`);
+      }
     },
     onError: (error: any) => {
       setIsError(true);
@@ -190,6 +196,7 @@ function Invitation({ id, slug }: { id: number, slug: String }) {
     setValue('template', template);
     trigger('template');
   };
+
   const mutation = useMutation({
     mutationKey: ['user-campains', slug, 'invitation-guest'],
     mutationFn: (item: any) => add(
