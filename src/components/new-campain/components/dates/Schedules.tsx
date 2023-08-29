@@ -85,7 +85,7 @@ function Schedules() {
                   .map((schedule: Schedule, index: number) => (
                     <li key={`schedule-${index}`}>
                       <span className="outline-blue-button">
-                        {getHumanDate(schedule.date)}{' '}
+                        {getHumanDate(new Date(schedule.date))}{' '}
                         <button type="button" onClick={() => removeSchedule(schedule)}>
                           <RxCrossCircled className="ml-3 text-red-600" />
                         </button>

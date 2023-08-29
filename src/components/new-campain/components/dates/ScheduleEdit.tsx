@@ -1,4 +1,4 @@
-import { getInputFormattedDate } from '@/utils';
+import { getDateFromDateAndTime, getInputFormattedDate } from '@/utils';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm } from 'react-hook-form';
 import * as yup from 'yup';
@@ -31,11 +31,8 @@ function ScheduleEdit({ update }: any) {
   });
 
   const onSubmit = ({ date, time }: FormValues) => {
-    const [hours, seconds] = time.split(':');
-    let selectedDate = new Date(date);
-    selectedDate.setHours(Number(hours.trim()));
-    selectedDate.setMinutes(Number(seconds.trim()));
-    update({ date: selectedDate, timezone: Intl.DateTimeFormat().resolvedOptions().timeZone });
+    const selectedDate = getDateFromDateAndTime(date, time);
+    update({ date: selectedDate, time, timezone: Intl.DateTimeFormat().resolvedOptions().timeZone });
   };
 
   return (

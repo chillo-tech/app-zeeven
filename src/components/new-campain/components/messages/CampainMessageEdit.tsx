@@ -46,9 +46,6 @@ const CampainMessageEdit: FunctionComponent<CampainMessageEditProps> = ({
   
   const onSubmit = (event: any) => {
     const target = event;
-    console.log('====================================');
-    console.log(target);
-    console.log('====================================');
     //update(index, data)
   }
 	const updateStyle = ({name, value}: StyleParams) => {

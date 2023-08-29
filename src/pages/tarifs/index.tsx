@@ -9,12 +9,10 @@ import { useSession } from 'next-auth/react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
-import { AiOutlineCheckCircle } from 'react-icons/ai';
 import { useMutation, useQuery } from 'react-query';
 
 function Tarifs() {
   const [data, setData] = useState<any>();
-  const session = useSession();
   useQuery<any>({
     queryKey: ['les-tarifs'],
     queryFn: () =>
@@ -44,7 +42,7 @@ function Tarifs() {
       <section className="pt-16">
         {data ? (
           <Tab.Group>
-            <Tab.List className="container mx-auto flex space-x-1 rounded-xl bg-app-blue/20 p-1 md:w-11/12">
+            <Tab.List className="flex space-x-1 rounded-xl bg-blue-900/20 p-1">
               {data?.pages.map(({ related_page_id }: any) => (
                 <Tab
                   key={`tarifs-${data.id}-${related_page_id.id}`}

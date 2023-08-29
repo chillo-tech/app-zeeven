@@ -1,20 +1,26 @@
-import React, {useContext, useState} from 'react';
-import BottomBar from './BottomBar';
-import {NewCampainContext} from '@/context/NewCampainContext';
-import {getDisplayedDate, getFormattedTime} from '@/utils/DateFormat';
-import Preview from './Preview';
-import {useMutation} from 'react-query';
-import {add, handleError} from '@/services';
 import Message from '@/components/Message';
-import {useRouter} from 'next/router'
-import {signIn, useSession} from 'next-auth/react';
+import Debug from '@/components/shared/Debug';
+import { NewCampainContext } from '@/context/NewCampainContext';
+import { add, handleError } from '@/services';
+import { slugify } from '@/utils';
+import { getDisplayedDate, getFormattedTime } from '@/utils/DateFormat';
 import { AxiosError } from 'axios';
+import { signIn, useSession } from 'next-auth/react';
+import { useRouter } from 'next/router';
+import React, { useContext, useState } from 'react';
+import { useMutation } from 'react-query';
+import BottomBar from './BottomBar';
+import Preview from './Preview';
 
 function Recap() {
-	const context = useContext(NewCampainContext);
-	const {state: {stepIndex, campain}, previousStep, reset} = context;
-	const {data: sessionData} = useSession();
-	const [isError, setIsError] = useState(false);
+  const context = useContext(NewCampainContext);
+  const {
+    state: { stepIndex, campain },
+    previousStep,
+    reset,
+  } = context;
+  const { data: sessionData } = useSession();
+  const [isError, setIsError] = useState(false);
 
 	const mutation = useMutation({
     mutationFn: ((campain) => add("/api/backend/event", campain)),
@@ -33,16 +39,16 @@ function Recap() {
 		router.push('/');
 	}
 
-	const onSubmit = (event: React.ChangeEvent<HTMLFormElement>): void => {
-		event.preventDefault();
-		if (!sessionData) {
-			signIn(undefined, {
-				callbackUrl: `${window.location.origin}/nouvelle-campagne`,
-			});
-		} else {
-			mutation.mutate(campain);
-		}
-	};
+  const onSubmit = (event: React.ChangeEvent<HTMLFormElement>): void => {
+    event.preventDefault();
+    if (!sessionData) {
+      signIn(undefined, {
+        callbackUrl: `${window.location.origin}/nouvelle-campagne`,
+      });
+    } else {
+      mutation.mutate(campain);
+    }
+  };
 
 	return (
 		<section className='rounded-lg bg-white border border-slate-200 shadow-sm'>
@@ -104,11 +110,11 @@ function Recap() {
               guests={campain?.guests||[]} 
               variables={campain.messages[0].informations}
             />
-					</div>
-				</div>
-			) : null}
-		</section>
-	)
+          </div>
+        </div>
+      ) : null}
+    </section>
+  );
 }
 
-export default Recap
+export default Recap;

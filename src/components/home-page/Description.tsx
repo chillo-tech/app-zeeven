@@ -24,7 +24,7 @@ function Description() {
 								loader={loaderProp}
 								unoptimized={true}
 								className={cn(
-									'rounded-md duration-700 ease-in-out group-hover:opacity-75',
+									'rounded-md duration-700 ease-in-out group-hover:opacity-75 object-cover',
 									isLoading
 										? 'scale-110 blur-2xl grayscale'
 										: 'scale-100 blur-0 grayscale-0'

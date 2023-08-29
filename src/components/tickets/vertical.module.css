@@ -1,0 +1,133 @@
+.wrapper {
+  height: 529px;
+  width: 300px;
+  padding: 10px;
+  display: grid;
+  grid-template-rows: repeat(10, 1fr);
+  grid-template-columns: repeat(8, 1fr);
+  grid-template-areas:
+    'one one one one one one one one'
+    'one one one one one one one one'
+    'one one one one one one one one'
+    'one one one one one one one one'
+    'one one one one one one one one'
+    'one one one one one one one one'
+    'one one one one one one one one'
+    'two two two two two two two two'
+    'two two two two two two two two'
+    'two two two two two two two two'
+  ;
+}
+.separator {
+  padding: 0 5px;
+}
+.data {
+  grid-area: one;
+  display: flex;
+  background-size: cover;
+  overflow: hidden;
+  border-radius: 6px;
+}
+.image {
+  grid-area: two;
+  padding-top: 7px;
+  display: flex;
+}
+.inner {
+  flex: 1;
+  border-radius: 6px;
+  padding: 10px;
+  position: relative;
+  display: flex;
+  flex-direction: column; 
+  justify-content: space-between;
+}
+
+.dataInner {
+  position: relative;
+  display: flex; 
+  flex-direction: column; 
+  justify-content: space-between;
+  flex: 1;
+  border-radius: 6px;
+  overflow: hidden;
+  align-items: center;
+  align-content: center;
+}
+
+.dataInnerContent {
+  flex-direction: column; 
+  justify-content: center; 
+  display: flex; 
+  position: absolute; 
+  inset: 0; 
+  padding: 0 5px 0;
+  text-align: center;
+}
+
+.dataInnerMessage {
+  padding: 0 !important; 
+  font-size: 10px;
+  margin: 10px 0 0 0 !important;
+}
+
+.dataInnerMessageTitle {
+  font-size: 22px;
+  font-weight: bolder;
+  margin: 0 0 10px 0 !important;
+  padding: 0 !important;
+}
+
+.dataInnerMessageDateAddress {
+  font-weight: 200;
+  margin: 10px 0;
+}
+
+.dataInnerMessageDateAddressDate {
+  margin: 0 !important; 
+  padding: 0 !important; 
+  font-weight: 200;
+}
+
+.imageInner {
+  flex: 1;
+  border-radius: 6px;
+  padding: 10px;
+  background-color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.innerImageWrapper {
+  width: 50%;
+  height: 90px;
+  position: relative;
+  display: flex;
+}
+.imageInnerName {
+  padding: 0; 
+  margin: 20px 0 0;
+  text-align: right;
+}
+
+.ticketName {
+  display: flex;
+  flex-direction: column; 
+  justify-content: space-between;
+}
+.imageInnerTicketLabelNumber {
+  padding: 0;
+  margin: 0; 
+  font-size: small; 
+  text-align: right;
+}
+
+.imageInnerTicketNumber {
+  display: block;
+  font-size: 20px; 
+  font-weight: 900;
+}
+
+.imageInnerImage {
+  object-fit: contain;
+}

@@ -87,3 +87,24 @@ export const getStringAsDate = (entry: any) => {
   }
   return entry;
 }
+
+export const getDateWithTime = (date: any, time: string) => {
+  if (date === null) {
+		return date;
+	}
+
+  const hours = Number(time.split(':')[0]);
+  const minutes = Number(time.split(':')[1]);
+
+  date.setHours(hours);
+  date.setMinutes(minutes);
+  return date;
+}
+
+export const getDateFromDateAndTime= (date: any, time: string) => {
+  const [hours, minutes] = time.split(':');
+  const selectedDate = new Date(date);
+  selectedDate.setHours(Number(hours.trim()));
+  selectedDate.setMinutes(Number(minutes.trim()));
+  return selectedDate;
+}
