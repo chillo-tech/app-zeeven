@@ -7,7 +7,9 @@
 strong {
   font-weight: 900 !important;
 }
-
+.react-colorful__last-control {
+  border-radius: 0 !important;
+}
 @layer base {
 
   .blue-link {

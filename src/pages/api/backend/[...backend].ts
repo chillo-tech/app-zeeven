@@ -51,8 +51,10 @@ async function handler(
           res.status(401).json({ message: "Veuillez vous connecter" });
           return;
         } 
-        const {data: {message} = {message: ''}} = response;
-        res.status(status||response.status).json({ message});
+        if(response) {
+          const {data: {message} = {message: ''}} = response;
+          res.status(status||response.status).json({ message});
+        }
         return;
       }
       return Promise.reject(error);

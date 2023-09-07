@@ -42,13 +42,13 @@ function Tarifs() {
       <section className="pt-16">
         {data ? (
           <Tab.Group>
-            <Tab.List className="flex space-x-1 rounded-xl bg-blue-900/20 p-1">
+            <Tab.List className="container flex space-x-1 rounded-xl bg-blue-900/20 p-1">
               {data?.pages.map(({ related_page_id }: any) => (
                 <Tab
                   key={`tarifs-${data.id}-${related_page_id.id}`}
                   className={(data) =>
                     classNames(
-                      'text-md w-full rounded-lg py-2 font-medium leading-5 md:py-4',
+                      'ext-md w-full rounded-lg py-2 font-medium leading-5 md:py-4',
                       'ring-white ring-opacity-60 ring-offset-2 ring-offset-blue-400 focus:outline-none focus:ring-2',
                       data.selected
                         ? 'text-app-blue bg-white shadow'

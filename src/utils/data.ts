@@ -41,11 +41,11 @@ const PROFILE_CATEGORIES: any = [
     url: ''
   }
 ];
-const EVENT_PROFILE_CATEGORIES =  {
+const EVENT_PROFILE_CATEGORIES = {
   "contact": true,
   "guest": false,
   "nvitation": false,
-  "schedule": false ,
+  "schedule": false,
   "table": false
 }
 const WIFI_ENCODAGE = [
@@ -68,20 +68,53 @@ const WIFI_ENCODAGE = [
 ];
 const QR_CODES_TYPES = [
   {
-    label: 'Lien',
-    icon: 'link',
-    value: 'LINK',
-    placeholder: 'https://zeeven.fr'
+    label: 'TELEPHONE',
+    icon: 'PHONE',
+    value: 'PHONE',
+    description: "Au scan le QR code appelera à ce numéro."
   },
   {
-    label: 'Wifi',
+    label: 'EMAIL',
+    icon: 'EMAIL',
+    value: 'EMAIL',
+    description: "Au scan le QR code envera un email à cette adresse."
+  },
+  {
+    label: 'LIEN',
+    icon: 'link',
+    value: 'LINK',
+    placeholder: 'https://zeeven.fr',
+    description: "Votre QR code ouvrira cette URL."
+  },
+  {
+    label: 'SMS',
+    icon: 'SMS',
+    value: 'SMS',
+    description: "Au scan le QR code envera un message à ce numéro."
+  },
+  {
+    label: 'WHATSAPP',
+    icon: 'WHATSAPP',
+    value: 'WHATSAPP',
+    description: "Au scan le QR code envera un message whatsapp à ce numéro."
+  },
+  {
+    label: 'WIFI',
     icon: 'wifi',
     value: 'WIFI',
+    description: "Au scan le QR code permettra de se connecter au WIFI"
   },
   {
     label: 'VCARD',
     icon: 'VCARD',
     value: 'VCARD',
+    description: "Au scan le QR code permettra d'enregistrer ce contact."
+  },
+  {
+    label: 'TEXTE',
+    icon: 'TEXT',
+    value: 'TEXT',
+    description: "Au scan le QR code permettra de lire ce texte."
   },
 ];
 const GUESTS_OPTIONS = [
@@ -244,28 +277,39 @@ const isValidUrl = (url: string) => {
 };
 const CHANNELS = [
   {
-     "label": "Email",
-     "image": "email.png",
-     "value": "EMAIL"
+    "label": "Email",
+    "image": "email.png",
+    "value": "EMAIL"
   },
   {
-     "label": "SMS",
-     "image": "sms.png",
-     "value": "SMS"
+    "label": "SMS",
+    "image": "sms.png",
+    "value": "SMS"
   },
   {
-     "label": "Whatsapp",
-     "image": "whatsapp.png",
-     "value": "WHATSAPP"
+    "label": "Whatsapp",
+    "image": "whatsapp.png",
+    "value": "WHATSAPP"
   }
 ]
+const QRCODE_APPEARANCE = [
+  'NONE',
+  'TEXT_BOTTOM',
+  'TEXT_TOP'
+]
+const WHITE_COLOR = "#FFFFFF";
+const BLACK_COLOR = "#211c1c";
+const QRCODE_DEFAULT_TEXT = "Scannez ici";
+const NONE = "NONE";
 export {
   variableFieldType,
   isUserInformation,
   variableWithoutTemplate,
-  INVALID_ERROR_MESSAGE,
+  BLACK_COLOR,
+  QRCODE_DEFAULT_TEXT,
   CHANNELS,
   EVENT_PROFILE_CATEGORIES,
+  INVALID_ERROR_MESSAGE,
   PROFILE_CATEGORIES,
   GLOBAL_ERROR,
   REQUIRED_FIELD_ERROR_MESSAGE,
@@ -293,5 +337,8 @@ export {
   ACCOUNT_CATEGORIESLINKS,
   WIFI_ENCODAGE,
   ACCOUNT_PAGES_LINKS,
-  TICKET_TYPE
+  TICKET_TYPE,
+  NONE,
+  QRCODE_APPEARANCE,
+  WHITE_COLOR
 };

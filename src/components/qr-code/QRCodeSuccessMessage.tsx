@@ -1,12 +1,11 @@
 import { useRouter } from 'next/router';
 import Message from '../Message';
-import QRCodePrevisualisation from './QRCodePrevisualisation';
 
-function QRCodeSuccessMessage({ data }: any) {
+function QRCodeSuccessMessage() {
   const router = useRouter();
   return (
-    <div className="container mx-auto mb-10 overflow-hidden rounded-lg md:w-2/3">
-      <div className="grid md:grid-cols-2">
+    <div className="bg-white un-success container mx-auto mb-10 overflow-hidden rounded-lg">
+      <div className="grid">
         <Message
           type="success"
           firstMessage="Votre QR CODE a bien été généré"
@@ -14,7 +13,6 @@ function QRCodeSuccessMessage({ data }: any) {
           action={() => router.push('/')}
           actionLabel="Retourner à l'accueil"
         />
-        <QRCodePrevisualisation data={data}/>
       </div>
     </div>
   );

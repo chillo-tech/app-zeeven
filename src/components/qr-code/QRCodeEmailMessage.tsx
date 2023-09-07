@@ -1,32 +1,30 @@
 import { add, handleError } from '@/services';
 import {
   BLACK_COLOR,
-  INVALID_ERROR_MESSAGE,
   NONE,
+  EMAIL_PATTERN,
+  EMAIL_ERROR_MESSAGE,
   QRCODE_DEFAULT_TEXT,
-  QR_CODES_TYPES,
   REQUIRED_FIELD_ERROR_MESSAGE,
-  URL_PATTERN,
   WHITE_COLOR,
 } from '@/utils';
 import * as yup from 'yup';
 
 import { yupResolver } from '@hookform/resolvers/yup';
-import { useRouter } from 'next/router';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useMutation } from 'react-query';
 import Message from '../Message';
 import QRCodeSuccessMessage from './QRCodeSuccessMessage';
-import QRCodePrevisualisation from './QRCodePrevisualisation';
 import QRCodeAppearance from './parameters/QRCodeAppearance';
+import QRCodePrevisualisation from './QRCodePrevisualisation';
 
 export type Message = {
   name: string;
   organisation: string;
   type: string;
-  text: string;
   data: {
+    email: string;
     text: string;
   };
   params?: {
@@ -39,8 +37,7 @@ export type Message = {
   };
 };
 
-function QRCodeText({ type, params, placeholder }: any) {
-  console.log({ type })
+function QRCodeEmailMessage({ type, params }: any) {
   const [isError, setIsError] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
   const [qrCodeData, setQrCodeData] = useState({});
@@ -60,29 +57,12 @@ function QRCodeText({ type, params, placeholder }: any) {
     .object({
       type: yup.string().trim().required(REQUIRED_FIELD_ERROR_MESSAGE).default(type),
       data: yup.object({
-        text: yup.string()
-          .required(REQUIRED_FIELD_ERROR_MESSAGE)
-          .test("validate-text", "Le format de données sasi est invalide", (value = "", context) => {
-            const type = context.parent.type;
-            if (type === 'LINK') {
-              const re = new RegExp(URL_PATTERN);
-              return re.test(value.trim());
-            }
-            if (type === 'PHONE') {
-              const re = new RegExp(URL_PATTERN);
-              return re.test(value.trim());
-            }
-            return value.trim().length > 0;
-          })
-          .when('$other', {
-            is: (val: any) => { console.log({ val }); return val === 'LINK' },
-            then: (schema) =>
-              schema.matches(URL_PATTERN, {
-                message: INVALID_ERROR_MESSAGE,
-                excludeEmptyString: true,
-              }),
-          }),
-        type: yup.string().trim().required(REQUIRED_FIELD_ERROR_MESSAGE).default(type),
+        email: yup
+          .string()
+          .required(EMAIL_ERROR_MESSAGE)
+          .email(EMAIL_ERROR_MESSAGE)
+          .matches(EMAIL_PATTERN, { excludeEmptyString: true, message: EMAIL_ERROR_MESSAGE }),
+        text: yup.string(),
       }),
       params: yup
         .object({
@@ -125,11 +105,12 @@ function QRCodeText({ type, params, placeholder }: any) {
   });
   const formData = watch();
   const onSubmit = (data: Message) => mutate({ temp: false, data });
+
   return (
     <div className="grid w-full bg-slate-100 md:grid-cols-4">
       <div className="options flex flex-col justify-arround py-3 px-2 md:col-span-3 md:p-4">
         {isError ? (
-          <div className="container mx-auto mb-10 rounded-lg bg-white md:w-2/3">
+          <div className="un-erreur container mx-auto mb-10 rounded-lg bg-white">
             <Message
               type="error"
               firstMessage="Une erreur est survenue, nous allons la résoudre sous peu"
@@ -140,30 +121,47 @@ function QRCodeText({ type, params, placeholder }: any) {
           </div>
         ) : null}
         {isSuccess ? <QRCodeSuccessMessage /> : null}
-        {isIdle ? (
-          <div className="grid items-center gap-4">
-            <form noValidate className="block space-y-6" onSubmit={handleSubmit(onSubmit)}>
-              <div className="grid space-y-4 items-center rounded-xl bg-white py-4 px-4">
-                <div className="block">
+        {(isIdle) ? (
+          <form noValidate className="block space-y-6" onSubmit={handleSubmit(onSubmit)}>
+            <div className="grid items-center space-y-4 rounded-xl bg-white px-4 py-4">
+              <div className="text-md mb-0">
+                <label htmlFor="email" className="input-label">
+                  Votre email
+                </label>
+                <div className="mt-1 flex flex-col md:flex-row">
                   <input
-                    type="text"
-                    id="text"
-                    placeholder={placeholder}
+                    placeholder="Votre adresse mail"
+                    type="email"
+                    autoComplete="false"
                     className="focus:ring-indigo-5000 w-full rounded-lg border-gray-300 text-xl shadow-sm focus:border-indigo-500"
-                    {...register('data.text')}
+                    {...register('data.email')}
+                    id="email"
                   />
-                  <p className="text-red-500">{errors?.data?.text?.message}</p>
                 </div>
-                <div className="flex">
-                  <button type="submit" className="yellow-button">
-                    <span>Générer le QR code</span>
-                  </button>
-                </div>
-                <small className="font-semi mt-2 text-gray-500">{params.description}</small>
+                <p className="text-red-600">{errors?.data?.email?.message}</p>
               </div>
-              <QRCodeAppearance register={register} setValue={setValue} data={formData} />
-            </form>
-          </div>
+              <div className="block">
+                <label htmlFor="message" className="input-label">
+                  Votre message
+                </label>
+                <textarea
+                  placeholder="Nous sommes à votre écoute, dites nous tout."
+                  id="message"
+                  rows={4}
+                  className="focus:ring-indigo-5000 w-full rounded-lg border-gray-300 py-2 shadow-sm focus:border-indigo-500"
+                  {...register('data.text')}
+                ></textarea>
+                <p className="text-red-500">{errors?.data?.text?.message}</p>
+              </div>
+              <div className="flex">
+                <button type="submit" className="yellow-button">
+                  <span>Générer le QR code</span>
+                </button>
+              </div>
+              <small className="font-semi mt-2 text-gray-600">{params.description}</small>
+            </div>
+            <QRCodeAppearance register={register} setValue={setValue} data={formData} />
+          </form>
         ) : null}
       </div>
 
@@ -174,4 +172,4 @@ function QRCodeText({ type, params, placeholder }: any) {
   );
 }
 
-export default QRCodeText;
+export default QRCodeEmailMessage;
