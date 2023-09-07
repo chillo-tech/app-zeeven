@@ -15,7 +15,7 @@ function ImageDisplay({
     if(local) {
       return  image.path
     } else if(base64) {
-      return `data:image/jpg;base64,${image.path}`
+      return image.path.startsWith("data:") ? image.path :`data:image/jpg;base64,${image.path}` 
     } else {
       return `${process.env.APPLICATION_URL}/assets/${image.id}`;
     }
