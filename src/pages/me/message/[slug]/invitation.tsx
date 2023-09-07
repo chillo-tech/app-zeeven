@@ -234,6 +234,7 @@ function Invitation({ id, slug }: { id: number; slug: String }) {
   const handleFileRead = async (event: any) => {
     const file = event.target.files[0];
     const base64 = (await convertToBase64(file)) as string;
+    setValue('template.title', data?.name);
     setValue('template.file', base64 as string);
     setValue('template.name', 'horizontal');
   };
@@ -613,6 +614,7 @@ function Invitation({ id, slug }: { id: number; slug: String }) {
                 <span>Enregistrer</span>
               </button>
             </div>
+            <pre>{JSON.stringify(errors)}</pre>
           </form>
         </div>
       ) : null}
