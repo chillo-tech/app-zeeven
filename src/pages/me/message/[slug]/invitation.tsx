@@ -614,7 +614,6 @@ function Invitation({ id, slug }: { id: number; slug: String }) {
                 <span>Enregistrer</span>
               </button>
             </div>
-            <pre>{JSON.stringify(errors)}</pre>
           </form>
         </div>
       ) : null}
