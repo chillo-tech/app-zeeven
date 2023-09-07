@@ -3,6 +3,7 @@ export interface Profile {
 	publicId?: string,
 	civility?: string,
 	firstName: string,
+	partner?: string,
 	lastName: string,
 	email: string,
 	phone: string,

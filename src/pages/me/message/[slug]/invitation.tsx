@@ -80,7 +80,7 @@ const schema = yup
         })
       )
       .required('Merci de saisir une date et cliquer sur ajouter')
-      .min(1, 'Merci de saisir une dat et cliquer sur ajouter'),
+      .min(1, 'Merci de saisir une date et cliquer sur ajouter'),
     }),
   })
   .required();

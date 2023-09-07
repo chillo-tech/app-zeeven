@@ -22,7 +22,7 @@ function CsvFile({display, setContacts}: any) {
 				if(result) {
 					const guests = result.split("\n")
 						.slice(1)
-						.filter((line: string) => line.split(",").length === 6)
+						.filter((line: string) => line.split(",").length >= 6)
 						.map((line: string) =>  {
 							const values = line.split(",");
 							return {
@@ -32,9 +32,9 @@ function CsvFile({display, setContacts}: any) {
 								phoneIndex: values[3].replaceAll('"', ''),
 								phone: values[4].replaceAll('"', ''),
 								email: values[5].replaceAll('"', ''),
+								partner: values[6].replaceAll('"', ''),
 							}
 					})
-
 					setContacts(guests);
 				}
 			}
@@ -62,7 +62,7 @@ function CsvFile({display, setContacts}: any) {
 				<span className="py-2">OU</span>
 				<span className="rounded-lg bg-blue-400 text-white px-3 py-2 shadow-md mb-2">Sélectionnez un fichier</span>
 				<span className="text-xs">Votre fichier doit avoir les colonnes</span>
-				<span className="text-xs">(civilite,prenom,nom,indicatif,telephone,email)</span>
+				<span className="text-xs">(civilite,prenom,nom,indicatif,telephone,email,partenaire)</span>
 				<input className="absolute left-0 top-0 right-0 bottom-0 w-full h-full opacity-0"
 					   id="contacts-file"
 					   type="file"

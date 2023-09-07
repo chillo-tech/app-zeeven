@@ -1,10 +1,12 @@
 import Metadata from '@/components/Metadata';
 import RenderHtmlContent from '@/components/RenderHtmlContent';
 import ImageDisplay from '@/components/image-display';
-import QRCodeLink from '@/components/qr-code/QRCodeLink';
+import QRCodeEmailMessage from '@/components/qr-code/QRCodeEmailMessage';
+import QRCodeMessage from '@/components/qr-code/QRCodeMessage';
+import QRCodePhone from '@/components/qr-code/QRCodePhone';
+import QRCodeText from '@/components/qr-code/QRCodeText';
 import QRCodeVCARD from '@/components/qr-code/QRCodeVCARD';
 import QRCodeWifi from '@/components/qr-code/QRCodeWifi';
-import Debug from '@/components/shared/Debug';
 import OutlineLink from '@/components/shared/OutlineLink';
 import OpenedLayout from '@/containers/opened';
 import { fetchData, handleError } from '@/services';
@@ -12,13 +14,13 @@ import { PAGE_FIELDS, QR_CODES_TYPES, slugify } from '@/utils';
 import { Tab } from '@headlessui/react';
 import classNames from 'classnames';
 import { useState } from 'react';
-import { BsPersonVcard, BsWifi } from 'react-icons/bs';
+import { BsChatDots, BsEnvelopeAtFill, BsEnvelopeFill, BsMailbox, BsPersonVcard, BsPhoneFill, BsTextCenter, BsWhatsapp, BsWifi } from 'react-icons/bs';
 import { TfiWorld } from 'react-icons/tfi';
 import { useQuery } from 'react-query';
 
 function QRCode() {
-  const [displayMenu, setDisplayMenu] = useState(true);
   const [data, setData] = useState<any>({});
+
   useQuery<any>({
     queryKey: ['les-QRCode'],
     queryFn: () =>
@@ -48,52 +50,103 @@ function QRCode() {
         </h3>
       </div>
       <section className="container mx-auto mb-10 md:p-0">
-        <div className="rounded-lg border-2 border-blue-300 bg-white p-2 md:p-8">
-          <div className="w-full">
-            <Tab.Group>
-              <Tab.List className="flex flex-col space-x-1 rounded-xl bg-blue-700/80 p-1 md:flex-row">
-                {QR_CODES_TYPES.map((item: any) => (
-                  <Tab
-                    key={`label-${slugify(item.label)}`}
-                    className={({ selected }) =>
-                      classNames(
-                        'flex items-center justify-center',
-                        'text-md rounded-lg py-2.5 font-medium leading-5 text-app-blue md:w-full',
-                        'ring-white ring-opacity-60 ring-offset-blue-400 focus:outline-none focus:ring-2',
-                        selected
-                          ? 'mr-2 bg-white shadow'
-                          : 'text-blue-100 hover:bg-white/[0.12] hover:text-white'
-                      )
-                    }
-                  >
-                    {item.value === 'LINK' ? <TfiWorld className="mr-4" /> : null}
-                    {item.value === 'WIFI' ? <BsWifi className="mr-4" /> : null}
-                    {item.value === 'VCARD' ? <BsPersonVcard className="mr-4" /> : null}
-                    {item.label}
-                  </Tab>
-                ))}
-              </Tab.List>
-              <Tab.Panels className="mt-2">
-                {QR_CODES_TYPES.map(({ label, value }: { label: string; value: string }) => (
+        <div className="overflow-hidden rounded-lg border-2 border-blue-300 bg-white">
+          <Tab.Group>
+            <Tab.List className="grid grid-cols-2 rounded-lg bg-blue-700/80 p-1 md:grid-cols-5">
+              {QR_CODES_TYPES.map((item: any) => (
+                <Tab
+                  key={`label-${slugify(item.label)}`}
+                  className={({ selected }) =>
+                    classNames(
+                      'flex items-center justify-center',
+                      'text-md rounded-lg py-2.5 font-medium leading-5 text-app-blue md:w-full',
+                      'ring-white ring-opacity-60 ring-offset-blue-400 focus:outline-none focus:ring-2',
+                      selected
+                        ? 'mr-2 bg-white shadow'
+                        : 'text-blue-100 hover:bg-white/[0.12] hover:text-white'
+                    )
+                  }
+                >
+                  {item.value === 'LINK' ? <TfiWorld className="mr-4" /> : null}
+                  {item.value === 'SMS' ? <BsChatDots className="mr-4" /> : null}
+                  {item.value === 'WHATSAPP' ? <BsWhatsapp className="mr-4" /> : null}
+                  {item.value === 'WIFI' ? <BsWifi className="mr-4" /> : null}
+                  {item.value === 'VCARD' ? <BsPersonVcard className="mr-4" /> : null}
+                  {item.value === 'TEXT' ? <BsTextCenter className="mr-4" /> : null}
+                  {item.value === 'PHONE' ? <BsPhoneFill className="mr-4" /> : null}
+                  {item.value === 'EMAIL' ? <BsEnvelopeFill className="mr-4" /> : null}
+                  {item.label}
+                </Tab>
+              ))}
+            </Tab.List>
+            <Tab.Panels className="mt-2">
+              {QR_CODES_TYPES.map(
+                ({ label, value, ...rest }: { label: string; value: string }) => (
                   <Tab.Panel
                     key={`value-${slugify(label)}`}
                     className={classNames(
-                      'rounded-xl bg-white md:px-4',
                       'ring-white ring-opacity-60 ring-offset-2 ring-offset-blue-400 focus:outline-none focus:ring-2'
                     )}
                   >
                     {
                       {
-                        LINK: <QRCodeLink type="LINK" handleMenu={setDisplayMenu} />,
-                        WIFI: <QRCodeWifi type="WIFI" handleMenu={setDisplayMenu} />,
-                        VCARD: <QRCodeVCARD type="VCARD" handleMenu={setDisplayMenu} />,
+                        LINK: (
+                          <QRCodeText
+                            placeholder="Votre lien"
+                            type={value}
+                            params={rest}
+                          />
+                        ),
+                        TEXT: (
+                          <QRCodeText
+                            placeholder="Votre texte"
+                            type={value}
+                            params={rest}
+                          />
+                        ),
+                        SMS: (
+                          <QRCodeMessage
+                            type={value}
+                            params={rest}
+                          />
+                        ),
+                        PHONE: (
+                          <QRCodePhone
+                            type={value}
+                            params={rest}
+                          />
+                        ),
+                        WHATSAPP: (
+                          <QRCodeMessage
+                            type={value}
+                            params={rest}
+                          />
+                        ),
+                        EMAIL: (
+                          <QRCodeEmailMessage
+                            type={value}
+                            params={rest}
+                          />
+                        ),
+                        WIFI: (
+                          <QRCodeWifi
+                            type={value}
+                            params={rest}
+                          />
+                        ),
+                        VCARD: (
+                          <QRCodeVCARD
+                            type={value}
+                            params={rest}
+                          />
+                        ),
                       }[value]
                     }
                   </Tab.Panel>
-                ))}
-              </Tab.Panels>
-            </Tab.Group>
-          </div>
+                )
+              )}
+            </Tab.Panels>
+          </Tab.Group>
         </div>
       </section>
       <section className="mx-auto mb-10 bg-app-light-gray pb-10">
@@ -102,26 +155,26 @@ function QRCode() {
           {data?.articles?.map(({ article_id }: any, index: number) => (
             <article
               className={classNames(
-                'items-center mx-auto mb-8 rounded-xl border border-app-light-blue px-4  shadow-md md:w-11/12',
+                'mx-auto mb-8 items-center rounded-xl border border-app-light-blue px-4  shadow-md md:w-11/12',
                 { 'pb-5 pt-5': index === 0 },
-                { 'pb-8 pt-5 grid md:grid-cols-3 md:gap-10 gap-4': index !== 0 },
+                { 'grid gap-4 pb-8 pt-5 md:grid-cols-3 md:gap-10': index !== 0 },
                 { 'bg-app-light-blue': index % 2 === 0 },
                 { 'bg-white ': index % 2 !== 0 }
               )}
               key={`article-${data.id}-${article_id.id}`}
             >
               <div className={classNames({ 'md:col-span-2': index !== 0 })}>
-              <h3 className="mt-4 text-lg font-extrabold text-black md:px-0 md:text-3xl">
-                <span className="text-app-blue">{article_id.label}</span>
-              </h3>
-              <p>{article_id.sublabel}</p>
-              <RenderHtmlContent content={article_id?.abstract} classes="py-4" />
+                <h3 className="mt-4 text-lg font-extrabold text-black md:px-0 md:text-3xl">
+                  <span className="text-app-blue">{article_id.label}</span>
+                </h3>
+                <p>{article_id.sublabel}</p>
+                <RenderHtmlContent content={article_id?.abstract} classes="py-4" />
               </div>
               {article_id.articles && article_id.articles.length ? (
                 <article className="flex flex-col gap-4 py-4 md:flex-row">
                   {article_id.articles?.map(({ related_article_id }: any) => (
                     <div
-                      className="relative flex flex-col items-start justify-between rounded-lg border border-app-light-blue bg-app-light-blue md:px-10 pb-10 pt-5 md:w-11/12"
+                      className="relative flex flex-col items-start justify-between rounded-lg border border-app-light-blue bg-app-light-blue pb-10 pt-5 md:w-11/12 md:px-10"
                       key={`article-${data.id}-${related_article_id.id}`}
                     >
                       <div>
@@ -146,11 +199,11 @@ function QRCode() {
                   ))}
                 </article>
               ) : null}
-               <ImageDisplay
-                          wrapperClasses="h-40 md:h-80 relative overflow-hidden md:rounded-full"
-                          imageClasses="object-contain"
-                          image={article_id.images[0].directus_files_id}
-                        />
+              <ImageDisplay
+                wrapperClasses="h-40 md:h-80 relative overflow-hidden md:rounded-full"
+                imageClasses="object-contain"
+                image={article_id.images[0].directus_files_id}
+              />
             </article>
           ))}
         </div>
