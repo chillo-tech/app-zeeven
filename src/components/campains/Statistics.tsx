@@ -32,6 +32,8 @@ function Statistics({id}:{id: number}) {
     <>
       {data ? (
         <article className="min-h-fit bg-white flex justify-around items-center py-4">
+          
+        {/** 
           <div className="grid grid-rows-2 text-center items-center justify-center">
             <Emoji symbol="&#128521;" />
             <h3 className="text-orange-600 text-xl py-2 flex flex-col font-semibold">
@@ -53,8 +55,6 @@ function Statistics({id}:{id: number}) {
               <span>Reçus</span>
             </h3>
           </div>
-          
-          {/** 
           <div className="grid grid-rows-2 text-center items-center justify-center">
             <Emoji symbol="&#129303;" />
             <h3 className="text-green-600 text-xl py-2 flex flex-col font-semibold">
