@@ -44,12 +44,12 @@ export const getDayAndMonthLabel = (entry: Date) => {
 }
 
 export const getDisplayedDate = (entry: string = "") => {
-	if (!entry.trim().length) {
+  if (!`${entry}`.length || !`${entry}`.trim().length) {
 		return entry;
 	}
-
-	const [dayOfDate, month, year] = getFormattedDate(new Date(entry)).split('/');
-	const [dayOfWeekLabel, monthLabel] = getDayAndMonthLabel(new Date(entry));
+  const entryAsDate = new Date(entry);
+	const [dayOfDate, month, year] = getFormattedDate(entryAsDate).split('/');
+	const [dayOfWeekLabel, monthLabel] = getDayAndMonthLabel(entryAsDate);
 	return `${dayOfWeekLabel}, ${dayOfDate} ${monthLabel}`;
 
 };

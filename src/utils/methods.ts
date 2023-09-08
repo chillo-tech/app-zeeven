@@ -6,7 +6,7 @@ export const capitalize = (data: string): string => {
 
 export const slugify = (text?: string): string => {
   return text
-    ? text
+    ? `${text}`
         .toLowerCase()
         .trim()
         .replace(/[é,è,ê]/g, 'e')
