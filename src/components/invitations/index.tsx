@@ -32,7 +32,7 @@ function Invitations({ event, handleItemEdit }: any) {
 
   return (
     <>
-      {(invitation && Object.keys(invitation).length) ? (
+      {(invitation && Object.keys(invitation).length > 1) ? (
         <>
           {mutation.isLoading ? (
             <Message

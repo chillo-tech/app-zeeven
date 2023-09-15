@@ -1,6 +1,7 @@
 import { Guest } from '@/types/Guest';
 import classNames from 'classnames';
 import DeletetableItem from '../shared/DeletetableItem';
+import { CIVILITY_MAPPING } from '@/utils';
 
 type Props = {
   guests: Guest[];
@@ -9,32 +10,43 @@ type Props = {
 
 function GuestList({ guests, deleteGuest }: Props) {
   return (
-    <>
+    <div className="mt-2 flex flex-col items-center bg-white shadow sm:overflow-hidden sm:rounded-md">
       {guests
         .sort((a: Guest, b: Guest) => a.firstName.localeCompare(b.firstName))
         .map((guest, index) => (
           <DeletetableItem
-            classes="border-b border-slate-100"
+            classes={classNames('border-b border-slate-100', { 'bg-slate-100': index % 2 === 1 })}
             data={guest}
             action={deleteGuest}
             actionValue={guest.publicId}
             key={`${guest.id}-${index}`}
           >
-           
-           <article className={classNames('grid items-center text-gray-800 md:grid-cols-7')}>
-              <span className="px-1 py-1">{guest.civility}</span>
-              <span className="flex flex-col overflow-hidden py-1 capitalize md:col-span-2" title={guest.firstName}>
-                <span>{guest.firstName} {guest.lastName}</span>
+            <article
+              className={classNames('grid items-center px-4 text-gray-800 md:grid-cols-7', {
+                'bg-slate-100': index % 2 === 1,
+              })}
+            >
+              <span className="px-1 py-1">{(CIVILITY_MAPPING as any)[`${guest.civility}`]}</span>
+              <span
+                className="flex flex-col overflow-hidden py-1 capitalize md:col-span-2"
+                title={guest.firstName}
+              >
+                <span>
+                  {guest.firstName} {guest.lastName}
+                </span>
                 <span>{guest.partner}</span>
               </span>
-              <span className="py-1 md:col-span-2 truncate overflow-hidden">{guest.email}</span>
-              <span className="py-1 md:col-span-2 truncate overflow-hidden" title={`(${guest.phoneIndex}) ${guest.phone}`}>
+              <span className="overflow-hidden truncate py-1 md:col-span-2">{guest.email}</span>
+              <span
+                className="overflow-hidden truncate py-1 md:col-span-2"
+                title={`(${guest.phoneIndex}) ${guest.phone}`}
+              >
                 ({guest.phoneIndex}) {guest.phone}
               </span>
             </article>
           </DeletetableItem>
         ))}
-    </>
+    </div>
   );
 }
 

@@ -1,78 +1,48 @@
 import Message from '@/components/Message';
 import { handleError } from '@/services';
-import { add, deleteItem, search } from '@/services/crud';
-import { Guest } from '@/types/Guest';
-import { AxiosError } from 'axios';
-import { useRouter } from 'next/router';
-import { useEffect, useState } from 'react';
+import { deleteItem, search } from '@/services/crud';
+import { useState } from 'react';
 import { AiOutlineUserAdd } from 'react-icons/ai';
 import { useMutation, useQuery } from 'react-query';
 import GuestEdit from './GuestEdit';
 import GuestList from './GuestList';
+import { slugify, BACKEND_BASE_PATH } from '@/utils';
 
-function Guests({ handleItemEdit, event }: any) {
-  const router = useRouter();
-  const {
-    query: { slug },
-  } = router;
-  const [eventId] = useState<String>(
-    (slug as string).substring((slug as string)?.lastIndexOf('-') + 1)
-  );
+function Guests({ handleItemEdit, event, params }: any) {
   const [formVisible, setFormVisible] = useState(false);
+  //const [data, setData] = useState([]);
   const [isError, setIsError] = useState(false);
-  const [data, setData] = useState(event.guests || []);
-  const mutation = useMutation({
-    mutationFn: ({ eventId, guestId }: any) =>
-      deleteItem(`/api/backend/event/${eventId}/guest/${guestId}`),
-    onSuccess: handleItemEdit,
-    onError: (error: any) => {
-      setIsError(true), handleError(error);
-    },
-  });
-  const addMutation = useMutation({
-    mutationKey: ['user-campains', slug, 'add-guest'],
-    mutationFn: (item: Guest) => add(`/api/backend/event/${eventId}/guest`, item),
-    onError: (error: AxiosError) => {
-      setIsError(true), handleError(error);
-    },
-    onSuccess: handleItemEdit,
-  });
-  const onSubmit = async (item: Guest) => {
-    setFormVisible(false);
-    try {
-      addMutation.mutate(item);
-    } catch (error) {}
-  };
+  const [{fetchPath, addPath}, setParams] = useState<any>(params);
 
-  const deleteGuest = (guestId?: string) => {
-    const eventId = `${(slug as string).substring((slug as string)?.lastIndexOf('-') + 1)}`;
-    mutation.mutate({ eventId, guestId });
-  };
-
-  const { isSuccess, isLoading } = useQuery<any>({
-    enabled: false,
-    queryKey: ['user-campains', slug, 'guests'],
+  const { isLoading, refetch, data:{data} = {} } = useQuery<any>({
+    enabled: (fetchPath && fetchPath.length  > 0),
+    queryKey: [slugify(fetchPath), 'guests'],
     queryFn: () =>
-      search(
-        `/api/backend/event/${(slug as string).substring(
-          (slug as string)?.lastIndexOf('-') + 1
-        )}/guest`
-      ),
-    onSuccess: ({ data }: any) => {
-      //setData(data);
-      //handleGuests(data);
+      search(`${BACKEND_BASE_PATH}/${fetchPath}`),
+      onError: (error: any) => {
+        setIsError(true), handleError(error);
+      },
+      refetchOnWindowFocus: false,
+  });
+  const deleteMutation = useMutation({
+    mutationFn: ({ guestId }: any) => deleteItem(`${BACKEND_BASE_PATH}/${addPath}/${guestId}`),
+    onSuccess: () => {
+      refetch();
     },
     onError: (error: any) => {
       setIsError(true), handleError(error);
     },
-    refetchOnWindowFocus: false,
   });
-  useEffect(() => {
-    setData(event.guests);
-  }, [event]);
+ 
+  const onSubmit = () => {
+    setFormVisible(false);
+    refetch();
+  };
+
+  const deleteGuest = (guestId?: string) => deleteMutation.mutate({ guestId });
 
   return (
-    <article className="flex flex-col p-3">
+    <>
       {isLoading ? (
         <Message
           type="loading"
@@ -87,7 +57,7 @@ function Guests({ handleItemEdit, event }: any) {
           secondMessage="Veuillez prendre contact avec nous"
         />
       ) : null}
-      {data ? (
+      {(data && data.length) ? (
         <>
           <div className="flex items-center justify-between border-b-2 border-blue-500">
             <span className="text-app-blue">Vos contacts ({data.length})</span>
@@ -95,11 +65,11 @@ function Guests({ handleItemEdit, event }: any) {
               <AiOutlineUserAdd className="text-2xl text-app-blue" />
             </button>
           </div>
-          {formVisible ? <GuestEdit handleSubmit={onSubmit} /> : null}
+          {formVisible ? <GuestEdit handleSubmit={onSubmit} addPath={addPath}/> : null}
           {data.length ? <GuestList guests={data} deleteGuest={deleteGuest} /> : null}
         </>
       ) : null}
-    </article>
+    </>
   );
 }
 

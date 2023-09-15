@@ -8,7 +8,7 @@ import ProtectedLayout from '@/containers/protected';
 import { ApplicationContext } from '@/context/ApplicationContext';
 import { handleError } from '@/services';
 import { search } from '@/services/crud';
-import { PROFILE_CATEGORIES } from '@/utils';
+import { PROFILE_CATEGORIES, BACKEND_BASE_PATH } from '@/utils';
 import { Tab } from '@headlessui/react';
 import classNames from 'classnames';
 import { useContext, useState } from 'react';
@@ -17,16 +17,18 @@ import { useQuery } from 'react-query';
 function CampainDetail({ id }: { id: number }) {
   const [isError, setIsError] = useState(false);
   const [data, setData] = useState<any>();
+  const [params, setParams] = useState<any>({fetchPath: `event/${id}/guest`, addPath: `event/${id}/guest` });
   const { updateData } = useContext(ApplicationContext);
 
   const { isLoading, refetch } = useQuery<any>({
     queryKey: ['user-campains', id],
-    queryFn: () => search(`/api/backend/event/${id}`),
+    queryFn: () => search(`${BACKEND_BASE_PATH}/event/${id}`),
     enabled: !!id,
     refetchOnWindowFocus: false,
     onSuccess: ({ data }) => {
       setData(data);
       updateData({ event: data });
+      setParams({fetchPath: `event/${id}/guest`, addPath: `event/${id}/guest` });
     },
     onError: (error: any) => {
       setIsError(true);
@@ -99,7 +101,7 @@ function CampainDetail({ id }: { id: number }) {
                     {(() => {
                       switch (slug) {
                         case 'contact':
-                          return <Guests event={data} handleItemEdit={handleItemEdit} />;
+                          return <Guests event={data} handleItemEdit={handleItemEdit} params={params}/>;
                         case 'table':
                           return <Tables event={data} handleItemEdit={handleItemEdit} />;
                         case 'invitation':

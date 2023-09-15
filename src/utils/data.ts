@@ -1,3 +1,4 @@
+const BACKEND_BASE_PATH = "/api/backend";
 const TOKEN_PAYLOAD = 'TOKEN_PAYLOAD';
 const USER_INFOS = 'USER_INFOS';
 const PHONE_PATTERN = /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,5}$/;
@@ -19,7 +20,15 @@ const SET_STATE = 'SET_STATE';
 const RESET_CAMPAIN = 'RESET_CAMPAIN';
 const SET_NB_STEPS = 'SET_NB_STEPS';
 const UPDATE_DATA = 'UPDATE_DATA';
-
+const CIVILITY_MAPPING = {
+  "MR_MRS": "Mr & Mme",
+            "MME":"Mme",
+            "Mme": "Mme",
+            "MR": "M.",
+            "Mr": "M.",
+            "MLLE": "Mlle",
+            "Mlle": "Mlle"
+};
 const TICKET_TYPE = {
   horizontal: 'horizontal',
   vertical: 'vertical',
@@ -125,11 +134,17 @@ const GUESTS_OPTIONS = [
     sublabel: "A partir d'un",
   },
   {
+    id: 'CONTACTS',
+    label: 'Mes contacts',
+    icon: 'form',
+    sublabel: 'Sélectionner parmis',
+  },
+  {
     id: 'FORM',
     label: 'Formulaire',
     icon: 'form',
     sublabel: 'Remplir un',
-  },
+  }
 ];
 const ACCOUNT_LINKS = [
   {
@@ -159,6 +174,10 @@ const ACCOUNT_PAGES_LINKS = [
   {
     label: 'Tarifs',
     url: '/tarifs',
+  },
+  {
+    label: 'Contacts',
+    url: '/me/contacts',
   },
   {
     label: 'Mon compte',
@@ -305,7 +324,9 @@ export {
   variableFieldType,
   isUserInformation,
   variableWithoutTemplate,
+  BACKEND_BASE_PATH,
   BLACK_COLOR,
+  CIVILITY_MAPPING,
   QRCODE_DEFAULT_TEXT,
   CHANNELS,
   EVENT_PROFILE_CATEGORIES,

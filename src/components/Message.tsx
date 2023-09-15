@@ -23,8 +23,8 @@ const classByType = (type: string) => {
 
 function Message({type, firstMessage, secondMessage, actionLabel, action}: Params) {
 	return (
-		<div className='text-center flex flex-col justify-center items-center h-80'>
-			<h2 className={`text-lg text-center ${classByType(type)}`}>{firstMessage}</h2>
+    <div className="mt-2 flex py-10 flex-col items-center bg-white shadow sm:overflow-hidden sm:rounded-md">
+    <h2 className={`text-lg text-center ${classByType(type)}`}>{firstMessage}</h2>
 			<div className={`text-lg text-center my-5 ${classByType(type)}`}>{secondMessage}</div>
 			{
 				action && actionLabel ? (
