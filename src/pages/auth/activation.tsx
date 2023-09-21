@@ -15,6 +15,7 @@ import {useState} from "react";
 import {AxiosError} from "axios";
 import {unstable_getServerSession} from "next-auth";
 import {authOptions} from "../api/auth/[...nextauth]";
+import Metadata from "@/components/Metadata";
 
 const schema = yup.object({
 	code: yup.string()
@@ -53,9 +54,8 @@ export default function Activation() {
 	};
 	return (
 		<section className={styles.wrapper}>
-			<Head>
-				<title>Activez votre compte</title>
-			</Head>
+      <Metadata entry={{title: 'Activez votre compte', description: 'Informez nos contacts de vos évènements'}}/>
+
 			<nav className={`${styles.navigation}`}>
 				<Link href={"/"} className={styles.logo}>ZEEVEN</Link>
 			</nav>

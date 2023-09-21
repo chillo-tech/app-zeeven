@@ -4,12 +4,13 @@ import { RxTriangleRight } from 'react-icons/rx';
 interface Params {
   link?: string;
   label: string;
+  icon?: boolean;
   download?: string;
   classes?: string;
   button?: boolean;
   action?: any;
 }
-function OutlineLink({ link, label, button, action, classes, download }: Params) {
+function OutlineLink({ link, label, button, action, classes, download, icon = true }: Params) {
 
   return (
     <>
@@ -21,9 +22,12 @@ function OutlineLink({ link, label, button, action, classes, download }: Params)
             classes
           )}
         >
-          <span className="mr-2 rounded-full bg-app-yellow p-0">
-            <RxTriangleRight className="!m-0 text-3xl text-app-blue" />
-          </span>{' '}
+          {icon ? (
+             <span className="mr-2 rounded-full bg-app-yellow p-0">
+             <RxTriangleRight className="!m-0 text-3xl text-app-blue" />
+           </span>
+          ) : null}
+         {' '}
           {label}
         </button>
       ) : (

@@ -105,7 +105,6 @@ function Invitation({ id, slug }: { id: number; slug: String }) {
       const {
         params: { invitation },
       } = data as any;
-      console.log({ invitation });
       if (invitation) {
         setData(data);
         updateData({ event: data });

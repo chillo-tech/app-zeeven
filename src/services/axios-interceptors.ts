@@ -1,13 +1,12 @@
 import {AxiosError, AxiosInstance, AxiosRequestConfig, AxiosResponse} from "axios";
 import { Session } from "next-auth";
-import { signOut } from 'next-auth/react';
 
 interface AppSession extends Session {
   token: {
     accessToken: string
   }
 }
-const onRequest = async (config: AxiosRequestConfig): Promise<AxiosRequestConfig> => { 
+const onRequest = async (config: AxiosRequestConfig): Promise<AxiosRequestConfig> => {
   let {headers = {}}= config;
   let authorization: any = {'Authorization': headers['Authorization']}
   
@@ -17,6 +16,7 @@ const onRequest = async (config: AxiosRequestConfig): Promise<AxiosRequestConfig
 
   const credentials = url.startsWith('/api/backoffice') ?  {} : { 'service-id': `${process.env.SERVICE_ID}`, 'service-key': `${process.env.SERVICE_KEY}`};
   const baseURL = url.startsWith('/api/backoffice') ? process.env.BACKOFFICE_API : process.env.API_URL;
+
   return {
       ...config,
       baseURL,

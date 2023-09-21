@@ -1,20 +1,24 @@
-import { add } from '@/services';
+import { add, handleError } from '@/services';
 import { downloadBase64File } from '@/utils';
 import classNames from 'classnames';
 import { useState, useEffect } from 'react';
 import useDeepCompareEffect from 'use-deep-compare-effect';
 import ImageDisplay from '../image-display';
 import OutlineLink from '../shared/OutlineLink';
+import { AxiosError } from 'axios';
 
 function QRCodePrevisualisation({ classes, formData, isValid, qrCodeData: initialQrCodeData }: any) {
   const [qrCodeData, setQrCodeData] = useState(initialQrCodeData);
-  useEffect(() => {
-    console.log(formData);
+  useDeepCompareEffect(() => {
     if (isValid) {
       const fetchData = async () => {
-        //const result = await add(`/api/backend/qr-code?simulate=true`, { ...formData, data: { text: formData.text } });
-        const result = await add(`/api/backend/qr-code?simulate=true`, formData);
-        setQrCodeData({ path: result.data, title: 'QR CODE ZEEVEN' });
+        try {
+          //const result = await add(`/api/backend/qr-code?simulate=true`, { ...formData, data: { text: formData.text } });
+          const result = await add(`/api/backend/qr-code?simulate=true`, formData);
+          setQrCodeData({ path: result.data, title: 'QR CODE ZEEVEN' });
+        } catch (error: any) {
+          handleError(error);
+        }
       };
       fetchData();
     }

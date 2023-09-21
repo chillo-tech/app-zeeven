@@ -17,6 +17,7 @@ import {useState} from "react";
 import {AxiosError} from "axios";
 import {unstable_getServerSession} from "next-auth";
 import {authOptions} from "../api/auth/[...nextauth]";
+import Metadata from "@/components/Metadata";
 
 const schema = yup.object({
 	firstName: yup.string()
@@ -80,9 +81,8 @@ export default function SignIn({providers, csrfToken}: { providers: Provider[], 
 	};
 	return (
 		<section className={styles.wrapper}>
-			<Head>
-				<title>Créez votre compte</title>
-			</Head>
+      <Metadata entry={{title: 'Créez votre compte', description: 'Créez votre compte'}}/>
+
 			<nav className={`${styles.navigation}`}>
 				<Link href={"/"} className={styles.logo}>ZEEVEN</Link>
 			</nav>

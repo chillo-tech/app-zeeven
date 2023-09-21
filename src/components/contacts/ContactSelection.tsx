@@ -1,6 +1,6 @@
 import { handleError, search } from '@/services';
 import { Guest } from '@/types/Guest';
-import { BACKEND_BASE_PATH, CIVILITY_MAPPING } from '@/utils';
+import { BACKEND_BASE_PATH, CIVILITY_MAPPING, formatText } from '@/utils';
 import classNames from 'classnames';
 import { useState } from 'react';
 import { AiFillCheckCircle } from 'react-icons/ai';
@@ -73,7 +73,9 @@ function ContactSelection({ display, setContacts, contacts }: any) {
               aria-labelledby="channels"
             >
               {data
-                .sort((a: Guest, b: Guest) => a.firstName.localeCompare(b.firstName))
+                .sort((a: Guest, b: Guest) => {
+                  return a.firstName && b.firstName ? a.firstName.localeCompare(b.firstName) : 0;
+                })
                 .map((guest: Guest) => (
                   <label
                     key={guest.publicId}
@@ -107,8 +109,8 @@ function ContactSelection({ display, setContacts, contacts }: any) {
                             >
                               <span>
                                 {`${
-                                  guest.civility && (CIVILITY_MAPPING as any)[`${guest.civility}`]
-                                } ${guest.firstName} ${guest.lastName}`.trim()}
+                                  formatText(guest.civility && (CIVILITY_MAPPING as any)[`${guest.civility}`])
+                                } ${formatText(guest.firstName)} ${formatText(guest.lastName)}`.trim()}
                               </span>
                               {guest.partner ? <span>{guest.partner}</span> : null}
                             </span>
@@ -123,13 +125,15 @@ function ContactSelection({ display, setContacts, contacts }: any) {
                               title={guest.firstName}
                             >
                               <span className="overflow-hidden truncate py-1 md:col-span-2">
-                                {guest.email}
+                                {formatText(guest.email)}
                               </span>
                               <span
                                 className="overflow-hidden truncate py-1 md:col-span-2"
-                                title={`(${guest.phoneIndex}) ${guest.phone}`}
+                                title={`${guest.phoneIndex} ${guest.phone}`}
                               >
-                                ({guest.phoneIndex}) {guest.phone}
+                                {guest.phoneIndex && guest.phone
+                                  ? `(${guest.phoneIndex}) ${guest.phone}`
+                                  : null}
                               </span>
                             </span>
                           </span>

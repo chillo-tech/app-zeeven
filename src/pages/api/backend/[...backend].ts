@@ -16,7 +16,7 @@ async function handler(
 ) {
   try {
     const session = await getServerSession(req, res, authOptions) as AppSession;
-    let headers = {};
+    let {headers} = req;
     if(session && session.token) {
       const {accessToken} = session.token;
       headers = {...headers, 'Authorization':`Bearer ${accessToken}`};

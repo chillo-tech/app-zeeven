@@ -40,7 +40,6 @@ export type Message = {
 };
 
 function QRCodeText({ type, params, placeholder }: any) {
-  console.log({ type })
   const [isError, setIsError] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
   const [qrCodeData, setQrCodeData] = useState({});
@@ -52,6 +51,7 @@ function QRCodeText({ type, params, placeholder }: any) {
       setIsError(true), handleError(error);
     },
     onSuccess: ({ data }: any) => {
+      sessionStorage.removeItem("qrcodeId");
       setIsSuccess(true);
       setQrCodeData({ path: data, title: 'QR CODE ZEEVEN' });
     }
@@ -75,7 +75,7 @@ function QRCodeText({ type, params, placeholder }: any) {
             return value.trim().length > 0;
           })
           .when('$other', {
-            is: (val: any) => { console.log({ val }); return val === 'LINK' },
+            is: (val: any) => { return val === 'LINK' },
             then: (schema) =>
               schema.matches(URL_PATTERN, {
                 message: INVALID_ERROR_MESSAGE,

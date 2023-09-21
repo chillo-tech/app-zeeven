@@ -8,7 +8,8 @@ function handleError(error: any) {
     if(
         status === 401 
         || (response && response.status && response.status === 401) 
-        || (response && response.config && response.config.status && response.config.status === 401))
+        || (response && response.config && response.config.status && response.config.status === 401)
+      )
     {
       signOut({redirect: false, callbackUrl: '/auth/signin'});
       window.location.href= '/auth/signin';

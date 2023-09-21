@@ -12,6 +12,7 @@ import {EMAIL_ERROR_MESSAGE, EMAIL_PATTERN} from "@/utils/data";
 import {useRouter} from "next/router";
 import {unstable_getServerSession} from "next-auth";
 import {authOptions} from '@/pages/api/auth/[...nextauth]'
+import Metadata from "@/components/Metadata";
 
 const schema = yup.object({
 	username: yup.string()
@@ -40,9 +41,8 @@ export default function SignIn({providers, csrfToken}: { providers: Provider[], 
 	};
 	return (
 		<section className={styles.wrapper}>
-			<Head>
-				<title>Connectez vous</title>
-			</Head>
+      <Metadata entry={{title: 'Connectez vous', description: 'Informez nos contacts de vos évènements'}}/>
+
 			<nav className={`${styles.navigation}`}>
 				<Link href={"/"} className={styles.logo}>ZEEVEN</Link>
 			</nav>

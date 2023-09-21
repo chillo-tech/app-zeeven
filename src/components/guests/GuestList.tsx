@@ -12,7 +12,7 @@ function GuestList({ guests, deleteGuest }: Props) {
   return (
     <div className="mt-2 flex flex-col items-center bg-white shadow sm:overflow-hidden sm:rounded-md">
       {guests
-        .sort((a: Guest, b: Guest) => a.firstName.localeCompare(b.firstName))
+        .sort((a: Guest, b: Guest) => {return (a.firstName && b.firstName) ? a.firstName.localeCompare(b.firstName): 0})
         .map((guest, index) => (
           <DeletetableItem
             classes={classNames('border-b border-slate-100', { 'bg-slate-100': index % 2 === 1 })}
@@ -39,9 +39,9 @@ function GuestList({ guests, deleteGuest }: Props) {
               <span className="overflow-hidden truncate py-1 md:col-span-2">{guest.email}</span>
               <span
                 className="overflow-hidden truncate py-1 md:col-span-2"
-                title={`(${guest.phoneIndex}) ${guest.phone}`}
+                title={`${guest.phoneIndex} ${guest.phone}`}
               >
-                ({guest.phoneIndex}) {guest.phone}
+                { (guest.phoneIndex && guest.phone)? `(${guest.phoneIndex}) ${guest.phone}`: null}
               </span>
             </article>
           </DeletetableItem>

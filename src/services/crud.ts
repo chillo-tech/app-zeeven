@@ -1,16 +1,19 @@
 import axios from "axios"
-import {axiosInstance} from "./axios-instance"
 
 const deleteItem = (endpoint: string) => {
 	return axios.delete(endpoint)
 }
 
 const add = (endpoint: string, data: any) => {
+    const qrcodeId = sessionStorage.getItem("qrcodeId");
     const result = axios.post(
       `${endpoint}`,
       data,
       {
-        headers: {"Content-Type": "application/json"}
+        headers: {
+          "Content-Type": "application/json",
+          ...(qrcodeId && {"qrcode-id": qrcodeId})
+        }
       }
     )
     return result;

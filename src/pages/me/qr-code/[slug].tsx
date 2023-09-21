@@ -1,4 +1,5 @@
 import Message from '@/components/Message';
+import Metadata from '@/components/Metadata';
 import QRCodeItem from '@/components/qr-code/display/QRCodeItem';
 import QRcodeStatistics from '@/components/qr-code/display/QRCodeStatistics';
 import DeletetableItem from '@/components/shared/DeletetableItem';
@@ -26,11 +27,7 @@ function QRcodeDetail({ id }: { id: number }) {
   });
   return (
     <ProtectedLayout>
-      <Head>
-        <title>Informations sur votre évènement</title>
-        <meta name="description" content="Informez nos contacts de vos évènements" />
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
+      <Metadata entry={{title: 'Informations sur votre évènement', description: 'Informez nos contacts de vos évènements'}}/>
 
       {isLoading ? (
         <Message
@@ -50,18 +47,12 @@ function QRcodeDetail({ id }: { id: number }) {
       ) : null}
       {isSuccess && data ? (
         <section className="">
-          <h1 className="mb-3 mt-2 text-4xl font-semibold text-app-blue">
-            {capitalize(data.publicId.replaceAll('-', ' '))}
-          </h1>
-
-          <DeletetableItem
-            classes="border-b border-slate-100 bg-white !items-stretch"
-            data={data}
-            action={() => null}
-            actionValue={id}
+          <div
+            className="p-4 border-b border-slate-100 bg-white !items-stretch"
+         
           >
             <QRCodeItem entry={data} withDetail={false} />
-          </DeletetableItem>
+          </div>
           <QRcodeStatistics id={id}/>
         </section>
       ) : null}

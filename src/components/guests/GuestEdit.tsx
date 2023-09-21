@@ -9,6 +9,7 @@ import { useForm } from 'react-hook-form';
 import { useMutation } from 'react-query';
 import * as yup from 'yup';
 import Message from '../Message';
+import GoogleGuests from './GoogleGuests';
 
 type FormValues = {
   profile: Profile;
@@ -31,6 +32,7 @@ const schema = yup
   .required();
 
 function GuestEdit({ handleSubmit, addPath }: { handleSubmit: Function; addPath: string }) {
+  const [showSeparator, setShowSeparator] = useState(false);
   const [error, setError] = useState<any>();
   const {
     register,
@@ -60,9 +62,18 @@ function GuestEdit({ handleSubmit, addPath }: { handleSubmit: Function; addPath:
   };
 
   return (
-    <>
+    <div className="rounded-md bg-white px-4 py-6 shadow">
+      <GoogleGuests reset={reset} handleSubmit={handleSubmit} showSeparator={setShowSeparator}/>
+      
+      {showSeparator ? (
+        <p className="relative my-6 flex h-px items-center justify-center bg-app-blue">
+          <span className="absolute bg-white px-6 font-bold text-app-blue">
+            OU REMPLIR LE FORMULAIRE
+          </span>
+        </p>
+      ) : null}
       <form onSubmit={handleFormSubmit(onSubmit)}>
-        <div className="grid gap-4 bg-white px-4 py-4 shadow sm:overflow-hidden sm:rounded-md md:grid-cols-3">
+        <div className="grid gap-4 sm:overflow-hidden md:grid-cols-3">
           <div className="text-md mb-0">
             <label htmlFor="civility" className="text-md mb-2 flex w-full flex-col justify-between">
               Civilité
@@ -820,17 +831,15 @@ function GuestEdit({ handleSubmit, addPath }: { handleSubmit: Function; addPath:
           </div>
         </div>
       </form>
-
-
       {addMutation.isLoading ? (
-            <Message
-              type="loading"
-              firstMessage="Un instant"
-              secondMessage="Nous enregistrons vos informations"
-            />
-          ) : null}
+        <Message
+          type="loading"
+          firstMessage="Un instant"
+          secondMessage="Nous enregistrons vos informations"
+        />
+      ) : null}
       <p className="text-red-600">{error?.response?.data?.message}</p>
-    </>
+    </div>
   );
 }
 

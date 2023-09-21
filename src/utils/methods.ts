@@ -23,6 +23,11 @@ export const toTitle = (text: string): string => {
   return text.charAt(0).toUpperCase() + text.slice(1, text.length);
 };
 
+export const formatText = (text: string): string => {
+  if (!text) return '';
+  return text.trim();
+};
+
 export type URL_DATA = {
   route: string;
   label: string;

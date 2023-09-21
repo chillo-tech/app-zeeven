@@ -1,4 +1,5 @@
 import Message from '@/components/Message';
+import Metadata from '@/components/Metadata';
 import Layout from '@/containers/opened';
 import { sendData } from '@/services';
 import { add } from '@/services/crud';
@@ -62,10 +63,7 @@ function ContactUs() {
   };
   return (
     <Layout>
-      <Head>
-        <title>Contactez nous</title>
-        <meta name="description" content="Une question, un feedback, contactez nous" />
-      </Head>
+      <Metadata  entry={{title: 'description', description: 'Une question, un feedback, contactez nous'}}/>
       <section className="mx-auto w-11/12 pb-20 pt-10 md:w-1/2">
         <h1 className="mb-2 text-center text-4xl font-extrabold text-app-blue">
           N&apos;hésitez pas écrivez nous

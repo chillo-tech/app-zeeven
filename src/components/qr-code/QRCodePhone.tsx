@@ -50,6 +50,7 @@ function QRCodePhone({ type, params }: any) {
       setIsError(true), handleError(error);
     },
     onSuccess: ({ data }: any) => {
+      sessionStorage.removeItem("qrcodeId");
       setIsSuccess(true);
       setQrCodeData({ path: data, title: 'QR CODE ZEEVEN' });
     }

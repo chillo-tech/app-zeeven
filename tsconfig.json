@@ -19,5 +19,5 @@
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "src/pages/api/backoffice/[....backoffice].js"],
-  "exclude": ["node_modules"]
+  "exclude": ["node_modules", "src/components/guests/GoogleGuests.tsx"]
 }

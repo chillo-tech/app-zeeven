@@ -11,7 +11,7 @@ function GuestList({ guests, remove }: Params) {
     <>
       <h3 className="pt-4 text-left text-lg font-semibold text-app-blue">Vos contacts </h3>
       {guests
-        .sort((a: Guest, b: Guest) => a.firstName.localeCompare(b.firstName))
+        .sort((a: Guest, b: Guest) => {return (a.firstName && b.firstName) ? a.firstName.localeCompare(b.firstName): 0})
         .map((guest, index) => (
           <DeletetableItem
             classes={`${

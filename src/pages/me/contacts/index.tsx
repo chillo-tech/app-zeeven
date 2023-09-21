@@ -11,7 +11,10 @@ function Contacts() {
         description: "Informez nos contacts de vos évènements"
       }}
       />
-			<Guests params={{fetchPath: "contact", addPath: "contact"}}/>
+			<Guests params={{
+          fetchPath: "contact",
+          addPath: "contact"
+        }}/>
     </ProtectedLayout>
   )
 }

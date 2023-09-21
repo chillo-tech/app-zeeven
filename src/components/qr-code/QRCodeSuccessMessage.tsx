@@ -9,7 +9,7 @@ function QRCodeSuccessMessage() {
         <Message
           type="success"
           firstMessage="Votre QR CODE a bien été généré"
-          secondMessage="Inscrivez vous pour recevoir des statistiques personnalisées"
+          secondMessage="Inscrivez/connectez vous pour recevoir des statistiques personnalisées"
           action={() => router.push('/')}
           actionLabel="Retourner à l'accueil"
         />

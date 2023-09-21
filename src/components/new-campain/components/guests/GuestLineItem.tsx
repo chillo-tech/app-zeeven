@@ -10,8 +10,11 @@ function GuestLineItem({guest}: any) {
       <span>{guest.partner}</span>
     </span>
     <span className="py-1 md:col-span-2 truncate overflow-hidden">{guest.email}</span>
-    <span className="py-1 md:col-span-2 truncate overflow-hidden" title={`(${guest.phoneIndex}) ${guest.phone}`}>
-      ({guest.phoneIndex}) {guest.phone}
+    <span
+      className="overflow-hidden truncate py-1 md:col-span-2"
+      title={`${guest.phoneIndex} ${guest.phone}`}
+    >
+      { (guest.phoneIndex && guest.phone)? `(${guest.phoneIndex}) ${guest.phone}`: null}
     </span>
   </article>
   )

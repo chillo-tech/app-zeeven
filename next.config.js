@@ -12,10 +12,23 @@ const nextConfig = {
     APPLICATION_URL: process.env.APPLICATION_URL,
     NEXTAUTH_URL: process.env.NEXTAUTH_URL,
     API_URL: process.env.API_URL,
-    SERVICE_KEY: process.env.SERVICE_KEY,
-    SERVICE_ID: process.env.SERVICE_ID,
-    GOOGLE_ID: process.env.GOOGLE_ID,
-    GOOGLE_SECRET: process.env.GOOGLE_SECRET
+    NEXT_PUBLIC_API_KEY: process.env.NEXT_PUBLIC_API_KEY,
+    NEXT_PUBLIC_SERVICE_ID: process.env.NEXT_PUBLIC_SERVICE_ID,
+    NEXT_PUBLIC_GOOGLE_ID: process.env.NEXT_PUBLIC_GOOGLE_ID,
+    NEXT_PUBLIC_GOOGLE_SECRET: process.env.NEXT_PUBLIC_GOOGLE_SECRET
+  },
+  publicRuntimeConfig: {
+    NEXT_PUBLIC_GOOGLE_MAP_API_KEY: process.env.NEXT_PUBLIC_GOOGLE_MAP_API_KEY,
+    NEXT_PUBLIC_GOOGLE_ANALYTICS: process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS,
+    BACKOFFICE_API: process.env.BACKOFFICE_API,
+    BACKOFFICE_API_TOKEN: process.env.BACKOFFICE_API_TOKEN,
+    APPLICATION_URL: process.env.APPLICATION_URL,
+    NEXTAUTH_URL: process.env.NEXTAUTH_URL,
+    API_URL: process.env.API_URL,
+    NEXT_PUBLIC_API_KEY: process.env.NEXT_PUBLIC_API_KEY,
+    NEXT_PUBLIC_SERVICE_ID: process.env.NEXT_PUBLIC_SERVICE_ID,
+    NEXT_PUBLIC_GOOGLE_ID: process.env.NEXT_PUBLIC_GOOGLE_ID,
+    NEXT_PUBLIC_GOOGLE_SECRET: process.env.NEXT_PUBLIC_GOOGLE_SECRET
   },
   /*
   async rewrites() {
@@ -45,8 +58,8 @@ const nextConfig = {
         destination: '/nouvelle-campagne',
         permanent: false,
       },
-    ]
-  }
-}
+    ];
+  },
+};
 
-module.exports = nextConfig
+module.exports = nextConfig;

@@ -12,6 +12,7 @@ const configs = {
       staleTime: 5,
       refetchOnWindowFocus: false,
       refetchOnMount: false,
+      retryDelay: 1000,
     },
   },
 };
@@ -38,6 +39,20 @@ export default function App({
         });
     `}
       </Script>
+
+      <Script
+        async={true}
+        defer={true}
+        src="https://apis.google.com/js/api.js"
+        strategy="lazyOnload"
+      />
+
+      <Script
+        async={true}
+        defer={true}
+        src="https://accounts.google.com/gsi/client"
+        strategy="lazyOnload"
+      />
       <SessionProvider session={session}>
         <ApplicationContextWrapper>
           <QueryClientProvider client={queryClient}>

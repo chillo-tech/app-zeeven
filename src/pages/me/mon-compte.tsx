@@ -5,6 +5,7 @@ import {useQuery} from 'react-query';
 import {fetchData} from '@/services';
 import Message from '@/components/Message';
 import ProfileEdit from '@/components/profile/ProfileEdit';
+import Metadata from '@/components/Metadata';
 
 function Compte() {
 	const {isLoading, isError, data: {data} = {}} = useQuery<any>({
@@ -15,11 +16,8 @@ function Compte() {
 	});
 	return (
 		<ProtectedLayout>
-			<Head>
-				<title>Informez nos contacts de vos évènements</title>
-				<meta name="description" content="Informez nos contacts de vos évènements"/>
-				<link rel="icon" href="/favicon.ico"/>
-			</Head>
+      <Metadata entry={{title: 'Informez nos contacts de vos évènements', description: 'Informez nos contacts de vos évènements'}}/>
+
 			<section className='shadow sm:rounded-md sm:overflow-hidden min-h-fit bg-white py-6 px-4 sm:p-6'>
 				{isLoading ? (
 						<Message

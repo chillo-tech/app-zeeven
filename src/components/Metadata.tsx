@@ -1,4 +1,5 @@
 import Head from 'next/head'
+import Script from 'next/script';
 import React, { useMemo ,useState} from 'react'
 
 function Metadata({entry}: any) {
@@ -23,6 +24,7 @@ function Metadata({entry}: any) {
   }, [entry])
   
   return (
+    <>
     <Head>
       <title>{title}</title>
       <meta name="referrer" content="origin" />
@@ -30,6 +32,7 @@ function Metadata({entry}: any) {
       <meta name="description" content={description} />
       <link rel="icon" href="/favicon.ico" />
     </Head>
+    </>
   )
 }
 
