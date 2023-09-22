@@ -5,11 +5,10 @@ import { useState, useEffect } from 'react';
 import useDeepCompareEffect from 'use-deep-compare-effect';
 import ImageDisplay from '../image-display';
 import OutlineLink from '../shared/OutlineLink';
-import { AxiosError } from 'axios';
 
 function QRCodePrevisualisation({ classes, formData, isValid, qrCodeData: initialQrCodeData }: any) {
   const [qrCodeData, setQrCodeData] = useState(initialQrCodeData);
-  useDeepCompareEffect(() => {
+  useEffect(() => {
     if (isValid) {
       const fetchData = async () => {
         try {
@@ -22,7 +21,7 @@ function QRCodePrevisualisation({ classes, formData, isValid, qrCodeData: initia
       };
       fetchData();
     }
-  }, [formData, isValid]);
+  }, [isValid, formData]);
 
   return (
     <div className={classNames('', classes)}>

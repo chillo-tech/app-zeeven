@@ -11,8 +11,8 @@ function handleError(error: any) {
         || (response && response.config && response.config.status && response.config.status === 401)
       )
     {
-      signOut({redirect: false, callbackUrl: '/auth/signin'});
-      window.location.href= '/auth/signin';
+      signOut({redirect: true, callbackUrl: '/auth/signin'});
+      //window.location.href= '/auth/signin';
     }
   }
 }

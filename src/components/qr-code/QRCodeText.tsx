@@ -13,7 +13,7 @@ import * as yup from 'yup';
 
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useRouter } from 'next/router';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useMutation } from 'react-query';
 import Message from '../Message';
@@ -43,6 +43,7 @@ function QRCodeText({ type, params, placeholder }: any) {
   const [isError, setIsError] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
   const [qrCodeData, setQrCodeData] = useState({});
+  const [formData, setFormData] = useState({});
 
   const { mutate, isIdle } = useMutation({
     mutationFn: ({ temp, data }: any) => add(`/api/backend/qr-code?simulate=${temp}`, data),
@@ -123,7 +124,13 @@ function QRCodeText({ type, params, placeholder }: any) {
     },
     resolver: yupResolver(schema),
   });
-  const formData = watch();
+  useEffect(() => {
+    const subscription = watch((value, { name, type }) => {
+      console.log(value, name, type);
+      setFormData(value);
+    });
+    return () => subscription.unsubscribe();
+  }, [watch]);
   const onSubmit = (data: Message) => mutate({ temp: false, data });
   return (
     <div className="grid w-full bg-slate-100 md:grid-cols-4">
