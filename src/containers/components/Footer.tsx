@@ -1,7 +1,7 @@
 import RenderHtmlContent from '@/components/RenderHtmlContent';
 import { ApplicationContext } from '@/context/ApplicationContext';
 import { fetchData } from '@/services';
-import { ENTREPRISE, getUrl, slugify } from '@/utils';
+import { ENTREPRISE, slugify } from '@/utils';
 import { signIn } from 'next-auth/react';
 import Link from 'next/link';
 import { useContext } from 'react';
@@ -82,7 +82,11 @@ function Footer() {
                               className="mb-2"
                             >
                               <Link
-                                href={`/${slugify(page.page_id.label).indexOf('qr-code') > -1 ? 'qr-code':  `1-nos-solutions`}`}
+                                href={`/${
+                                  slugify(page.page_id.label).indexOf('qr-code') > -1
+                                    ? 'qr-code'
+                                    : `1-nos-solutions`
+                                }`}
                                 className="text-slate-300 hover:text-white"
                               >
                                 {page.page_id.label}
@@ -113,6 +117,12 @@ function Footer() {
             </div>
             <div className="logo flex flex-col">
               <h3 className="mb-3 text-xl text-white">Entreprise</h3>
+              <Link
+                href="/politique-de-confidentialite"
+                className="mb-2 text-slate-300 hover:text-white"
+              >
+                Politique de confidentialité
+              </Link>
               <Link href="/contactez-nous" className="mb-2 text-slate-300 hover:text-white">
                 Contactez nous
               </Link>
