@@ -35,12 +35,7 @@ const civilites = [
     id: 2,
     value: 'MS',
     label: 'Madame',
-  },
-  {
-    id: 3,
-    value: 'MR MS',
-    label: 'Monsieur & Madame',
-  },
+  }
 ];
 export type Message = {
   civility: string;
@@ -58,7 +53,7 @@ const schema = yup
     civility: yup.string().trim().required('Votre civilité'),
     name: yup.string().trim().required('Votre nom et votre prénom'),
     adults: yup.string().trim().required("Combien d'adultes"),
-    children: yup.string().trim().required("Combien d'enfants"),
+    children: yup.string().default("0"), //.trim().required("Combien d'enfants").default(),
     phoneIndex: yup.string().trim().required('Sélectionner un indicatif'),
     phone: yup
       .string()
@@ -90,6 +85,7 @@ function PresenceClassic({ data }: any) {
     mode: 'onBlur',
     reValidateMode: 'onChange',
     resolver: yupResolver(schema),
+    defaultValues: {children: '0'}
   });
   const onSubmit = (data: Message) => {
     const guestQuery: any = { guests: { create: [{ guest_id: data }] } };
@@ -216,7 +212,7 @@ function PresenceClassic({ data }: any) {
                       name="civility"
                     >
                       <RadioGroup.Label>Votre civilité</RadioGroup.Label>
-                      <div className="grid items-center gap-4 md:grid-cols-3">
+                      <div className="grid items-center gap-4 md:grid-cols-2">
                         {civilites.map((civilite) => (
                           <RadioGroup.Option
                             key={civilite.value}
@@ -954,9 +950,9 @@ function PresenceClassic({ data }: any) {
                     <p className="text-red-600">{errors?.phone?.message}</p>
                   </div>
 
-                  <div className="grid md:grid-cols-2 md:gap-4">
+                  <div className="grid md:gap-4">
                     <div className="flex flex-col">
-                      <label className="">Adultes</label>
+                      <label className="">Combien de personnes serez-vous ?</label>
                       <input
                         type="number"
                         {...register('adults')}
@@ -964,7 +960,7 @@ function PresenceClassic({ data }: any) {
                       />
                       <p className="text-red-500">{errors.adults?.message}</p>
                     </div>
-                    <div className="flex flex-col">
+                    <div className="flex flex-col hidden">
                       <label className="">Enfants</label>
                       <input
                         type="number"

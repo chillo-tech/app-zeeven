@@ -8,7 +8,7 @@ const URL_PATTERN =
   /((https?):\/\/)(www.)?[a-z0-9]+(\.[a-z]{2,}){1,3}(#?\/?[a-zA-Z0-9#]+)*\/?(\?[a-zA-Z0-9-_]+=[a-zA-Z0-9-%]+&?)?$/;
 
 const STRING_WITH_NUMBERS_REGEXP = /^\D*(\d\D*){10,}$/;
-const PHONE_ERROR_MESSAGE = 'Votre numéro de téléphone est invalide';
+const PHONE_ERROR_MESSAGE = "Votre numéro de téléphone est invalide. Le premier ZERO n'est pas necessaire";
 const INVALID_ERROR_MESSAGE = 'Ce champ est invalide';
 const EMAIL_ERROR_MESSAGE = 'Votre mail est invalide';
 const REQUIRED_FIELD_ERROR_MESSAGE = 'Ce champ est requis';
