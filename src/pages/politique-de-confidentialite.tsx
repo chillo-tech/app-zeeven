@@ -5,7 +5,7 @@ import Link from 'next/link';
 function PolitiqueDeConfidentialite() {
   return (
     <OpenedLayout>
-      <Metadata  entry={{title: 'Politique de confidentialité', description: 'Informez nos contacts de vos évènements'}}/>
+      <Metadata  entry={{title: 'Politique de confidentialité', description: "La présente charte sur le respect de la vie privée (la « Charte ») a pour objectif de formaliser notre engagement quant au respect de la vie privée des utilisateurs du site"}}/>
       <div className="container">
           <h1 className="py-4 text-2xl font-bold conditions">
             Politique de confidentialité
@@ -405,4 +405,3 @@ function PolitiqueDeConfidentialite() {
 }
 
 export default PolitiqueDeConfidentialite;
-configure arguments: --with-cc-opt='-g -O2 -fdebug-prefix-map=/build/nginx-FlcIR2/nginx-1.14.2=. -fstack-protector-strong -Wformat -Werror=format-security -fPIC -Wdate-time -D_FORTIFY_SOURCE=2' --with-ld-opt='-Wl,-z,relro -Wl,-z,now -fPIC' --prefix=/usr/share/nginx --conf-path=/etc/nginx/nginx.conf --http-log-path=/var/log/nginx/access.log --error-log-path=/var/log/nginx/error.log --lock-path=/var/lock/nginx.lock --pid-path=/run/nginx.pid --modules-path=/usr/lib/nginx/modules --http-client-body-temp-path=/var/lib/nginx/body --http-fastcgi-temp-path=/var/lib/nginx/fastcgi --http-proxy-temp-path=/var/lib/nginx/proxy --http-scgi-temp-path=/var/lib/nginx/scgi --http-uwsgi-temp-path=/var/lib/nginx/uwsgi --with-debug --with-pcre-jit --with-http_ssl_module --with-http_stub_status_module --with-http_realip_module --with-http_auth_request_module --with-http_v2_module --with-http_dav_module --with-http_slice_module --with-threads --with-http_addition_module --with-http_geoip_module=dynamic --with-http_gunzip_module --with-http_gzip_static_module --with-http_image_filter_module=dynamic --with-http_sub_module --with-http_xslt_module=dynamic --with-stream=dynamic --with-stream_ssl_module --with-stream_ssl_preread_module --with-mail=dynamic --with-mail_ssl_module --add-dynamic-module=/build/nginx-FlcIR2/nginx-1.14.2/debian/modules/http-auth-pam --add-dynamic-module=/build/nginx-FlcIR2/nginx-1.14.2/debian/modules/http-dav-ext --add-dynamic-module=/build/nginx-FlcIR2/nginx-1.14.2/debian/modules/http-echo --add-dynamic-module=/build/nginx-FlcIR2/nginx-1.14.2/debian/modules/http-upstream-fair --add-dynamic-module=/build/nginx-FlcIR2/nginx-1.14.2/debian/modules/http-subs-filter
