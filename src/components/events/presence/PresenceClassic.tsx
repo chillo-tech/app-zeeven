@@ -145,7 +145,7 @@ function PresenceClassic({ data }: any) {
                 <Message
                   type="success"
                   firstMessage="Nous avons reçu vos informations."
-                  secondMessage="Votre billet vous sera envoyé sous peu avec les informations relatives à votre installation pour la soirée."
+                  secondMessage={data.confirmation ? data.confirmation :"Votre billet vous sera envoyé sous peu avec les informations relatives à votre installation pour la soirée."}
                   action={handleSuccess}
                   actionLabel="Aller à l'accueil"
                 />
@@ -997,7 +997,7 @@ function PresenceClassic({ data }: any) {
             <p className="flex items-center justify-center md:items-end md:justify-end">
               <ImageDisplay
                 wrapperClasses="h-20 w-32 relative overflow-hidden"
-                imageClasses="object-contain "
+                imageClasses="object-cover"
                 image={data.icon}
               />
             </p>
@@ -1007,8 +1007,8 @@ function PresenceClassic({ data }: any) {
             <RenderHtmlContent content={data.address} classes="text-center md:text-right" />
           </div>
           <ImageDisplay
-            wrapperClasses="h-32 relative overflow-hidden"
-            imageClasses="object-contain"
+            wrapperClasses="h-52 relative overflow-hidden"
+            imageClasses="object-cover"
             image={data.image}
           />
         </div>

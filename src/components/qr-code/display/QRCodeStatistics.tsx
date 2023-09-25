@@ -71,8 +71,9 @@ function QRcodeStatistics({ id }: { id: number }) {
                     return acc[curr] ? ++acc[curr] : (acc[curr] = 1), acc;
                   }, {})
               ).map(([key, value]) => (
-                <p className="mb-2 flex text-left" key={key}>
-                  <span className="w-28 font-bold">{capitalize(key)} :</span> {`${value}`}
+                <p className="mb-2 flex justify-between" key={key}>
+                  <span className="font-bold text-left">{capitalize(key)} :</span> 
+                  <span className="font-bold text-right">{`${value}`}</span>
                 </p>
               ))}
             </div>{' '}

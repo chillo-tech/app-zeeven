@@ -118,6 +118,7 @@ const TARIF_FIELDS =  `
     `;
 const EVENT_FIELDS =  `
       id,
+      confirmation,
       name,
       address,
       form,
