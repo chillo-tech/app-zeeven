@@ -76,7 +76,12 @@ export default function SignIn({providers, csrfToken}: { providers: Provider[], 
 									   {...register("password")} placeholder="Mot de passe"/>
 								<p className={formStyles.form_control__error}>{errors.password?.message}</p>
 							</div>
-							<button className={formStyles.form_control__button}>Connexion</button>
+							<div className="flex justify-between items-center">
+                <button className="bg-app-blue text-white rounded-md px-6 py-1 font-thin">Connexion</button>
+                <Link href='/password/forgoten' className="text-app-blue border-b border-app-blue">
+                  Mot de passe oublié ? 
+                </Link>
+              </div>
 						</form>
 					))}
 					{/*

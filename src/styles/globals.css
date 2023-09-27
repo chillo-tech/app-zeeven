@@ -30,6 +30,10 @@ strong {
     @apply text-app-blue  border border-blue-800 flex items-center justify-between px-3 py-2 rounded-full;
   }
 
+  .filled-blue-button{
+    @apply text-app-blue  border border-app-blue flex items-center justify-between px-3 py-2 rounded-full;
+  }
+
   .input-label {
     @apply text-xl;
   }

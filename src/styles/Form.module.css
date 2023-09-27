@@ -3,7 +3,7 @@
 }
 
 .form_control__input {
-    @apply w-full border-gray-300 rounded-lg shadow-sm focus:border-indigo-500;
+    @apply w-full border-gray-300 rounded-lg shadow-sm focus:border-indigo-500 text-black;
 }
 
 .form_control__error {
