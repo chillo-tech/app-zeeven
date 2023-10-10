@@ -1,3 +1,4 @@
+import { slugify } from '@/utils';
 import React, {useRef, useState} from 'react';
 import {AiOutlineCloudUpload} from 'react-icons/ai';
 function CsvFile({display, setContacts}: any) {
@@ -19,20 +20,25 @@ function CsvFile({display, setContacts}: any) {
 			reader.readAsText(event.target.files[0]);
 			reader.onload = () => {
 				const result = reader.result as string ;
+        const resultsAsTable = result.split("\n");
+        const columns = resultsAsTable[0];
+        const columnsPositions = columns.split(",");
+        const [,,,,,, ...othersColumns] = columnsPositions;
 				if(result) {
-					const guests = result.split("\n")
+					const guests = resultsAsTable
 						.slice(1)
-						.filter((line: string) => line.split(",").length >= 6)
+						.filter((line: string) => line.split(",").length === columnsPositions.length)
 						.map((line: string) =>  {
-							const values = line.split(",");
-							return {
-								civility: values[0].replaceAll('"', ''),
-								firstName: values[1].replaceAll('"', ''),
-								lastName: values[2].replaceAll('"', ''),
-								phoneIndex: values[3].replaceAll('"', ''),
-								phone: values[4].replaceAll('"', ''),
-								email: values[5].replaceAll('"', ''),
-								partner: values[6].replaceAll('"', ''),
+              const [civility,firstName,lastName,phoneIndex,phone,email, ...othersData] = line.split(",");
+              const others = othersData.map((entry: any, index: number) => ({key: slugify(othersColumns[index]).split('-').join(''), label: othersColumns[index].trim(), value: entry}));
+              return {
+								civility,
+                firstName,
+                lastName,
+                phoneIndex,
+                phone,
+                email, 
+                others
 							}
 					})
 					setContacts(guests);
@@ -61,8 +67,8 @@ function CsvFile({display, setContacts}: any) {
 				<span>Déposez votre fichier <span className="font-bold">csv</span> ici</span>
 				<span className="py-2">OU</span>
 				<span className="rounded-lg bg-blue-400 text-white px-3 py-2 shadow-md mb-2">Sélectionnez un fichier</span>
-				<span className="text-xs">Votre fichier doit avoir les colonnes</span>
-				<span className="text-xs">(civilite,prenom,nom,indicatif,telephone,email,partenaire)</span>
+				<span className="text-xs">Votre fichier doit avoir à minima les colonnes</span>
+				<span className="text-xs">(civilite,prenom,nom,indicatif,telephone,email)</span>
 				<input className="absolute left-0 top-0 right-0 bottom-0 w-full h-full opacity-0"
 					   id="contacts-file"
 					   type="file"

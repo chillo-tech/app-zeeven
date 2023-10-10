@@ -24,7 +24,7 @@ function MessageVariables() {
     watch,
     formState: { errors },
   } = useForm<FormValues>();
-  const watchAllFields = watch(); 
+  const watchAllFields = watch();
   const context = useContext(NewCampainContext);
   const {
     state: { stepIndex, campain },
@@ -36,19 +36,28 @@ function MessageVariables() {
   const [messageToHandle, setmessageToHandle] = useState(messages ? messages[0] : null);
   const informationLabel = (information: string) => {
     const vWithoutPattern = information ? variableWithoutTemplate(information) : '';
+    let params = INFORMATIONS;
+    if (guests && guests[0].others) {
+      params = [
+        ...INFORMATIONS,
+        ...guests[0].others.map(({ label, key }: any) => ({ value: key, label })),
+      ];
+    }
+
     return vWithoutPattern.length
-      ? INFORMATIONS.find(({ value }) => value === vWithoutPattern)?.label
+      ? params.find(({ value }) => {
+          return value === vWithoutPattern;
+        })?.label
       : vWithoutPattern;
   };
   const onSubmit: SubmitHandler<FormValues> = (data: FormValues) => {
-    const informations:string[] = Object.values(data);
-    updateCampain({ messages: Array(1).fill({...messageToHandle, informations}) });
-  }
-
+    const informations: string[] = Object.values(data);
+    updateCampain({ messages: Array(1).fill({ ...messageToHandle, informations }) });
+  };
 
   useEffect(() => {
     const { text, informations = [] } = messageToHandle;
-    const informationsInMessage = text.match(/{{\w+}}/g) || [];
+    const informationsInMessage = text.match(/{{[a-zA-Z0-9_ ]+}}/g) || [];
     setParameters(informationsInMessage);
     informationsInMessage.forEach((variable: string, index: number) => {
       if (Object.keys(informations).length) {
@@ -57,14 +66,12 @@ function MessageVariables() {
           shouldDirty: true,
         });
       } else {
-        setValue(
-          `${index}`, 
-          `${isUserInformation(variable) ? variable : ''}`,
-          { shouldDirty: true }
-        );
+        setValue(`${index}`, `${isUserInformation(variable, guests[0]) ? variable : ''}`, {
+          shouldDirty: true,
+        });
       }
     });
-  }, [messageToHandle, setValue]);
+  }, [messageToHandle, setValue, guests]);
   return (
     <section className="grid grid-cols-1 gap-2 rounded-lg border border-slate-200 bg-white shadow-sm md:grid-cols-3 md:gap-0">
       <div className=" border-r-2 border-slate-300 p-4 md:col-span-2 md:p-5">
@@ -88,7 +95,7 @@ function MessageVariables() {
                   aria-describedby="informations"
                 >
                   <div
-                    className={`hidden md:grid grid-cols-3 gap-6 border-b border-t border-slate-200 py-1 text-lg`}
+                    className={`hidden grid-cols-3 gap-6 border-b border-t border-slate-200 py-1 text-lg md:grid`}
                   >
                     <span className="md:text-right">L&apos;information</span>
                     <span className="col-span-2 flex flex-col">
@@ -99,19 +106,19 @@ function MessageVariables() {
                   {parameters.map((information: string, index: number) => (
                     <div
                       key={`var-${index}`}
-                      className={`grid md:grid-cols-3 items-center gap-2 border-b border-slate-200 py-3 pr-3 text-center ${
+                      className={`grid items-center gap-2 border-b border-slate-200 py-3 pr-3 text-center md:grid-cols-3 ${
                         index % 2 === 0 ? 'bg-slate-100' : ''
                       }`}
                     >
                       <label
                         htmlFor={`information-${index}-${variableWithoutTemplate(information)}`}
-                        className='text-sm text-left md:text-right'
+                        className="text-left text-sm md:text-right"
                       >
                         {informationLabel(information)}( {information} )
                       </label>
                       <div className="md:col-span-2">
                         <div className="flex items-center">
-                          {isUserInformation(information) ? (
+                          {isUserInformation(information, guests[0]) ? (
                             <>
                               <p className="mr-1 block w-full rounded-lg bg-gray-300 px-2 py-2 text-left shadow-sm disabled:opacity-50">
                                 {informationLabel(information)} du destinataire
@@ -143,7 +150,9 @@ function MessageVariables() {
                               })}
                               defaultValue={
                                 messageToHandle.informations
-                                  ? messageToHandle.informations[variableWithoutTemplate(information)]
+                                  ? messageToHandle.informations[
+                                      variableWithoutTemplate(information)
+                                    ]
                                   : ''
                               }
                               type={variableFieldType(information)}
@@ -164,8 +173,10 @@ function MessageVariables() {
                             />
                           )}
                         </div>
-                        {errors[index]?.type === "required" && (
-                          <p role="alert" className="text-red-500">Ce champ est requis</p>
+                        {errors[index]?.type === 'required' && (
+                          <p role="alert" className="text-red-500">
+                            Ce champ est requis
+                          </p>
                         )}
                       </div>
                     </div>

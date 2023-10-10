@@ -3,6 +3,7 @@ import {
   BLACK_COLOR,
   INVALID_ERROR_MESSAGE,
   NONE,
+  PHONE_PATTERN,
   QRCODE_DEFAULT_TEXT,
   QR_CODES_TYPES,
   REQUIRED_FIELD_ERROR_MESSAGE,
@@ -70,7 +71,7 @@ function QRCodeText({ type, params, placeholder }: any) {
               return re.test(value.trim());
             }
             if (type === 'PHONE') {
-              const re = new RegExp(URL_PATTERN);
+              const re = new RegExp(PHONE_PATTERN);
               return re.test(value.trim());
             }
             return value.trim().length > 0;
@@ -126,7 +127,6 @@ function QRCodeText({ type, params, placeholder }: any) {
   });
   useEffect(() => {
     const subscription = watch((value, { name, type }) => {
-      console.log(value, name, type);
       setFormData(value);
     });
     return () => subscription.unsubscribe();

@@ -1,6 +1,7 @@
 const BACKEND_BASE_PATH = "/api/backend";
 const TOKEN_PAYLOAD = 'TOKEN_PAYLOAD';
 const USER_INFOS = 'USER_INFOS';
+const MESSAGE_VARIABLE_PATTERN = /{{[a-zA-Z0-9_ ]+}}/g;
 const PHONE_PATTERN = /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,5}$/;
 //const EMAIL_PATTERN = /^([\w-\.]+)@((?:[\w]+\.)+)([a-zA-Z]{2,4})$/;
 const EMAIL_PATTERN = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,})+$/;
@@ -280,13 +281,14 @@ const variableFieldType = (variable: string) => {
   }
 };
 
-const isUserInformation = (variable: string) => {
+const isUserInformation = (variable: string, guest: any) => {
   const cleanedVariable = variableWithoutTemplate(variable);
-
-  return (
-    ['civility', 'firstName', 'lastName', 'email', 'phoneIndex', 'phone'].indexOf(cleanedVariable) >
-    -1
-  );
+  let usersParams = ['civility', 'firstName', 'lastName', 'email', 'phoneIndex', 'phone'];
+  if(guest && guest.others) {
+    const keys = guest.others.map(({key}: any) => key);
+    usersParams = [...usersParams, ...keys];
+  }
+  return (usersParams.indexOf(cleanedVariable) > -1);
 };
 
 const isValidUrl = (url: string) => {
@@ -334,6 +336,7 @@ export {
   CHANNELS,
   EVENT_PROFILE_CATEGORIES,
   INVALID_ERROR_MESSAGE,
+  MESSAGE_VARIABLE_PATTERN,
   PROFILE_CATEGORIES,
   GLOBAL_ERROR,
   REQUIRED_FIELD_ERROR_MESSAGE,
