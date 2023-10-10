@@ -1,7 +1,6 @@
 import Metadata from '@/components/Metadata';
 import OpenedLayout from '@/containers/opened';
 import Link from 'next/link';
-
 function PolitiqueDeConfidentialite() {
   return (
     <OpenedLayout>

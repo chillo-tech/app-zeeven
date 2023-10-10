@@ -9,4 +9,5 @@ export interface Profile {
 	phone: string,
 	phoneIndex: string,
 	sendInvitation?: boolean
+  others?: any
 };

@@ -1,3 +1,4 @@
+import { slugify } from '@/utils';
 import React, {useRef, useState} from 'react';
 import {AiOutlineCloudUpload} from 'react-icons/ai';
 function CsvFile({display, setContacts}: any) {
@@ -19,21 +20,25 @@ function CsvFile({display, setContacts}: any) {
 			reader.readAsText(event.target.files[0]);
 			reader.onload = () => {
 				const result = reader.result as string ;
-        const columns = result[0];
-        const [civility,firstName,lastName,phoneIndex,phone,email, ...rest] = columns.split(",");
+        const resultsAsTable = result.split("\n");
+        const columns = resultsAsTable[0];
+        const columnsPositions = columns.split(",");
+        const [,,,,,, ...othersColumns] = columnsPositions;
 				if(result) {
-					const guests = result.split("\n")
+					const guests = resultsAsTable
 						.slice(1)
-						.filter((line: string) => line.split(",").length >= 6)
+						.filter((line: string) => line.split(",").length === columnsPositions.length)
 						.map((line: string) =>  {
-              const [civility,firstName,lastName,phoneIndex,phone,email, ...rest] = line.split(",");
+              const [civility,firstName,lastName,phoneIndex,phone,email, ...othersData] = line.split(",");
+              const others = othersData.map((entry: any, index: number) => ({key: slugify(othersColumns[index]).split('-').join(''), label: othersColumns[index].trim(), value: entry}));
               return {
 								civility,
                 firstName,
                 lastName,
                 phoneIndex,
                 phone,
-                email
+                email, 
+                others
 							}
 					})
 					setContacts(guests);

@@ -73,7 +73,7 @@ function NewCampainContextWrapper({children}: Props) {
 			<section className='pb-20 md:pb-20 font-light'>
 				<Nav/>
 				<main className='container mx-auto py-2'>
-					<div className='md:w-3/4 mx-auto p-2'>
+					<div className='mx-auto p-2'>
 						<div className="operator flex items-center">
 							<div className="picture pr-4">
 								<Image alt="Nouvelle campagne" src={"/images/emmanuelle.png"} width="100" height="100"/>

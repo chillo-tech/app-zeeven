@@ -100,7 +100,7 @@ function Espaces({ index }: any) {
                         local={true}
                         image={{
                           path: `/images/${slugify(page_id.label.toLowercase())}-message.png`,
-                          title: 'Entammez vos échanges >avec ZEEVEN',
+                          title: 'Entammez vos échanges avec ZEEVEN',
                         }}
                       />
                     </div>

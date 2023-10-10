@@ -65,7 +65,7 @@ function Variables() {
       } else {
         setValue(
           `messages.0.informations.${'' + index}`,
-          `${isUserInformation(variable) ? variable : ''}`,
+          `${isUserInformation(variable, guests[0]) ? variable : ''}`,
           { shouldDirty: true }
         );
       }
@@ -131,7 +131,7 @@ function Variables() {
                     </label>
                     <div className="col-span-2">
                       <div className="flex items-center">
-                        {isUserInformation(information) ? (
+                        {isUserInformation(information, guests[0]) ? (
                           <>
                             <p className="mr-1 block w-full rounded-lg bg-gray-300 px-2 py-2 text-left shadow-sm disabled:opacity-50">
                               {informationLabel(information)} du destinataire
