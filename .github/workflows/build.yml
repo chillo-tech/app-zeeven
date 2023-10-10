@@ -17,7 +17,7 @@ jobs:
   create-prod-folder:
     name: create prod folder
     runs-on: ubuntu-latest
-    if: ${{ github.base_ref == 'master' && github.ref == 'refs/heads/master' }}
+    if: ${{ github.base_ref == 'master' || github.ref == 'refs/heads/master' }}
     environment:
       name: production
     steps:
@@ -50,7 +50,7 @@ jobs:
 
   create-staging-folder:
     runs-on: ubuntu-latest
-    if: ${{ !(github.base_ref == 'master' && github.ref == 'refs/heads/master') }}
+    if: ${{ !(github.base_ref == 'master' || github.ref == 'refs/heads/master') }}
     environment:
       name: staging
     steps:
@@ -108,7 +108,7 @@ jobs:
     name: 'Run prod container'
     runs-on: ubuntu-latest
     needs: [dockerize, create-prod-folder]
-    if: ${{ !(github.base_ref == 'master' && github.ref == 'refs/heads/master') }}
+    if: ${{ !(github.base_ref == 'master' || github.ref == 'refs/heads/master') }}
     environment:
       name: prod
     steps:
@@ -132,7 +132,7 @@ jobs:
     name: 'Run staging container'
     runs-on: ubuntu-latest
     needs: [dockerize, create-staging-folder]
-    if: ${{ !(github.base_ref == 'master' && github.ref == 'refs/heads/master') }}
+    if: ${{ !(github.base_ref == 'master' || github.ref == 'refs/heads/master') }}
     environment:
       name: staging
     steps:
