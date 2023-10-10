@@ -110,7 +110,7 @@ jobs:
     needs: [dockerize, create-prod-folder]
     if: ${{ !(github.base_ref == 'master' || github.ref == 'refs/heads/master') }}
     environment:
-      name: prod
+      name: production
     steps:
       - name: Run container
         uses: appleboy/ssh-action@master
