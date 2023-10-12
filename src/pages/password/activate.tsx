@@ -55,7 +55,7 @@ function Activate() {
       <section className="grid h-screen w-full md:grid-cols-2">
         <div
           className={classNames(
-            'flex flex-col justify-center justify-between px-5 py-10 md:px-60',
+            'flex flex-col justify-center justify-between px-5 py-10 md:px-32',
             'bg-app-blue text-white md:bg-white md:text-black'
           )}
         >
