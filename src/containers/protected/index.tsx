@@ -2,9 +2,22 @@ import React, { useContext } from 'react'
 import Footer from '../components/Footer';
 import Header from './components/Header';
 import Stocks from './components/Stocks';
+import { useQuery } from 'react-query';
+import { fetchData } from '@/services';
+import { ApplicationContext } from '@/context/ApplicationContext';
 
 function ProtectedLayout({children}: {children: any}) {
-
+  const context = useContext(ApplicationContext);
+  const { updateData } = context;
+	useQuery<any>({
+		queryKey: ["user-profile"],
+    queryFn: () =>  fetchData({
+      path: '/api/backend/profile',
+    }),
+    onSuccess: ({data}: any) =>{
+      updateData({ user: data });
+    },
+	});
   return (
     <section className={`bg-gradient-to-b from-blue-100 to-pink-50 min-h-screen font-light h-min-screen flex flex-col justify-between`}>
       <Header />

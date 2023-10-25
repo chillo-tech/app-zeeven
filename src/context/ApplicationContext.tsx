@@ -16,6 +16,7 @@ export const ApplicationContext = createContext<AppContextInterface>(
 function ApplicationContextWrapper({ children }: Props) {
   const [state, dispatch] = useReducer(ApplicationReducer, INITIAL_STATE);
   const updateData = useCallback((data: {}) => dispatch({type: UPDATE_DATA, data}),[]);
+  const authenticatedUser = useCallback((data: {}) => dispatch({type: UPDATE_DATA, data}),[]);
   const appContext = useMemo(
     () => ({
       state,

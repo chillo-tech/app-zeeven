@@ -6,12 +6,13 @@ import {fetchData} from '@/services';
 import Message from '@/components/Message';
 import ProfileEdit from '@/components/profile/ProfileEdit';
 import Metadata from '@/components/Metadata';
+import { BACKEND_BASE_PATH } from '@/utils';
 
 function Compte() {
 	const {isLoading, isError, data: {data} = {}} = useQuery<any>({
 		queryKey: ["user-profile"],
     queryFn: () =>  fetchData({
-      path: '/api/backend/profile',
+      path: `${BACKEND_BASE_PATH}/profile`,
     }),
 	});
 	return (

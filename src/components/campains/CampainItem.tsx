@@ -4,7 +4,6 @@ import {BsWhatsapp} from 'react-icons/bs';
 import {CiMail} from 'react-icons/ci';
 import {FaSms} from 'react-icons/fa';
 import {categoryFromLabel, getDisplayedDate, slugify, statusFromLabel} from '@/utils';
-import Debug from '../shared/Debug';
 
 function CampainItem({item, index}: { item: any, index: number }) {
 	return (

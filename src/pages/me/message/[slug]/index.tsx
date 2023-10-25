@@ -1,5 +1,6 @@
 import Message from '@/components/Message';
 import Metadata from '@/components/Metadata';
+import Actions from '@/components/campains/Actions';
 import Statistics from '@/components/campains/Statistics';
 import Guests from '@/components/guests/Guests';
 import Invitations from '@/components/invitations';
@@ -18,7 +19,7 @@ function CampainDetail({ id }: { id: number }) {
   const [isError, setIsError] = useState(false);
   const [data, setData] = useState<any>();
   const [params, setParams] = useState<any>({fetchPath: `event/${id}/guest`, addPath: `event/${id}/guest` });
-  const { updateData } = useContext(ApplicationContext);
+  const { updateData, state } = useContext(ApplicationContext);
 
   const { isLoading, refetch } = useQuery<any>({
     queryKey: ['user-campains', id],
@@ -65,6 +66,7 @@ function CampainDetail({ id }: { id: number }) {
       ) : null}
       {data && Object.keys(data).length ? (
         <section className="">
+          <Actions data={data} state={state}  handleItemEdit={handleItemEdit}/>
           <h1 className="mb-3 text-4xl font-semibold text-app-blue">{data.name}</h1>
           <Statistics id={id} />
           <Tab.Group>

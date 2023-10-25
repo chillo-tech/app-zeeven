@@ -17,6 +17,7 @@ const INVALID_ERROR_MESSAGE = 'Ce champ est invalide';
 const EMAIL_ERROR_MESSAGE = 'Votre mail est invalide';
 const REQUIRED_FIELD_ERROR_MESSAGE = 'Ce champ est requis';
 const GLOBAL_ERROR = 'Une erreur est survenue, nous allons la résoudre sous peu';
+const GLOBAL_SUCCESS_MESSAGE = "Votre demande a bien été enregistrée";
 const INITIAL_STATE = { stepIndex: 0, campain: {} };
 const UPDATE_CAMPAIN = 'UPDATE_CAMPAIN';
 const UPDATE_STEP_INDEX = 'UPDATE_STEP_INDEX';
@@ -339,6 +340,7 @@ export {
   MESSAGE_VARIABLE_PATTERN,
   PROFILE_CATEGORIES,
   GLOBAL_ERROR,
+  GLOBAL_SUCCESS_MESSAGE,
   REQUIRED_FIELD_ERROR_MESSAGE,
   SET_STATE,
   INFORMATIONS,

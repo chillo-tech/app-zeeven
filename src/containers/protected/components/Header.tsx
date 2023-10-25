@@ -7,12 +7,12 @@ import { HiOutlineMenuAlt3 } from 'react-icons/hi';
 import { RiLogoutBoxRLine } from 'react-icons/ri';
 import { RxCross1 } from 'react-icons/rx';
 import { TfiPencilAlt2 } from 'react-icons/tfi';
+
 function Header() {
   const { data: session } = useSession();
   const router = useRouter();
   const [isOpen, setIsOpen] = React.useState(false);
   const toggle = () => setIsOpen(!isOpen);
-
   return (
     <header className=" bg-white shadow-md">
       <div className="first">
