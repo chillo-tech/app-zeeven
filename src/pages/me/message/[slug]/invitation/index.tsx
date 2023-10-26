@@ -3,6 +3,7 @@ import Message from '@/components/Message';
 import Metadata from '@/components/Metadata';
 import ImageDisplay from '@/components/image-display';
 import ScheduleEdit from '@/components/new-campain/components/dates/ScheduleEdit';
+import Debug from '@/components/shared/Debug';
 import ProtectedLayout from '@/containers/protected';
 import { ApplicationContext } from '@/context/ApplicationContext';
 import { handleError } from '@/services';
@@ -108,6 +109,7 @@ function Invitation({ id, slug }: { id: number; slug: String }) {
       const {
         params: { invitation },
       } = data as any;
+      console.log({data})
       if (invitation) {
         setData(data);
         updateData({ event: data });
@@ -238,7 +240,7 @@ function Invitation({ id, slug }: { id: number; slug: String }) {
     const base64 = (await convertToBase64(file)) as string;
     setValue('template.title', data?.name);
     setValue('template.file', base64 as string);
-    setValue('template.name', data?.name);
+    setValue('template.name', 'horizontal');
   };
 
   const convertToBase64 = (file: any) => {
@@ -349,7 +351,7 @@ function Invitation({ id, slug }: { id: number; slug: String }) {
                           className="hidden"
                           id="template"
                           type="file"
-                          accept="image/jpeg, image/png"
+                          accept="image/jpeg, image/png, image/jpg"
                           onChange={handleFileRead}
                         />
                       </label>

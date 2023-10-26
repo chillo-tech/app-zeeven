@@ -2,7 +2,6 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { AiOutlinePlusCircle } from 'react-icons/ai';
 import InvitationItem from './InvitationItem';
-import Debug from '../shared/Debug';
 
 function Invitations({ event, handleItemEdit }: any) {
   const { invitation } = event;
