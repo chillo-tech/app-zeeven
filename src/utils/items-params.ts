@@ -1,6 +1,6 @@
-const METADATA=`metadonnees.titre,metadonnees.description,metadonnees.mots_cles`;
+const METADATA = `metadonnees.titre,metadonnees.description,metadonnees.mots_cles`;
 const base = `id,libelle,sous_libelle,ordre,${METADATA}`;
-const prix = "prix.prix_id.valeur,prix.prix_id.date";
+const prix = 'prix.prix_id.valeur,prix.prix_id.date';
 const image = `
     images.directus_files_id.id,
     images.directus_files_id.title,
@@ -40,9 +40,9 @@ revue.item.M,
 revue.item.nom,
 revue.item.prenom
 `;
-const MENU =  `${base},${image},slug,display`;
+const MENU = `${base},${image},slug,display`;
 
-const PAGE_FIELDS =  `
+const PAGE_FIELDS = `
       id,
       label,
       abstract,
@@ -81,7 +81,7 @@ const PAGE_FIELDS =  `
       pages.related_page_id.prices.pricing_id.items.item_id.id,
       pages.related_page_id.prices.pricing_id.items.item_id.label
     `;
-const TARIF_FIELDS =  `
+const TARIF_FIELDS = `
       id,
       label,
       status,
@@ -116,7 +116,7 @@ const TARIF_FIELDS =  `
       pages.related_page_id.prices.pricing_id.items.item_id.id,
       pages.related_page_id.prices.pricing_id.items.item_id.label
     `;
-const EVENT_FIELDS =  `
+const EVENT_FIELDS = `
       id,
       confirmation,
       name,
@@ -132,7 +132,7 @@ const EVENT_FIELDS =  `
       cover.*,
       icon.*
     `;
-const MENUFULL =  `
+const MENUFULL = `
       id,
       label,
       status,
@@ -141,7 +141,7 @@ const MENUFULL =  `
       pages.page_id.*,
       pages.page_id.images.directus_files_id.*
     `;
-const ENTREPRISE =  `
+const ENTREPRISE = `
   id,
   name,
   abstract,
@@ -156,6 +156,22 @@ const ENTREPRISE =  `
   categories.pages.page_id.sublabel,
   categories.pages.page_id.images.directus_files_id.*
 `;
+
+const SONDAGE = `
+  *,
+  question.question_id.*,
+  question.question_id.choix.choix_id.*
+`;
+
 const PARTIAL_SPACES = `${base},${image},${prix},${type},slug`;
 
-export {MENU, MENUFULL, PARTIAL_SPACES, ENTREPRISE,PAGE_FIELDS, TARIF_FIELDS,EVENT_FIELDS};
+export {
+  ENTREPRISE,
+  EVENT_FIELDS,
+  MENU,
+  MENUFULL,
+  PAGE_FIELDS,
+  PARTIAL_SPACES,
+  SONDAGE,
+  TARIF_FIELDS,
+};
