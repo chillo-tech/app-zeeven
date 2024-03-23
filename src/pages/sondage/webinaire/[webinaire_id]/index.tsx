@@ -1,35 +1,16 @@
 import Metadata from '@/components/Metadata';
 
 import WebinaireForm from '@/components/webinaire/form/webinaireForm';
-import { fetchDataClient } from '@/services';
+import { useWebinaire } from '@/hooks/webinaire';
 import styles from '@/styles/SignIn.module.css';
-import { IWebinaireView } from '@/types/WebinaireFields';
 import { capitalize, getHumanDate } from '@/utils';
 import { formatSnakeCase } from '@/utils/formatSnakeCase';
 import { GetServerSideProps } from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
-import { useQuery } from 'react-query';
 
 const Webinaire = ({ webinaire_id }: { webinaire_id: string }) => {
-  const fetchView = async () => {
-    const {
-      data: { data: view },
-    } = await fetchDataClient({
-      path: `/api/chillo-backoffice/items/Description_Webinaire/${webinaire_id}/`,
-      fields: '*,image_webinaire.*,formulaire.*',
-    });
-
-    return view as IWebinaireView;
-  };
-
-  const viewQuery = useQuery({
-    queryKey: ['vue-webinaire', 1],
-    queryFn: fetchView,
-    retry: 10,
-    refetchOnWindowFocus: false,
-    // onSuccess: handleView,
-  });
+  const { viewQuery } = useWebinaire({ webinaire_id });
   return viewQuery.data ? (
     <section className={`${styles.wrapper} !overflow-y-hidden`}>
       <Metadata entry={{ title: 'Webinaire', description: 'description metadonnees' }} />
