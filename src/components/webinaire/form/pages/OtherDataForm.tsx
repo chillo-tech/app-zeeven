@@ -42,7 +42,7 @@ const OtherDataForm = () => {
                 {choice.value === 'other' && radioSelectedValue === 'other' && (
                   <>
                     <input
-                      className={formStyles.form_control__input}
+                      className={`${formStyles.form_control__input} shrink-0 !p-[8px] !py-[12px] focus:border-indigo-500 focus-visible:outline-indigo-500`}
                       placeholder="Veuillez preciser"
                       {...register('connaissance_webinaire')}
                     />

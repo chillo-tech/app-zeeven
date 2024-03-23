@@ -1,8 +1,13 @@
 import formStyles from '@/styles/Form.module.css';
 import { useContext } from 'react';
 import { context } from '../context';
+
+import PhoneInput from 'react-phone-input-2';
+import fr from 'react-phone-input-2/lang/fr.json';
+import 'react-phone-input-2/lib/style.css';
+
 const UserInfoForm = () => {
-  const { register, errors } = useContext(context);
+  const { register, errors, mutation, phoneNumber, setPhoneNumber } = useContext(context);
   return (
     <>
       {/* nom */}
@@ -55,6 +60,34 @@ const UserInfoForm = () => {
           <p className={formStyles.form_control__error}>Veuillez indiquer votre email </p>
         )}
       </div>
+
+      {/* numero telephone */}
+      <div className={`${formStyles.form_control}`}>
+        <label htmlFor={`numero_telephone`} className={formStyles.form_control__label}>
+          <span className={formStyles.form_control__label__first}>Votre numéro de téléphone</span>
+        </label>
+
+        <PhoneInput
+          localization={fr}
+          country={'fr'}
+          onBlur={register('numero_telephone').onBlur}
+          value={phoneNumber}
+          inputClass={'!h-auto !w-full'}
+          containerClass={formStyles.form_control__input}
+          onChange={(value, data) => {
+            if (!('dialCode' in data)) return;
+            setPhoneNumber(`${value ? data.dialCode : ''}${value.slice(data.dialCode.length)}`);
+          }}
+          disabled={mutation.isLoading}
+        />
+        {errors.numero_telephone && (
+          <p className={formStyles.form_control__error}>
+            Veuillez indiquer votre numéro de téléphone{' '}
+          </p>
+        )}
+      </div>
+
+      {/*  */}
 
       {/* Consentement marketing */}
       <div className={`${formStyles.form_control}`}>
