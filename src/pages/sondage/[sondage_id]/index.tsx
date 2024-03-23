@@ -38,7 +38,6 @@ const SondagePage = () => {
       reponses_choisies,
     };
 
-    console.log('postObj', postObj);
     return add('/api/backoffice/reponses', postObj);
   };
   const mutation = useMutation({
@@ -63,7 +62,6 @@ const SondagePage = () => {
   });
 
   const onSubmit = (data: any) => {
-    console.log('data', data);
     mutation.mutate(data);
   };
 

@@ -95,7 +95,6 @@ const WebinaireForm = ({ formView }: { formView: IWebinaireFormulaire }) => {
   const [radioSelectedValue, setRadioSelectedValue] = useState('');
 
   const onSubmit = (data: any) => {
-    console.log('data', data);
     mutation.mutate({ ...data, date_inscription: new Date().toISOString() });
   };
 

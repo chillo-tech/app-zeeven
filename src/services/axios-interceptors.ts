@@ -28,7 +28,6 @@ const onRequest = async (config: AxiosRequestConfig): Promise<AxiosRequestConfig
     : { 'service-id': `${process.env.SERVICE_ID}`, 'service-key': `${process.env.SERVICE_KEY}` };
   const baseURL = isForDataModel? process.env.BACKOFFICE_CHILLO_API : isToBackOffice ? process.env.BACKOFFICE_API : process.env.API_URL;
 
-  console.log('baseURL', baseURL)
   return {
     ...config,
     baseURL,

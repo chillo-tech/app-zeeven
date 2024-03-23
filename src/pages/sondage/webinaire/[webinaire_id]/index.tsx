@@ -30,7 +30,6 @@ const Webinaire = ({ webinaire_id }: { webinaire_id: string }) => {
     refetchOnWindowFocus: false,
     // onSuccess: handleView,
   });
-  console.log('viewQuery.data', viewQuery.data);
   return viewQuery.data ? (
     <section className={`${styles.wrapper} !overflow-y-hidden`}>
       <Metadata entry={{ title: 'Webinaire', description: 'description metadonnees' }} />
