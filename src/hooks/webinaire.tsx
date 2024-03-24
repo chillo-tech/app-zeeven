@@ -4,6 +4,7 @@ import { axiosInstance } from '@/services/axios-instance';
 import { IWebinaireView } from '@/types/WebinaireFields';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { AxiosError } from 'axios';
+import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useMutation, useQuery } from 'react-query';
@@ -17,14 +18,23 @@ const useWebinaire = ({ webinaire_id }: { webinaire_id: string }) => {
       fields: '*,image_webinaire.*,formulaire.*',
     });
 
+    if (!view || !view.formulaire) {
+      router.push('/404');
+      return;
+    }
+
     return view as IWebinaireView;
   };
+  const router = useRouter();
 
   const viewQuery = useQuery({
     queryKey: ['vue-webinaire', 1],
     queryFn: fetchView,
     retry: 10,
     refetchOnWindowFocus: false,
+    onError: () => {
+      router.push('/404');
+    },
   });
   return { viewQuery };
 };

@@ -160,7 +160,8 @@ const ENTREPRISE = `
 const SONDAGE = `
   *,
   question.question_id.*,
-  question.question_id.choix.choix_id.*
+  question.question_id.choix.choix_id.*,
+  entreprise.*
 `;
 
 const PARTIAL_SPACES = `${base},${image},${prix},${type},slug`;

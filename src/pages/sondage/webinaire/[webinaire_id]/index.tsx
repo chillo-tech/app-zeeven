@@ -69,7 +69,7 @@ const Webinaire = ({ webinaire_id }: { webinaire_id: string }) => {
               <p className="text-center  font-light lg:text-left">{viewQuery.data.public_cible}</p>
             </div>
           </aside>
-          <WebinaireForm formView={viewQuery.data.formulaire} />
+          {viewQuery.data.formulaire && <WebinaireForm formView={viewQuery.data.formulaire} />}
         </main>
       </section>
     </WebinaireWapper>

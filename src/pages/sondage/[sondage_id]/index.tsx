@@ -1,6 +1,6 @@
 import Metadata from '@/components/Metadata';
+import Form from '@/components/sondage/form/form';
 import { add, fetchDataClient } from '@/services';
-import formStyles from '@/styles/Form.module.css';
 import styles from '@/styles/SignIn.module.css';
 import { ISondage } from '@/types';
 import { EMAIL_ERROR_MESSAGE, EMAIL_PATTERN, SONDAGE } from '@/utils';
@@ -54,6 +54,10 @@ const SondagePage = () => {
     register,
     handleSubmit,
     formState: { errors },
+    setValue,
+    setError,
+    getValues,
+    clearErrors,
   } = useForm<{
     [key: `question_${string | number}`]: string | number;
   }>({
@@ -62,6 +66,7 @@ const SondagePage = () => {
   });
 
   const onSubmit = (data: any) => {
+    console.log('data', data);
     mutation.mutate(data);
   };
 
@@ -88,7 +93,7 @@ const SondagePage = () => {
         if (question_id.choix.length > 0) {
           objectSchema[`question_${question_id.id}`] = yup
             .number()
-            .min(1, 'Ce champ est requis')
+            .min(0, 'Ce champ est requis')
             .required('Ce champ est requis');
         } else {
           objectSchema[`question_${question_id.id}`] = yup.string();
@@ -106,18 +111,31 @@ const SondagePage = () => {
     retry: false,
     refetchOnWindowFocus: false,
     onSuccess: handleSondage,
+    onError: () => {
+      router.push('/404');
+    },
   });
 
   return sondageQuery.data ? (
     <section className={styles.wrapper}>
       <Metadata
-        entry={{ title: sondageQuery.data.intitule, description: sondageQuery.data.intitule }}
+        entry={{
+          title: `${sondageQuery.data.intitule || 'sondage'} | ${
+            sondageQuery.data.entreprise?.nom || 'zeeven'
+          }`,
+          description: sondageQuery.data.intitule || 'produit par zeeven de chillo tech',
+        }}
       />
 
       <nav className={`${styles.navigation}`}>
-        <Link href={'/'} className={styles.logo}>
-          ZEEVEN
-        </Link>
+        <div>
+          <Link href={'/'} className={styles.logo}>
+            ZEEVEN
+          </Link>
+          {sondageQuery.data.entreprise?.nom && (
+            <p>Ce sondage est destiné à {sondageQuery.data.entreprise?.nom}</p>
+          )}
+        </div>
       </nav>
       <div className={styles.form__container}>
         <h1 className={styles.form__title}>{sondageQuery.data.intitule}</h1>
@@ -128,58 +146,17 @@ const SondagePage = () => {
           {mutation.isError ? (
             <h2 className={`text-center text-lg text-rose-500`}>{errorMessage}</h2>
           ) : null}
-          <form onSubmit={handleSubmit(onSubmit)}>
-            {sondageQuery.data.question.map(({ question_id }, index) => {
-              return (
-                <div
-                  className={formStyles.form_control}
-                  key={`Question-${question_id.id}-${index}`}
-                >
-                  <label
-                    htmlFor={`Question-${question_id.id}-${index}`}
-                    className={formStyles.form_control__label}
-                  >
-                    <span className={formStyles.form_control__label__first}>
-                      {question_id.label}
-                    </span>
-                  </label>
-                  {question_id.choix.length > 0 ? (
-                    <>
-                      <select
-                        className={`w-full ${formStyles.form_control__input}`}
-                        {...register(`question_${question_id.id}`)}
-                        id={`Question-${question_id.id}-${index}`}
-                      >
-                        <option defaultChecked value={0}>
-                          Veuillez faire un choix
-                        </option>
-                        {question_id.choix.map(({ choix_id }, index) => {
-                          return (
-                            <option key={`Question-${question_id.id}-${index}`} value={choix_id.id}>
-                              {choix_id.intitule}
-                            </option>
-                          );
-                        })}
-                      </select>
-                      <p className={formStyles.form_control__error}>
-                        {errors[`question_${question_id.id}`]?.message}
-                      </p>
-                    </>
-                  ) : (
-                    <input
-                      type="text"
-                      id={`Question-${question_id.id}-${index}`}
-                      className={formStyles.form_control__input}
-                      placeholder="Votre réponse"
-                      {...register(`question_${question_id.id}`)}
-                    />
-                  )}
-                </div>
-              );
-            })}
 
-            <button className={formStyles.form_control__button}>Transmettre</button>
-          </form>
+          <Form
+            onSubmit={handleSubmit(onSubmit)}
+            errors={errors}
+            questions={sondageQuery.data.question}
+            register={register}
+            setValue={setValue}
+            getValues={getValues}
+            setError={setError}
+            clearErrors={clearErrors}
+          />
         </article>
       </div>
     </section>
