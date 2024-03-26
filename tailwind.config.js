@@ -6,19 +6,10 @@ module.exports = {
   theme: {
     screens: {
       'sm': '640px',
-      // => @media (min-width: 640px) { ... }
-
       'md': '768px',
-      // => @media (min-width: 768px) { ... }
-
       'lg': '1000px',
-      // => @media (min-width: 1024px) { ... }
-
       'xl': '1200px',
-      // => @media (min-width: 1280px) { ... }
-
       '2xl': '1200px',
-      // => @media (min-width: 1536px) { ... }
     },
     extend: {
       container: {
@@ -39,13 +30,10 @@ module.exports = {
 
       },
       gridTemplateRows: {
-        // Simple 8 row grid
         '5': 'repeat(8, minmax(0, 1fr))',
         '8': 'repeat(8, minmax(0, 1fr))',
         '9': 'repeat(9, minmax(0, 1fr))',
         '10': 'repeat(10, minmax(0, 1fr))',
-
-        // Complex site-specific row configuration
         'layout': '200px minmax(900px, 1fr) 100px',
       }
     },

@@ -70,7 +70,6 @@ const nextConfig = {
         protocol: 'https',
         hostname: 'backoffice.chillo.fr',
         port: '',
-        // pathname: '/account123/**',
       },
     ],
   },
