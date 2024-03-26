@@ -10,23 +10,18 @@ const onRequest = async (config: AxiosRequestConfig): Promise<AxiosRequestConfig
   let { headers = {} } = config;
   let authorization: any = { Authorization: headers['Authorization'] };
   const { url = '' } = config;
-  const isToBackOffice = url.startsWith('/api/backoffice') || url.startsWith('/api/chillo-backoffice');
-  const isForDataModel = url.startsWith('/api/chillo-backoffice');
-  const urlToCall = isForDataModel
-    ? url.replaceAll('/api/chillo-backoffice', '')
-    : isToBackOffice
+  const isToBackOffice = url.startsWith('/api/backoffice');
+  const urlToCall = isToBackOffice
     ? url.replaceAll('/api/backoffice', '/items')
     : url.replaceAll('/api/backend', '/backend');
-  authorization = isForDataModel
-    ? { Authorization: `Bearer ${process.env.BACKOFFICE_CHILLO_API_TOKEN}` }
-    : isToBackOffice
+  authorization = isToBackOffice
     ? { Authorization: `Bearer ${process.env.BACKOFFICE_API_TOKEN}` }
     : authorization;
 
   const credentials = isToBackOffice
     ? {}
     : { 'service-id': `${process.env.SERVICE_ID}`, 'service-key': `${process.env.SERVICE_KEY}` };
-  const baseURL = isForDataModel? process.env.BACKOFFICE_CHILLO_API : isToBackOffice ? process.env.BACKOFFICE_API : process.env.API_URL;
+  const baseURL = isToBackOffice ? process.env.BACKOFFICE_API : process.env.API_URL;
 
   return {
     ...config,
