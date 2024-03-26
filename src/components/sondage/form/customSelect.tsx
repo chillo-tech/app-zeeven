@@ -51,12 +51,12 @@ const CustomSelect = ({
                   setValue(name, choice.choix_id.id);
                   clearErrors(name);
                 } else {
-                  setValue(name, '');
+                  setValue(name, 0);
                   setError(name, { message: 'Ce champ est requis' });
                 }
                 setForm((prev) => ({
                   ...prev,
-                  [name]: prev[name] === choice.choix_id.id ? '' : choice.choix_id.id,
+                  [name]: prev[name] === choice.choix_id.id ? 0 : choice.choix_id.id,
                 }));
               }}
               className={` my-1 cursor-pointer select-none rounded-md px-4 py-2 transition-all  ${classNames(

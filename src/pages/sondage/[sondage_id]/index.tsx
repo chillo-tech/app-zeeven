@@ -1,6 +1,7 @@
 import Metadata from '@/components/Metadata';
 import Form from '@/components/sondage/form/form';
 import { add, fetchDataClient } from '@/services';
+import formStyles from '@/styles/Form.module.css';
 import styles from '@/styles/SignIn.module.css';
 import { ISondage } from '@/types';
 import { EMAIL_ERROR_MESSAGE, EMAIL_PATTERN, SONDAGE } from '@/utils';
@@ -8,9 +9,10 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { AxiosError } from 'axios';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useMutation, useQuery } from 'react-query';
+import ScaleLoader from 'react-spinners/ScaleLoader';
 import * as yup from 'yup';
 
 const SondagePage = () => {
@@ -66,7 +68,6 @@ const SondagePage = () => {
   });
 
   const onSubmit = (data: any) => {
-    console.log('data', data);
     mutation.mutate(data);
   };
 
@@ -93,7 +94,7 @@ const SondagePage = () => {
         if (question_id.choix.length > 0) {
           objectSchema[`question_${question_id.id}`] = yup
             .number()
-            .min(0, 'Ce champ est requis')
+            .min(1, 'Ce champ est requis')
             .required('Ce champ est requis');
         } else {
           objectSchema[`question_${question_id.id}`] = yup.string();
@@ -115,6 +116,12 @@ const SondagePage = () => {
       router.push('/404');
     },
   });
+
+  useEffect(() => {
+    if (mutation.isError) {
+      if (typeof window !== 'undefined') window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  }, [mutation.isError]);
 
   return sondageQuery.data ? (
     <section className={styles.wrapper}>
@@ -142,21 +149,35 @@ const SondagePage = () => {
         <h2 className={`${styles.form_control__label} pb-6 pt-2 text-center font-light`}>
           {sondageQuery.data.Description}
         </h2>
-        <article className={styles.inputs__container}>
+        <article className={`${styles.inputs__container} relative`}>
           {mutation.isError ? (
             <h2 className={`text-center text-lg text-rose-500`}>{errorMessage}</h2>
           ) : null}
 
-          <Form
-            onSubmit={handleSubmit(onSubmit)}
-            errors={errors}
-            questions={sondageQuery.data.question}
-            register={register}
-            setValue={setValue}
-            getValues={getValues}
-            setError={setError}
-            clearErrors={clearErrors}
-          />
+          {mutation.isLoading && (
+            <div className="absolute left-0 top-0 z-50 flex h-full w-full items-center justify-center bg-[rgba(30,50,138,.3)]">
+              <ScaleLoader color="rgb(30,50,138)" />
+            </div>
+          )}
+          {mutation.isSuccess ? (
+            <div className="space-y-4">
+              <p>Merci d'avoir participé à ce sondage</p>
+              <button onClick={() => router.push('/')} className={formStyles.form_control__button}>
+                Revenir à l'acceuil
+              </button>
+            </div>
+          ) : (
+            <Form
+              onSubmit={handleSubmit(onSubmit)}
+              errors={errors}
+              questions={sondageQuery.data.question}
+              register={register}
+              setValue={setValue}
+              getValues={getValues}
+              setError={setError}
+              clearErrors={clearErrors}
+            />
+          )}
         </article>
       </div>
     </section>
