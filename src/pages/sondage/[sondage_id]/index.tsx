@@ -161,9 +161,9 @@ const SondagePage = () => {
           )}
           {mutation.isSuccess ? (
             <div className="space-y-4">
-              <p>Merci d'avoir participé à ce sondage</p>
+              <p>Merci d&apos;avoir participé à ce sondage</p>
               <button onClick={() => router.push('/')} className={formStyles.form_control__button}>
-                Revenir à l'acceuil
+                Revenir à l&apos;acceuil
               </button>
             </div>
           ) : (
