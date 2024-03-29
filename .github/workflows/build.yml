@@ -144,6 +144,7 @@ jobs:
           username: ${{ secrets.APPLICATIONS_USERNAME }}
           key: ${{ secrets.APPLICATIONS_SSH_PRIVATE_KEY }}
           script: |
+            echo BACKOFFICE_API_TOKEN=${{ secrets.BACKOFFICE_API_TOKEN }} >> /opt/applications/${{env.APPLICATION_NAME}}/${{env.APPLICATION_TYPE}}-${{env.APPLICATION_NAME}}/.env
             echo NEXT_PUBLIC_GOOGLE_MAP_API_KEY=${{ secrets.NEXT_PUBLIC_GOOGLE_MAP_API_KEY }} >> /opt/applications/${{env.APPLICATION_NAME}}/${{env.APPLICATION_TYPE}}-${{env.APPLICATION_NAME}}/.env
             echo NEXTAUTH_URL=${{ secrets.NEXTAUTH_URL }} >> /opt/applications/${{env.APPLICATION_NAME}}/${{env.APPLICATION_TYPE}}-${{env.APPLICATION_NAME}}/.env
             echo APPLICATION_URL=${{ secrets.APPLICATION_URL }} >> /opt/applications/${{env.APPLICATION_NAME}}/${{env.APPLICATION_TYPE}}-${{env.APPLICATION_NAME}}/.env
