@@ -1,6 +1,6 @@
 import Metadata from '@/components/Metadata';
 import Form from '@/components/sondage/form/form';
-import { add, fetchDataClient } from '@/services';
+import { add, fetchData, fetchDataClient } from '@/services';
 import formStyles from '@/styles/Form.module.css';
 import styles from '@/styles/SignIn.module.css';
 import { ISondage } from '@/types';
@@ -82,7 +82,7 @@ const SondagePage = () => {
       const id = parseInt(slug.split('-').at(-1) || '');
       const {
         data: { data: sondage },
-      } = await fetchDataClient({
+      } = await fetchData({
         path: `/api/backoffice/sondage/${id}`,
         fields: SONDAGE,
       });
