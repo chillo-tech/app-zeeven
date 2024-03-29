@@ -35,7 +35,7 @@ const CustomSelect = ({
     return () => {
       unRegisterField(name);
     };
-  }, [name , registerField , unRegisterField , question.choix]);
+  }, [name]);
   return (
     <div className={`${formStyles.form_control} space-y-2`}>
       <label className={formStyles.form_control__label}>
@@ -59,15 +59,15 @@ const CustomSelect = ({
                   [name]: prev[name] === choice.choix_id.id ? 0 : choice.choix_id.id,
                 }));
               }}
-              className={` my-1 cursor-pointer select-none rounded-md px-4 py-2 transition-all  ${classNames(
+              className={` my-1 cursor-pointer items-center select-none rounded-md px-4 py-2 flex justify-between transition-all  ${classNames(
                 {
-                  'bg-blue-500 text-white hover:!bg-blue-500 hover:!text-white':
+                  'bg-green-500 text-white hover:!bg-green-500 hover:!text-white':
                     form[name] === choice.choix_id.id,
-                  'border border-blue-500 hover:bg-blue-200 hover:text-black': form[name] !== choice.choix_id.id,
+                  'border border-green-500 hover:bg-green-300 hover:text-black text-black': form[name] !== choice.choix_id.id,
                 }
               )}`}
             >
-              {choice.choix_id.intitule}
+              {choice.choix_id.intitule} <input checked={form[name] === choice.choix_id.id} type='radio'/>
             </div>
           );
         })}

@@ -36,7 +36,7 @@ const SondagePage = () => {
       email: '',
       numero_de_telephone: '',
       nom: '',
-      sondage: sondageQuery.data?.id || router.query.sondage_id,
+      sondage: sondageQuery.data?.id || router.query.slug,
       reponses_choisies,
     };
 
@@ -72,13 +72,26 @@ const SondagePage = () => {
   };
 
   const fetchSondage = async () => {
-    const {
-      data: { data: sondage },
-    } = await fetchDataClient({
-      path: `/api/backoffice/sondage/${router.query.sondage_id}`,
-      fields: SONDAGE,
-    });
-    return sondage;
+    const slug = router.query.slug;
+    while (!router.isReady) {
+      await new Promise(() => setTimeout(() => ({}), 500));
+    }
+    if (!slug || typeof slug !== 'string') {
+      throw new Error('Not found');
+    } else {
+      const id = parseInt(slug.split('-').at(-1) || '');
+      const {
+        data: { data: sondage },
+      } = await fetchDataClient({
+        path: `/api/backoffice/sondage/${id}`,
+        fields: SONDAGE,
+      });
+      console.log('sondage.slug', sondage.slug);
+      if (sondage.slug !== slug) {
+        throw new Error('Not found');
+      }
+      return sondage;
+    }
   };
 
   const handleSondage = async (sondage: ISondage) => {
@@ -107,7 +120,7 @@ const SondagePage = () => {
   };
 
   const sondageQuery = useQuery<ISondage>({
-    queryKey: ['sondage', router.query.sondage_id],
+    queryKey: ['sondage', router.query.slug],
     queryFn: fetchSondage,
     retry: false,
     refetchOnWindowFocus: false,
