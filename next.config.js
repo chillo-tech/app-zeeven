@@ -9,6 +9,8 @@ const nextConfig = {
     NEXT_PUBLIC_GOOGLE_ANALYTICS: process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS,
     BACKOFFICE_API: process.env.BACKOFFICE_API,
     BACKOFFICE_API_TOKEN: process.env.BACKOFFICE_API_TOKEN,
+    BACKOFFICE_CHILLO_API: process.env.BACKOFFICE_CHILLO_API,
+    BACKOFFICE_CHILLO_API_TOKEN: process.env.BACKOFFICE_CHILLO_API_TOKEN,
     APPLICATION_URL: process.env.APPLICATION_URL,
     NEXTAUTH_URL: process.env.NEXTAUTH_URL,
     API_URL: process.env.API_URL,
@@ -22,6 +24,8 @@ const nextConfig = {
     NEXT_PUBLIC_GOOGLE_ANALYTICS: process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS,
     BACKOFFICE_API: process.env.BACKOFFICE_API,
     BACKOFFICE_API_TOKEN: process.env.BACKOFFICE_API_TOKEN,
+    BACKOFFICE_CHILLO_API: process.env.BACKOFFICE_CHILLO_API,
+    BACKOFFICE_CHILLO_API_TOKEN: process.env.BACKOFFICE_CHILLO_API_TOKEN,
     APPLICATION_URL: process.env.APPLICATION_URL,
     NEXTAUTH_URL: process.env.NEXTAUTH_URL,
     API_URL: process.env.API_URL,
@@ -59,6 +63,15 @@ const nextConfig = {
         permanent: false,
       },
     ];
+  },
+  images: {
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'backoffice.chillo.fr',
+        port: '',
+      },
+    ],
   },
 };
 

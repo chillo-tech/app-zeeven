@@ -1,4 +1,4 @@
-const BACKEND_BASE_PATH = "/api/backend";
+const BACKEND_BASE_PATH = '/api/backend';
 const TOKEN_PAYLOAD = 'TOKEN_PAYLOAD';
 const USER_INFOS = 'USER_INFOS';
 const MESSAGE_VARIABLE_PATTERN = /{{[a-zA-Z0-9_ ]+}}/g;
@@ -9,15 +9,17 @@ const EMAIL_PATTERN = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,})+$/;
 const URL_PATTERN =
   /((https?):\/\/)(www.)?[a-z0-9]+(\.[a-z]{2,}){1,3}(#?\/?[a-zA-Z0-9#]+)*\/?(\?[a-zA-Z0-9-_]+=[a-zA-Z0-9-%]+&?)?$/;
 */
-const URL_PATTERN = /^(https?|ftp):\/\/(([a-z\d]([a-z\d-]*[a-z\d])?\.)+[a-z]{2,}|localhost)(\/[-a-z\d%_.~+]*)*(\?[;&a-z\d%_.~+=-]*)?(\#[-a-z\d_]*)?$/i;
+const URL_PATTERN =
+  /^(https?|ftp):\/\/(([a-z\d]([a-z\d-]*[a-z\d])?\.)+[a-z]{2,}|localhost)(\/[-a-z\d%_.~+]*)*(\?[;&a-z\d%_.~+=-]*)?(\#[-a-z\d_]*)?$/i;
 
 const STRING_WITH_NUMBERS_REGEXP = /^\D*(\d\D*){10,}$/;
-const PHONE_ERROR_MESSAGE = "Votre numéro de téléphone est invalide. Le premier ZERO n'est pas necessaire";
+const PHONE_ERROR_MESSAGE =
+  "Votre numéro de téléphone est invalide. Le premier ZERO n'est pas necessaire";
 const INVALID_ERROR_MESSAGE = 'Ce champ est invalide';
 const EMAIL_ERROR_MESSAGE = 'Votre mail est invalide';
 const REQUIRED_FIELD_ERROR_MESSAGE = 'Ce champ est requis';
 const GLOBAL_ERROR = 'Une erreur est survenue, nous allons la résoudre sous peu';
-const GLOBAL_SUCCESS_MESSAGE = "Votre demande a bien été enregistrée";
+const GLOBAL_SUCCESS_MESSAGE = 'Votre demande a bien été enregistrée';
 const INITIAL_STATE = { stepIndex: 0, campain: {} };
 const UPDATE_CAMPAIN = 'UPDATE_CAMPAIN';
 const UPDATE_STEP_INDEX = 'UPDATE_STEP_INDEX';
@@ -26,13 +28,13 @@ const RESET_CAMPAIN = 'RESET_CAMPAIN';
 const SET_NB_STEPS = 'SET_NB_STEPS';
 const UPDATE_DATA = 'UPDATE_DATA';
 const CIVILITY_MAPPING = {
-  "MR_MRS": "Mr & Mme",
-            "MME":"Mme",
-            "Mme": "Mme",
-            "MR": "M.",
-            "Mr": "M.",
-            "MLLE": "Mlle",
-            "Mlle": "Mlle"
+  MR_MRS: 'Mr & Mme',
+  MME: 'Mme',
+  Mme: 'Mme',
+  MR: 'M.',
+  Mr: 'M.',
+  MLLE: 'Mlle',
+  Mlle: 'Mlle',
 };
 const TICKET_TYPE = {
   horizontal: 'horizontal',
@@ -42,26 +44,26 @@ const PROFILE_CATEGORIES: any = [
   {
     label: 'Contacts',
     slug: 'contact',
-    url: ''
+    url: '',
   },
   {
     label: 'Invitations',
     slug: 'invitation',
-    url: ''
+    url: '',
   },
   {
     label: 'Tables',
     slug: 'table',
-    url: ''
-  }
+    url: '',
+  },
 ];
 const EVENT_PROFILE_CATEGORIES = {
-  "contact": true,
-  "guest": false,
-  "nvitation": false,
-  "schedule": false,
-  "table": false
-}
+  contact: true,
+  guest: false,
+  nvitation: false,
+  schedule: false,
+  table: false,
+};
 const WIFI_ENCODAGE = [
   {
     label: 'Aucun',
@@ -85,50 +87,50 @@ const QR_CODES_TYPES = [
     label: 'TELEPHONE',
     icon: 'PHONE',
     value: 'PHONE',
-    description: "Au scan le QR code appelera à ce numéro."
+    description: 'Au scan le QR code appelera à ce numéro.',
   },
   {
     label: 'EMAIL',
     icon: 'EMAIL',
     value: 'EMAIL',
-    description: "Au scan le QR code envera un email à cette adresse."
+    description: 'Au scan le QR code envera un email à cette adresse.',
   },
   {
     label: 'LIEN',
     icon: 'link',
     value: 'LINK',
     placeholder: 'https://zeeven.fr',
-    description: "Votre QR code ouvrira cette URL."
+    description: 'Votre QR code ouvrira cette URL.',
   },
   {
     label: 'SMS',
     icon: 'SMS',
     value: 'SMS',
-    description: "Au scan le QR code envera un message à ce numéro."
+    description: 'Au scan le QR code envera un message à ce numéro.',
   },
   {
     label: 'WHATSAPP',
     icon: 'WHATSAPP',
     value: 'WHATSAPP',
-    description: "Au scan le QR code envera un message whatsapp à ce numéro."
+    description: 'Au scan le QR code envera un message whatsapp à ce numéro.',
   },
   {
     label: 'WIFI',
     icon: 'wifi',
     value: 'WIFI',
-    description: "Au scan le QR code permettra de se connecter au WIFI"
+    description: 'Au scan le QR code permettra de se connecter au WIFI',
   },
   {
     label: 'VCARD',
     icon: 'VCARD',
     value: 'VCARD',
-    description: "Au scan le QR code permettra d'enregistrer ce contact."
+    description: "Au scan le QR code permettra d'enregistrer ce contact.",
   },
   {
     label: 'TEXTE',
     icon: 'TEXT',
     value: 'TEXT',
-    description: "Au scan le QR code permettra de lire ce texte."
+    description: 'Au scan le QR code permettra de lire ce texte.',
   },
 ];
 const GUESTS_OPTIONS = [
@@ -149,7 +151,7 @@ const GUESTS_OPTIONS = [
     label: 'Formulaire',
     icon: 'form',
     sublabel: 'Remplir un',
-  }
+  },
 ];
 const ACCOUNT_LINKS = [
   {
@@ -173,7 +175,7 @@ const ACCOUNT_CATEGORIESLINKS = [
   {
     label: 'QRCODE',
     url: '/me/qr-code',
-  }
+  },
 ];
 const ACCOUNT_PAGES_LINKS = [
   {
@@ -187,7 +189,7 @@ const ACCOUNT_PAGES_LINKS = [
   {
     label: 'Mon compte',
     url: '/me/mon-compte',
-  }
+  },
 ];
 const DESCRIPTION = [
   {
@@ -285,11 +287,11 @@ const variableFieldType = (variable: string) => {
 const isUserInformation = (variable: string, guest: any) => {
   const cleanedVariable = variableWithoutTemplate(variable);
   let usersParams = ['civility', 'firstName', 'lastName', 'email', 'phoneIndex', 'phone'];
-  if(guest && guest.others) {
-    const keys = guest.others.map(({key}: any) => key);
+  if (guest && guest.others) {
+    const keys = guest.others.map(({ key }: any) => key);
     usersParams = [...usersParams, ...keys];
   }
-  return (usersParams.indexOf(cleanedVariable) > -1);
+  return usersParams.indexOf(cleanedVariable) > -1;
 };
 
 const isValidUrl = (url: string) => {
@@ -302,72 +304,104 @@ const isValidUrl = (url: string) => {
 };
 const CHANNELS = [
   {
-    "label": "Email",
-    "image": "email.png",
-    "value": "EMAIL"
+    label: 'Email',
+    image: 'email.png',
+    value: 'EMAIL',
   },
   {
-    "label": "SMS",
-    "image": "sms.png",
-    "value": "SMS"
+    label: 'SMS',
+    image: 'sms.png',
+    value: 'SMS',
   },
   {
-    "label": "Whatsapp",
-    "image": "whatsapp.png",
-    "value": "WHATSAPP"
-  }
-]
-const QRCODE_APPEARANCE = [
-  'NONE',
-  'TEXT_BOTTOM',
-  'TEXT_TOP'
-]
-const WHITE_COLOR = "#FFFFFF";
-const BLACK_COLOR = "#211c1c";
-const QRCODE_DEFAULT_TEXT = "Scannez ici";
-const NONE = "NONE";
+    label: 'Whatsapp',
+    image: 'whatsapp.png',
+    value: 'WHATSAPP',
+  },
+];
+const QRCODE_APPEARANCE = ['NONE', 'TEXT_BOTTOM', 'TEXT_TOP'];
+const WHITE_COLOR = '#FFFFFF';
+const BLACK_COLOR = '#211c1c';
+const QRCODE_DEFAULT_TEXT = 'Scannez ici';
+const NONE = 'NONE';
+const CONNAISSANCE_WEBINAIRE_CHOIX = [
+  {
+    value: 'social_networks',
+    label: 'Les réseaux sociaux',
+  },
+  {
+    value: 'newsletter',
+    label: 'Par newsletter',
+  },
+  {
+    value: 'search_engine',
+    label: 'Via un moteur de recherche',
+  },
+  {
+    value: 'website-blog',
+    label: 'Via un site web ou un blog',
+  },
+  {
+    value: 'friends-collegues_pov',
+    label: "Par recommandation d'un ami ou d'un collegure",
+  },
+  {
+    value: 'web_ads',
+    label: 'Dans publicité en ligne',
+  },
+  {
+    value: 'event-webinar',
+    label: 'Durant un évènement ou le précédent webinaire',
+  },
+  {
+    value: 'other',
+    label: 'Autre',
+  },
+] as const;
+
 export {
-  variableFieldType,
-  isUserInformation,
-  variableWithoutTemplate,
+  ACCOUNT_CATEGORIESLINKS,
+  ACCOUNT_PAGES_LINKS,
   BACKEND_BASE_PATH,
   BLACK_COLOR,
-  CIVILITY_MAPPING,
-  QRCODE_DEFAULT_TEXT,
   CHANNELS,
+  CIVILITY_MAPPING,
+  CONNAISSANCE_WEBINAIRE_CHOIX,
+  DESCRIPTION,
+  EMAIL_ERROR_MESSAGE,
+  EMAIL_PATTERN,
   EVENT_PROFILE_CATEGORIES,
-  INVALID_ERROR_MESSAGE,
-  MESSAGE_VARIABLE_PATTERN,
-  PROFILE_CATEGORIES,
   GLOBAL_ERROR,
   GLOBAL_SUCCESS_MESSAGE,
-  REQUIRED_FIELD_ERROR_MESSAGE,
-  SET_STATE,
+  GUESTS_OPTIONS,
   INFORMATIONS,
   INITIAL_STATE,
-  UPDATE_CAMPAIN,
-  UPDATE_STEP_INDEX,
+  INVALID_ERROR_MESSAGE,
+  MESSAGE_VARIABLE_PATTERN,
+  NONE,
+  PHONE_ERROR_MESSAGE,
+  PHONE_PATTERN,
+  PROFILE_CATEGORIES,
+  QRCODE_APPEARANCE,
+  QRCODE_DEFAULT_TEXT,
+  QR_CODES_TYPES,
+  REQUIRED_FIELD_ERROR_MESSAGE,
   RESET_CAMPAIN,
   SET_NB_STEPS,
-  TOKEN_PAYLOAD,
-  USER_INFOS,
-  PHONE_PATTERN,
-  EMAIL_PATTERN,
-  URL_PATTERN,
-  STRING_WITH_NUMBERS_REGEXP,
-  PHONE_ERROR_MESSAGE,
-  EMAIL_ERROR_MESSAGE,
-  DESCRIPTION,
+  SET_STATE,
   STATISTICS,
-  UPDATE_DATA,
-  GUESTS_OPTIONS,
-  QR_CODES_TYPES,
-  isValidUrl,
-  ACCOUNT_CATEGORIESLINKS,
-  WIFI_ENCODAGE,
-  ACCOUNT_PAGES_LINKS,
+  STRING_WITH_NUMBERS_REGEXP,
   TICKET_TYPE,
-  NONE,
-  QRCODE_APPEARANCE,
-  WHITE_COLOR
+  TOKEN_PAYLOAD,
+  UPDATE_CAMPAIN,
+  UPDATE_DATA,
+  UPDATE_STEP_INDEX,
+  URL_PATTERN,
+  USER_INFOS,
+  WHITE_COLOR,
+  WIFI_ENCODAGE,
+  isUserInformation,
+  isValidUrl,
+  variableFieldType,
+  variableWithoutTemplate,
 };
