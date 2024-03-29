@@ -29,7 +29,10 @@ function Footer() {
         fields: ENTREPRISE,
       }),
     onSuccess: (data) => {
-      updateData({ company: data.data.data });
+      const {data: selected} = data;
+      const {data: selectedArray} = selected;
+      const company = selectedArray[0];
+      updateData({ company });
     },
   });
   return (
@@ -128,13 +131,6 @@ function Footer() {
               </Link>
               <Link href="/contactez-nous" className="mb-2 text-slate-300 hover:text-white">
                 Grille des prix
-              </Link>
-              <Link
-                href="https://chillo.tech/nos-postes"
-                target="_blank"
-                className={`text-slate-300 hover:text-white`}
-              >
-                Nous recrutons
               </Link>
             </div>
           </div>
