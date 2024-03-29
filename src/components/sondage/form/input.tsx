@@ -24,7 +24,7 @@ const Input = ({
     return () => {
       unRegisterField(name);
     };
-  }, [name, registerField, unRegisterField]);
+  }, [name]);
   return (
     <div className={`${formStyles.form_control} space-y-2`}>
       <label className={formStyles.form_control__label}>

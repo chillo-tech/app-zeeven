@@ -7,8 +7,7 @@ async function handler(
   res: NextApiResponse<any>,
 ) {
   try {
-    const {url = ''} = req;
-    const backendUrl = url.substring(url.indexOf('backend')) || '';
+    const {url : backendUrl = ''} = req;
     if (req.method === 'POST') {
       const {data} = await axiosInstance.post(`${backendUrl}`, req.body);
       return res.status(200).json(data);
