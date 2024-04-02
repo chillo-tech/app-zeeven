@@ -1,6 +1,6 @@
 import Metadata from '@/components/Metadata';
 import Form from '@/components/sondage/form/form';
-import { add, fetchData, fetchDataClient } from '@/services';
+import { add, fetchData } from '@/services';
 import formStyles from '@/styles/Form.module.css';
 import styles from '@/styles/SignIn.module.css';
 import { ISondage } from '@/types';
@@ -56,10 +56,7 @@ const SondagePage = () => {
     register,
     handleSubmit,
     formState: { errors },
-    setValue,
-    setError,
-    getValues,
-    clearErrors,
+    watch,
   } = useForm<{
     [key: `question_${string | number}`]: string | number;
   }>({
@@ -68,7 +65,8 @@ const SondagePage = () => {
   });
 
   const onSubmit = (data: any) => {
-    mutation.mutate(data);
+    console.log('data', data);
+    // mutation.mutate(data);
   };
 
   const fetchSondage = async () => {
@@ -107,6 +105,7 @@ const SondagePage = () => {
         if (question_id.choix.length > 0) {
           objectSchema[`question_${question_id.id}`] = yup
             .number()
+            .typeError('Ce champ est requis')
             .min(1, 'Ce champ est requis')
             .required('Ce champ est requis');
         } else {
@@ -185,10 +184,7 @@ const SondagePage = () => {
               errors={errors}
               questions={sondageQuery.data.question}
               register={register}
-              setValue={setValue}
-              getValues={getValues}
-              setError={setError}
-              clearErrors={clearErrors}
+              watch={watch}
             />
           )}
         </article>

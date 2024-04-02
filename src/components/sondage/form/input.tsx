@@ -1,6 +1,6 @@
 import formStyles from '@/styles/Form.module.css';
 import { IQuestion } from '@/types';
-import { ChangeEvent, useContext, useEffect } from 'react';
+import { useContext } from 'react';
 import { formContext } from './wrapper';
 
 const Input = ({
@@ -10,21 +10,7 @@ const Input = ({
   question: IQuestion;
   name: `question_${string | number}`;
 }) => {
-  const { setForm, registerField, register, unRegisterField } = useContext(formContext);
-  const registredProps = register(name);
-  const inputProps = {
-    ...registredProps,
-    onChange: (e: ChangeEvent<HTMLInputElement>) => {
-      setForm((prev) => ({ ...prev, [name]: e.target.value }));
-      registredProps.onChange(e);
-    },
-  };
-  useEffect(() => {
-    registerField(name);
-    return () => {
-      unRegisterField(name);
-    };
-  }, [name]);
+  const { register } = useContext(formContext);
   return (
     <div className={`${formStyles.form_control} space-y-2`}>
       <label className={formStyles.form_control__label}>
@@ -35,7 +21,7 @@ const Input = ({
           className={formStyles.form_control__input}
           placeholder="Votre réponse"
           type="text"
-          {...inputProps}
+          {...register(name)}
         />
       </div>
     </div>
