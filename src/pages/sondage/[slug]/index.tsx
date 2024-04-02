@@ -57,6 +57,7 @@ const SondagePage = () => {
     handleSubmit,
     formState: { errors },
     watch,
+    reset,
   } = useForm<{
     [key: `question_${string | number}`]: string | number;
   }>({
@@ -65,8 +66,8 @@ const SondagePage = () => {
   });
 
   const onSubmit = (data: any) => {
-    console.log('data', data);
-    // mutation.mutate(data);
+    // console.log('data', data);
+    mutation.mutate(data);
   };
 
   const fetchSondage = async () => {
@@ -174,9 +175,23 @@ const SondagePage = () => {
           {mutation.isSuccess ? (
             <div className="space-y-4">
               <p>Merci d&apos;avoir participé à ce sondage</p>
-              <button onClick={() => router.push('/')} className={formStyles.form_control__button}>
-                Revenir à l&apos;acceuil
-              </button>
+              <div className="flex items-center gap-5">
+                <button
+                  onClick={() => {
+                    reset();
+                    mutation.reset();
+                  }}
+                  className={formStyles.form_control__button}
+                >
+                  Recharger le formulaire
+                </button>
+                <button
+                  onClick={() => router.push('/')}
+                  className={formStyles.form_control__button}
+                >
+                  Revenir à l&apos;acceuil
+                </button>
+              </div>
             </div>
           ) : (
             <Form
