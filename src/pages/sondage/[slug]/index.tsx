@@ -66,7 +66,6 @@ const SondagePage = () => {
   });
 
   const onSubmit = (data: any) => {
-    // console.log('data', data);
     mutation.mutate(data);
   };
 
@@ -85,7 +84,6 @@ const SondagePage = () => {
         path: `/api/backoffice/sondage/${id}`,
         fields: SONDAGE,
       });
-      console.log('sondage.slug', sondage.slug);
       if (sondage.slug !== slug) {
         throw new Error('Not found');
       }

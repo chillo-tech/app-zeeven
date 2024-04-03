@@ -32,7 +32,6 @@ const CustomSelect = ({
                   className={classNames(
                     'relative flex cursor-pointer rounded-lg px-5 py-3 shadow-md focus:outline-none',
                     {
-                      // 'ring-2 ring-white/60 ring-offset-2 ring-offset-sky-300': active,
                       'text-white': checked,
                       'bg-red-400': checked && note === 1,
                       'bg-yellow-400': checked && note === 2,
@@ -52,20 +51,6 @@ const CustomSelect = ({
                     value={choice.choix_id.id}
                   />
                 </label>
-                {/* <div
-                
-                className={` my-1 flex cursor-pointer select-none items-center justify-between rounded-md px-4 py-2 transition-all  ${classNames(
-                  {
-                    'bg-green-500 text-white hover:!bg-green-500 hover:!text-white':
-                      form[name] === choice.choix_id.id,
-                    'border border-green-500 text-black hover:bg-green-300 hover:text-black':
-                      form[name] !== choice.choix_id.id,
-                  }
-                )}`}
-              >
-                {choice.choix_id.intitule}{' '}
-                <input checked={form[name] === choice.choix_id.id} type="radio" />l
-              </div> */}
               </div>
             );
           })}
