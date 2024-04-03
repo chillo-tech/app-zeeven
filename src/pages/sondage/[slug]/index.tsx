@@ -190,6 +190,7 @@ const SondagePage = () => {
                   Revenir à l&apos;acceuil
                 </button>
               </div>
+
             </div>
           ) : (
             <Form
