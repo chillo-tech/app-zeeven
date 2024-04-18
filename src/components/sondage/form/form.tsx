@@ -14,9 +14,7 @@ const Form = ({
   watch
 }: {
   onSubmit: (e?: BaseSyntheticEvent<object, any, any> | undefined) => Promise<void>;
-  questions: {
-    question_id: IQuestion;
-  }[];
+  questions: IQuestion[];
   register: UseFormRegister<{
     [key: `question_${number}`]: string | number;
     [key: `question_${string}`]: string | number;
@@ -35,16 +33,16 @@ const Form = ({
   return (
     <Wrapper register={register} watch={watch}>
       <form onSubmit={onSubmit} className="space-y-4">
-        {questions.map(({ question_id }, index) => {
+        {questions.map((question, index) => {
           return (
-            <div key={`Question-${question_id.id}-${index}`}>
-              {question_id.choix.length > 0 ? (
-                <CustomSelect name={`question_${question_id.id}`} question={question_id} />
+            <div key={`Question-${question.id}-${index}`}>
+              {question.choices.length > 0 ? (
+                <CustomSelect name={`question_${question.id}`} question={question} />
               ) : (
-                <Input name={`question_${question_id.id}`} question={question_id} />
+                <Input name={`question_${question.id}`} question={question} />
               )}
               <p className={formStyles.form_control__error}>
-                {errors[`question_${question_id.id}`]?.message}
+                {errors[`question_${question.id}`]?.message}
               </p>
             </div>
           );

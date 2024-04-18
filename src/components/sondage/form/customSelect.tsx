@@ -19,16 +19,16 @@ const CustomSelect = ({
         <span className={formStyles.form_control__label__first}>{question.label}</span>
       </label>
       <div className="space-y-2">
-        {question.choix
-          .sort((a, b) => a.choix_id.id - b.choix_id.id)
+        {question.choices
+          .sort((a, b) => a.choice_id.id - b.choice_id.id)
           .map((choice) => {
-            const note = parseInt(choice.choix_id.valeur);
-            const checked = Number(selected) === choice.choix_id.id;
+            const note = parseInt(choice.choice_id.value);
+            const checked = Number(selected) === choice.choice_id.id;
 
             return (
-              <div key={choice.choix_id.id}>
+              <div key={choice.choice_id.id}>
                 <label
-                  htmlFor={`${choice.choix_id.id}`}
+                  htmlFor={`${choice.choice_id.id}`}
                   className={classNames(
                     'relative flex cursor-pointer rounded-lg px-5 py-3 shadow-md focus:outline-none',
                     {
@@ -42,13 +42,13 @@ const CustomSelect = ({
                     }
                   )}
                 >
-                  {choice.choix_id.intitule}{' '}
+                  {choice.choice_id.titled}{' '}
                   <input
-                    id={`${choice.choix_id.id}`}
+                    id={`${choice.choice_id.id}`}
                     type="radio"
                     className="hidden"
                     {...register(name)}
-                    value={choice.choix_id.id}
+                    value={choice.choice_id.id}
                   />
                 </label>
               </div>
