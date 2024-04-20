@@ -3,7 +3,6 @@ import { slugify } from '@/utils';
 import Link from 'next/link';
 import { useContext } from 'react';
 import ImageDisplay from '../image-display';
-import Debug from '../shared/Debug';
 
 function Solutions() {
   const context = useContext(ApplicationContext);
@@ -46,7 +45,6 @@ function Solutions() {
                             href={getLink(`${page.page_id.id}-${page.page_id.label}`)}
                             className="flex items-center justify-between rounded-md bg-white px-6 py-4 font-light text-black shadow-lg"
                           >
-                            <span>{page.page_id.label}</span>
                             <span>{page.page_id.sublabel}</span>
                             {page.page_id.images && (
                               <ImageDisplay
