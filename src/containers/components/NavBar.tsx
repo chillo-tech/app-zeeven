@@ -1,5 +1,5 @@
 import { ApplicationContext } from '@/context/ApplicationContext';
-import { getUrl, slugify } from '@/utils';
+import { getUrl, slugify, toTitle } from '@/utils';
 import { signIn, signOut, useSession } from 'next-auth/react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
@@ -25,7 +25,7 @@ function NavBar() {
           ZEEVEN
         </Link>
         {company && company.menus ? (
-          <ul className=" text-md hidden items-center gap-6 font-light font-medium md:flex">
+          <ul className=" text-md hidden items-center gap-6 font-light text-xl md:flex">
             {company.menus
               .filter(({ status }: any, index: number) => status === 'published')
               .map((menu: any) => (
@@ -38,7 +38,7 @@ function NavBar() {
                     })}`}
                     className="flex items-center text-white"
                   >
-                    {menu.label}
+                    {toTitle(menu.label)}
                   </Link>
                 </li>
               ))}

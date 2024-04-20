@@ -25,13 +25,13 @@ function Footer() {
     enabled: !company,
     queryFn: () =>
       fetchData({
-        path: '/api/backoffice/company',
+        path: '/api/backoffice/company?filter[name][_eq]=Chillo.tech',
         fields: ENTREPRISE,
       }),
     onSuccess: (data) => {
       const {data: selected} = data;
       const {data: selectedArray} = selected;
-      const company = selectedArray.filter(({id}:any) => id === 3)[0];
+      const company = selectedArray[0];
       updateData({ company });
     },
   });
@@ -86,13 +86,13 @@ function Footer() {
                             >
                               <Link
                                 href={`/${
-                                  slugify(page.page_id.label).indexOf('qr-code') > -1
+                                  (slugify(page.page_id.sublabel).indexOf('qr-code') > -1 || slugify(page.page_id.sublabel).indexOf('qr-code') > -1)
                                     ? 'qr-code'
                                     : `1-nos-solutions`
                                 }`}
                                 className="text-slate-300 hover:text-white"
                               >
-                                {page.page_id.label}
+                                {page.page_id.sublabel}
                               </Link>
                             </li>
                           ))}
