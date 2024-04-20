@@ -31,7 +31,7 @@ function Footer() {
     onSuccess: (data) => {
       const {data: selected} = data;
       const {data: selectedArray} = selected;
-      const company = selectedArray[0];
+      const company = selectedArray.filter(({id}:any) => id === 3)[0];
       updateData({ company });
     },
   });
