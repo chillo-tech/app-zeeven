@@ -46,6 +46,7 @@ function Solutions() {
                             href={getLink(`${page.page_id.id}-${page.page_id.label}`)}
                             className="flex items-center justify-between rounded-md bg-white px-6 py-4 font-light text-black shadow-lg"
                           >
+                            <span>{page.page_id.label}</span>
                             <span>{page.page_id.sublabel}</span>
                             {page.page_id.images && (
                               <ImageDisplay

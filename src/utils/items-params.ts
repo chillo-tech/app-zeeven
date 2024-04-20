@@ -158,11 +158,36 @@ const ENTREPRISE = `
 `;
 
 const SONDAGE = `
-  *,
-  question.question_id.*,
-  question.question_id.choix.choix_id.*,
-  entreprise.*
-`;
+  id,
+  status,
+  sort,
+  user_created,
+  date_created,
+  user_updated,
+  date_updated,
+  label,
+  type,
+  abstract,
+  company.*,
+  startDate,
+  endDate,
+  slug,
+  answer_sheets,
+  questions.id,
+  questions.status,
+  questions.sort,
+  questions.user_created,
+  questions.date_created,
+  questions.user_updated,
+  questions.date_updated,
+  questions.label,
+  questions.description,
+  questions.isRequired,
+  questions.sector,
+  questions.type,
+  questions.survey,
+  questions.choices.choice_id.*
+`
 
 const PARTIAL_SPACES = `${base},${image},${prix},${type},slug`;
 

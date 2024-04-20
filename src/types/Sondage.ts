@@ -1,68 +1,74 @@
-interface ISondage {
-  id: number;
-  status: string;
-  sort: any;
-  user_created: string;
-  date_created: string;
-  user_updated: string;
-  date_updated: string;
-  intitule: string;
-  Description: any;
-  date_debut: string;
-  date_fin: string;
-  reponses_sondage: number[];
-  question: {
-    question_id: IQuestion;
-  }[];
-  entreprise: IEntreprise;
-}
-
-export interface IEntreprise {
-  id: number;
-  status: string;
-  sort: any;
-  user_created: string;
-  date_created: string;
-  user_updated: string;
-  date_updated: string;
-  description: string;
-  type: string;
-  mail: any;
-  poste_du_contact: string;
-  nom: string;
-  telephone: string;
-  sondages: number[];
-  adresse: number[];
+export interface ISondage {
+  id: number
+  status: string
+  sort: any
+  user_created: string
+  date_created: string
+  user_updated: string
+  date_updated: string
+  label: string
+  type: string
+  abstract: string
+  company: ICompany
+  startDate: any
+  endDate: any
+  slug: string
+  answer_sheets: any[]
+  questions: IQuestion[]
 }
 
 export interface IQuestion {
-  id: number;
-  status: string;
-  sort: any;
-  user_created: string;
-  date_created: string;
-  user_updated?: string;
-  date_updated?: string;
-  label: string;
-  description: any;
-  est_obligatoire: boolean;
-  secteur?: string;
-  type?: string;
-  choix: {
-    choix_id: IChoix;
-  }[];
+  id: number
+  status: string
+  sort: any
+  user_created: string
+  date_created: string
+  user_updated: string
+  date_updated: string
+  label: string
+  description: any
+  isRequired?: boolean
+  sector: string
+  type?: string
+  survey: number
+  choices: {
+    choice_id: IChoice
+  }[]
 }
 
-export interface IChoix {
-  id: number;
-  status: string;
-  sort: any;
-  user_created: string;
-  date_created: string;
-  valeur: string;
-  user_updated: any;
-  date_updated: any;
-  intitule: string;
+export interface IChoice {
+  id: number
+  status: string
+  sort: any
+  user_created: string
+  date_created: string
+  user_updated?: string
+  date_updated?: string
+  titled: string
+  value: string
 }
 
-export type { ISondage };
+
+export interface ICompany {
+  id: number
+  status: string
+  sort: any
+  user_created: string
+  date_created: string
+  user_updated: any
+  date_updated: any
+  name: string
+  abstract: any
+  sector: string
+  label: any
+  desccription: any
+  type: any
+  email: any
+  phone: any
+  contactPosition: any
+  menus: any[]
+  survey: number[]
+  addresses: any[]
+}
+
+

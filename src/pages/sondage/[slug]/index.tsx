@@ -1,6 +1,6 @@
 import Metadata from '@/components/Metadata';
 import Form from '@/components/sondage/form/form';
-import { add, fetchDataClient } from '@/services';
+import { add, fetchData } from '@/services';
 import formStyles from '@/styles/Form.module.css';
 import styles from '@/styles/SignIn.module.css';
 import { ISondage } from '@/types';
@@ -23,24 +23,25 @@ const SondagePage = () => {
   const router = useRouter();
 
   const answerSondage = (data: any) => {
-    const reponses_choisies = Object.keys(data).map((key) => {
+    const answers = Object.keys(data).map((key) => {
       return {
-        valeur: typeof data[key] === 'number' || data[key] instanceof Number ? null : data[key],
-        reponses_sondages: 1,
-        choix: typeof data[key] === 'number' || data[key] instanceof Number ? data[key] : null,
+        value: typeof data[key] === 'number' || data[key] instanceof Number ? null : data[key],
+        choice: typeof data[key] === 'number' || data[key] instanceof Number ? data[key] : null,
         question: Number(key.split('_')[1]),
       };
     });
 
     const postObj = {
       email: '',
-      numero_de_telephone: '',
-      nom: '',
-      sondage: sondageQuery.data?.id || router.query.sondage_id,
-      reponses_choisies,
+      phone: '',
+      phoneIndex: '',
+      firstName: '',
+      lastName: '',
+      sondage: sondageQuery.data?.id || router.query.slug,
+      answers,
     };
 
-    return add('/api/backoffice/reponses', postObj);
+    return add('/api/backoffice/survey_answer_sheet', postObj);
   };
   const mutation = useMutation({
     mutationFn: answerSondage,
@@ -56,10 +57,8 @@ const SondagePage = () => {
     register,
     handleSubmit,
     formState: { errors },
-    setValue,
-    setError,
-    getValues,
-    clearErrors,
+    watch,
+    reset,
   } = useForm<{
     [key: `question_${string | number}`]: string | number;
   }>({
@@ -72,32 +71,46 @@ const SondagePage = () => {
   };
 
   const fetchSondage = async () => {
-    const {
-      data: { data: sondage },
-    } = await fetchDataClient({
-      path: `/api/backoffice/sondage/${router.query.sondage_id}`,
-      fields: SONDAGE,
-    });
-    return sondage;
+    const slug = router.query.slug;
+    while (!router.isReady) {
+      await new Promise(() => setTimeout(() => ({}), 500));
+    }
+    if (!slug || typeof slug !== 'string') {
+      throw new Error('Not found');
+    } else {
+      const id = parseInt(slug.split('-').at(-1) || '');
+      const {
+        data: { data: sondage },
+      } = await fetchData({
+        path: `/api/backoffice/survey/${id}`,
+        fields: SONDAGE,
+      });
+      console.log('sondage', sondage);
+      if (sondage.slug !== slug) {
+        throw new Error('Not found');
+      }
+      return sondage;
+    }
   };
 
   const handleSondage = async (sondage: ISondage) => {
     const objectSchema: any = {};
-    sondage.question.forEach(({ question_id }) => {
-      if (question_id.type === 'email') {
-        objectSchema[`question_${question_id.id}`] = yup
+    sondage.questions.forEach((question) => {
+      if (question.type === 'email') {
+        objectSchema[`question_${question.id}`] = yup
           .string()
           .email(EMAIL_ERROR_MESSAGE)
           .required(EMAIL_ERROR_MESSAGE)
           .matches(EMAIL_PATTERN, { message: EMAIL_ERROR_MESSAGE });
       } else {
-        if (question_id.choix.length > 0) {
-          objectSchema[`question_${question_id.id}`] = yup
+        if (question.choices.length > 0) {
+          objectSchema[`question_${question.id}`] = yup
             .number()
+            .typeError('Ce champ est requis')
             .min(1, 'Ce champ est requis')
             .required('Ce champ est requis');
         } else {
-          objectSchema[`question_${question_id.id}`] = yup.string();
+          objectSchema[`question_${question.id}`] = yup.string();
         }
       }
     });
@@ -107,7 +120,7 @@ const SondagePage = () => {
   };
 
   const sondageQuery = useQuery<ISondage>({
-    queryKey: ['sondage', router.query.sondage_id],
+    queryKey: ['sondage', router.query.slug],
     queryFn: fetchSondage,
     retry: false,
     refetchOnWindowFocus: false,
@@ -127,10 +140,10 @@ const SondagePage = () => {
     <section className={styles.wrapper}>
       <Metadata
         entry={{
-          title: `${sondageQuery.data.intitule || 'sondage'} | ${
-            sondageQuery.data.entreprise?.nom || 'zeeven'
+          title: `${sondageQuery.data.label || 'sondage'} | ${
+            sondageQuery.data.company?.label || 'zeeven'
           }`,
-          description: sondageQuery.data.intitule || 'produit par zeeven de chillo tech',
+          description: sondageQuery.data.abstract || 'produit par zeeven de chillo tech',
         }}
       />
 
@@ -139,15 +152,18 @@ const SondagePage = () => {
           <Link href={'/'} className={styles.logo}>
             ZEEVEN
           </Link>
-          {sondageQuery.data.entreprise?.nom && (
-            <p>Ce sondage est destiné à {sondageQuery.data.entreprise?.nom}</p>
-          )}
+          {sondageQuery.data.company.label || sondageQuery.data.company.name ? (
+            <div>
+              Ce sondage est destiné à{' '}
+              {sondageQuery.data.company.label || sondageQuery.data.company.name}
+            </div>
+          ) : null}
         </div>
       </nav>
       <div className={styles.form__container}>
-        <h1 className={styles.form__title}>{sondageQuery.data.intitule}</h1>
+        <h1 className={styles.form__title}>{sondageQuery.data.label}</h1>
         <h2 className={`${styles.form_control__label} pb-6 pt-2 text-center font-light`}>
-          {sondageQuery.data.Description}
+          {sondageQuery.data.abstract}
         </h2>
         <article className={`${styles.inputs__container} relative`}>
           {mutation.isError ? (
@@ -162,20 +178,31 @@ const SondagePage = () => {
           {mutation.isSuccess ? (
             <div className="space-y-4">
               <p>Merci d&apos;avoir participé à ce sondage</p>
-              <button onClick={() => router.push('/')} className={formStyles.form_control__button}>
-                Revenir à l&apos;acceuil
-              </button>
+              <div className="flex items-center gap-5">
+                <button
+                  onClick={() => {
+                    reset();
+                    mutation.reset();
+                  }}
+                  className={formStyles.form_control__button}
+                >
+                  Recharger le formulaire
+                </button>
+                <button
+                  onClick={() => router.push('/')}
+                  className={formStyles.form_control__button}
+                >
+                  Revenir à l&apos;acceuil
+                </button>
+              </div>
             </div>
           ) : (
             <Form
               onSubmit={handleSubmit(onSubmit)}
               errors={errors}
-              questions={sondageQuery.data.question}
+              questions={sondageQuery.data.questions}
               register={register}
-              setValue={setValue}
-              getValues={getValues}
-              setError={setError}
-              clearErrors={clearErrors}
+              watch={watch}
             />
           )}
         </article>

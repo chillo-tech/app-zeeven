@@ -34,12 +34,8 @@ services:
       - NEXTAUTH_SECRET=${NEXTAUTH_SECRET}
       - NEXTAUTH_URL=${NEXTAUTH_URL}
       - NEXTAUTH_URL_INTERNAL=${NEXTAUTH_URL_INTERNAL}
-
       - SERVICE_ID=${SERVICE_ID}
       - SERVICE_KEY=${SERVICE_KEY}
-
-    networks:
-      - applications-network
 networks:
   applications-network:
     external: true
