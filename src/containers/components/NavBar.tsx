@@ -33,8 +33,7 @@ function NavBar() {
                   <Link
                     href={`/${getUrl({
                       current: slugify(`${menu.id}-${menu.label}`),
-                      url: 'tarifs',
-                      pattern: 'tarifs',
+                      url: 'tarifs'
                     })}`}
                     className="flex items-center text-white"
                   >

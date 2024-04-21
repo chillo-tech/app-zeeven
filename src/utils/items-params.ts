@@ -139,7 +139,23 @@ const MENUFULL = `
       sublabel,
       categories.*,
       pages.page_id.*,
-      pages.page_id.images.directus_files_id.*
+      pages.page_id.images.directus_files_id.*,
+      prices.pricing_id.id,
+      prices.pricing_id.status,
+      prices.pricing_id.sort,
+      prices.pricing_id.label,
+      prices.pricing_id.type,
+      prices.pricing_id.plans.price_plan_id.id,
+      prices.pricing_id.plans.price_plan_id.unit,
+      prices.pricing_id.plans.price_plan_id.frequence,
+      prices.pricing_id.plans.price_plan_id.description,
+      prices.pricing_id.plans.price_plan_id.popular,
+      prices.pricing_id.plans.price_plan_id.label,
+      prices.pricing_id.plans.price_plan_id.sublabel,
+      prices.pricing_id.plans.price_plan_id.type,
+      prices.pricing_id.plans.price_plan_id.value,
+      prices.pricing_id.plans.price_plan_id.credits,
+      prices.pricing_id.plans.price_plan_id.items.price_plan_item_id.*
     `;
 const ENTREPRISE = `
   id,

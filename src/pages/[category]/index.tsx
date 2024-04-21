@@ -1,6 +1,7 @@
 import Metadata from '@/components/Metadata';
 import RenderHtmlContent from '@/components/RenderHtmlContent';
 import ImageDisplay from '@/components/image-display';
+import Prices from '@/components/prices';
 import SectionLinks from '@/components/shared/SectionLinks';
 import OpenedLayout from '@/containers/opened';
 import { ApplicationContext } from '@/context/ApplicationContext';
@@ -146,6 +147,7 @@ function Espaces({ index }: any) {
               : null}
           </>
         ) : null}
+        {data?.prices && data?.prices.length ? <Prices data={data?.prices}/> : null }
       </OpenedLayout>
     </>
   );
