@@ -12,12 +12,16 @@ function ImageDisplay({
   const [isImageLoading, setLoading] = useState(true);
   const loaderProp =({ src}: {src: string}) => src;
   const getPath =() => {
+    const basePath = process.env.APPLICATION_URL ? process.env.APPLICATION_URL : '';
+    console.log('====================================');
+    console.log({basePath});
+    console.log('====================================');
     if(local) {
       return  image.path
     } else if(base64) {
       return image.path.startsWith("data:") ? image.path :`data:image/jpg;base64,${image.path}` 
     } else {
-      return `${process.env.APPLICATION_URL}/assets/${image.id}`;
+      return `${basePath}/assets/${image.id}`;
     }
   }
 
