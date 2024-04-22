@@ -1,12 +1,13 @@
-import axios from "axios"
+import { axiosInstance } from "./axios-instance";
+
 
 const deleteItem = (endpoint: string) => {
-	return axios.delete(endpoint)
+	return axiosInstance.delete(endpoint)
 }
 
 const add = (endpoint: string, data: any) => {
     const qrcodeId = sessionStorage.getItem("qrcodeId");
-    const result = axios.post(
+    const result = axiosInstance.post(
       `${endpoint}`,
       data,
       {
@@ -20,7 +21,7 @@ const add = (endpoint: string, data: any) => {
 }
 
 const patch = (endpoint: string, data: any) => {
-	return axios.patch(
+	return axiosInstance.patch(
 		endpoint,
 		data,
 		{
@@ -30,7 +31,7 @@ const patch = (endpoint: string, data: any) => {
 }
 
 const search = (endpoint: string) => {
-	return axios.get(endpoint)
+	return axiosInstance.get(endpoint)
 }
 
 export {add, search, patch, deleteItem}

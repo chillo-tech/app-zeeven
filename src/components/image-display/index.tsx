@@ -13,9 +13,7 @@ function ImageDisplay({
   const loaderProp =({ src}: {src: string}) => src;
   const getPath =() => {
     const basePath = process.env.APPLICATION_URL ? process.env.APPLICATION_URL : '';
-    console.log('====================================');
-    console.log({basePath});
-    console.log('====================================');
+
     if(local) {
       return  image.path
     } else if(base64) {
