@@ -17,14 +17,14 @@ const onRequest = async (config: AxiosRequestConfig): Promise<AxiosRequestConfig
   authorization = isToBackOffice
     ? { Authorization: `Bearer ${process.env.BACKOFFICE_API_TOKEN}` }
     : authorization;
-console.log('====================================');
-console.log(process.env.BACKOFFICE_API_TOKEN);
-console.log('====================================');
   const credentials = isToBackOffice
     ? {}
     : { 'service-id': `${process.env.SERVICE_ID}`, 'service-key': `${process.env.SERVICE_KEY}` };
   const baseURL = isToBackOffice ? process.env.BACKOFFICE_API : process.env.API_URL;
 
+  console.log('====================================');
+  console.log(baseURL, process.env.BACKOFFICE_API_TOKEN);
+  console.log('====================================');
   return {
     ...config,
     baseURL,
