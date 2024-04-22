@@ -10,7 +10,7 @@ import {yupResolver} from '@hookform/resolvers/yup';
 import * as yup from "yup";
 import {EMAIL_ERROR_MESSAGE, EMAIL_PATTERN} from "@/utils/data";
 import {useRouter} from "next/router";
-import {unstable_getServerSession} from "next-auth";
+import {getServerSession} from "next-auth";
 import {authOptions} from '@/pages/api/auth/[...nextauth]'
 import Metadata from "@/components/Metadata";
 
@@ -106,7 +106,7 @@ export default function SignIn({providers, csrfToken}: { providers: Provider[], 
 export const getServerSideProps: GetServerSideProps = async (context) => {
 	const providers = await getProviders();
 	const csrfToken = await getCsrfToken(context);
-	const session = await unstable_getServerSession(context.req, context.res, authOptions);
+	const session = await getServerSession(context.req, context.res, authOptions);
 	if (session) {
 		return {
 			redirect: {
