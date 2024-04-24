@@ -14,9 +14,6 @@ export const authOptions: NextAuthOptions = {
         password: { label: 'Password', type: 'password' },
       },
       async authorize(credentials, req) {
-        console.log('====================================');
-        console.log({credentials, req});
-        console.log('====================================');
         try {
           const {
             data: { token },
