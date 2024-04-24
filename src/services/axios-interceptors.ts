@@ -32,6 +32,9 @@ const onRequest = async (config: AxiosRequestConfig): Promise<AxiosRequestConfig
       ...credentials,
     },
   }
+  console.log('====================================');
+  console.log({configs});
+  console.log('====================================');
   return configs;
 };
 const onRequestError = (error: AxiosError): Promise<AxiosError> => {

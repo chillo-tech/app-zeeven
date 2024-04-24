@@ -1,6 +1,6 @@
 import { axiosInstance } from '@/services/axios-instance';
 import type { NextApiRequest, NextApiResponse } from 'next';
-import { getServerSession, } from "next-auth/next"
+import { unstable_getServerSession } from "next-auth/next"
 import { authOptions } from "../auth/[...nextauth]"
 import { Session } from 'next-auth';
 import axios, { AxiosError } from 'axios';
@@ -15,7 +15,7 @@ async function handler(
   res: NextApiResponse<any>,
 ) {
   try {
-    const session = await getServerSession(req, res, authOptions) as AppSession;
+    const session = await unstable_getServerSession(req, res, authOptions) as AppSession;
     let {headers} = req;
     if(session && session.token) {
       const {accessToken} = session.token;
