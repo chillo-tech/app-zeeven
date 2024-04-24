@@ -11,6 +11,8 @@ services:
       - "82:3000"
     extra_hosts:
       - "host.docker.internal:host-gateway"
+    networks:
+      - applications-network
     environment:
       - API_URL=${API_URL}
       - APPLICATION_URL=${APPLICATION_URL}
