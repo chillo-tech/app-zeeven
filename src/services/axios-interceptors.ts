@@ -11,7 +11,7 @@ const onRequest = async (config: AxiosRequestConfig): Promise<AxiosRequestConfig
   let authorization: any = { Authorization: headers['Authorization'] };
   const { url = '' } = config;
   const isToBackOffice = url.startsWith('/api/backoffice');
-  const urlToCall = isToBackOffice
+  let urlToCall = isToBackOffice
     ? url.replaceAll('/api/backoffice', '/items')
     : url.replaceAll('/api/backend', '/backend');
   authorization = isToBackOffice
@@ -21,7 +21,12 @@ const onRequest = async (config: AxiosRequestConfig): Promise<AxiosRequestConfig
     ? {}
     : { 'service-id': `${process.env.SERVICE_ID}`, 'service-key': `${process.env.SERVICE_KEY}` };
   const baseURL = isToBackOffice ? process.env.BACKOFFICE_API : process.env.API_URL;
-
+  urlToCall = isToBackOffice ? urlToCall : `${urlToCall}`;
+  console.log('====================================');
+  console.log({baseURL, urlToCall});
+  console.log('222222222222222222222222222222222222');
+  console.log(authorization);
+  console.log('====================================');
   const configs = {
     ...config,
     baseURL,
@@ -32,19 +37,22 @@ const onRequest = async (config: AxiosRequestConfig): Promise<AxiosRequestConfig
       ...credentials,
     },
   }
-  console.log('====================================');
-  console.log({configs});
-  console.log('====================================');
   return configs;
 };
 const onRequestError = (error: AxiosError): Promise<AxiosError> => {
   return Promise.reject(error);
 };
 const onResponse = (response: AxiosResponse): AxiosResponse => {
+  console.log('====================================');
+  console.log({response});
+  console.log('====================================');
   return response;
 };
 
 const onResponseError = async (error: AxiosError): Promise<AxiosError> => {
+  console.log('====================================');
+  console.log({error});
+  console.log('====================================');
   return Promise.reject(error);
 };
 

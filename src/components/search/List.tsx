@@ -1,5 +1,6 @@
 import CampainItem from '@/components/campains/CampainItem'
 import React from 'react'
+import Debug from '../shared/Debug'
 
 function List({data = []}: { data: any[] }) {
 	return (
@@ -22,9 +23,7 @@ function List({data = []}: { data: any[] }) {
         */}
             <span className='py-3 px-5'/>
           </div>
-          {data.map((item, index) => (
-            <CampainItem item={item} key={`${item.id}-${index}`} index={index}/>
-          ))}
+          <Debug data={data}/>
         </div>
       ) : null
      }
