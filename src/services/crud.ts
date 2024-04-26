@@ -1,3 +1,4 @@
+import axios from "axios";
 import { axiosInstance } from "./axios-instance";
 
 
@@ -31,7 +32,7 @@ const patch = (endpoint: string, data: any) => {
 }
 
 const search = (endpoint: string) => {
-	return axiosInstance.get(endpoint)
+	return axios.get(endpoint)
 }
 
 export {add, search, patch, deleteItem}
