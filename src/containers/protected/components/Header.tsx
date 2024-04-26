@@ -40,7 +40,7 @@ function Header() {
             </li>
             <li>
               <Link href="/contactez-nous" className="ml-2 block rounded-lg bg-white px-5">
-                Des questions ?
+                Contact
               </Link>
             </li>
             <li>

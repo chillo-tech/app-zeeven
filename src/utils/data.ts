@@ -180,7 +180,7 @@ const ACCOUNT_CATEGORIESLINKS = [
 const ACCOUNT_PAGES_LINKS = [
   {
     label: 'Tarifs',
-    url: '/tarifs',
+    url: '/2-tarifs',
   },
   {
     label: 'Contacts',
