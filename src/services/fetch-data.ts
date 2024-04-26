@@ -1,5 +1,4 @@
 import axios from 'axios';
-import { axiosInstance } from './axios-instance';
 interface Params {
   path: string;
   fields?: string;
@@ -10,7 +9,7 @@ interface Params {
 }
 
 const fetchDataClient = (params: Params) => {
-  return axiosInstance.get(params.path, {
+  return axios.get(params.path, {
     params: {
       ...(params.fields ? { fields: params.fields } : {}),
       ...(params.limit ? { limit: params.limit } : {}),

@@ -1,14 +1,13 @@
 import axios from "axios";
-import { axiosInstance } from "./axios-instance";
 
 
 const deleteItem = (endpoint: string) => {
-	return axiosInstance.delete(endpoint)
+	return axios.delete(endpoint)
 }
 
 const add = (endpoint: string, data: any) => {
     const qrcodeId = sessionStorage.getItem("qrcodeId");
-    const result = axiosInstance.post(
+    const result = axios.post(
       `${endpoint}`,
       data,
       {
@@ -22,7 +21,7 @@ const add = (endpoint: string, data: any) => {
 }
 
 const patch = (endpoint: string, data: any) => {
-	return axiosInstance.patch(
+	return axios.patch(
 		endpoint,
 		data,
 		{
