@@ -69,8 +69,8 @@ function GuestEdit({ handleSubmit, addPath }: { handleSubmit: Function; addPath:
 
   return (
     <div className="rounded-md bg-white px-4 py-6 shadow">
+      {/**
       <GoogleGuests reset={reset} handleSubmit={handleSubmit} showSeparator={setShowSeparator} />
-
       {showSeparator ? (
         <p className="relative my-6 flex h-px items-center justify-center bg-app-blue">
           <span className="absolute bg-white px-6 font-bold text-app-blue">
@@ -78,6 +78,7 @@ function GuestEdit({ handleSubmit, addPath }: { handleSubmit: Function; addPath:
           </span>
         </p>
       ) : null}
+       */}
       <form onSubmit={handleFormSubmit(onSubmit)}>
         <div className="grid gap-4 sm:overflow-hidden md:grid-cols-3">
           <div className="text-md mb-0">

@@ -22,14 +22,18 @@ function CsvFile({display, setContacts}: any) {
 				const result = reader.result as string ;
         const resultsAsTable = result.split("\n");
         const columns = resultsAsTable[0];
-        const columnsPositions = columns.split(",");
+        let separator = ",";
+        if (columns.includes(";")) {
+          separator = ";";
+        }
+        const columnsPositions = columns.split(separator);
         const [,,,,,, ...othersColumns] = columnsPositions;
 				if(result) {
 					const guests = resultsAsTable
 						.slice(1)
-						.filter((line: string) => line.split(",").length === columnsPositions.length)
+						.filter((line: string) => line.split(separator).length === columnsPositions.length)
 						.map((line: string) =>  {
-              const [civility,firstName,lastName,phoneIndex,phone,email, ...othersData] = line.split(",");
+              const [civility,firstName,lastName,phoneIndex,phone,email, ...othersData] = line.split(separator);
               const others = othersData.map((entry: any, index: number) => ({key: slugify(othersColumns[index]).split('-').join(''), label: othersColumns[index].trim(), value: entry}));
               return {
 								civility,

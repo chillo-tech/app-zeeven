@@ -15,9 +15,6 @@ async function handler(
   res: NextApiResponse<any>,
 ) {
   try {
-    console.log('====================================');
-    console.log("111111111111111111111111111111111111");
-    console.log('====================================');
     const session = await unstable_getServerSession(req, res, authOptions) as AppSession;
     let {headers} = req;
     if(session && session.token) {
