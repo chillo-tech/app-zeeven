@@ -11,11 +11,11 @@
 }
 
 .form_control__label {
-    @apply w-full flex flex-col justify-between mb-2;
+    @apply w-full flex flex-col justify-between mb-2 text-white md:text-app-blue ;
 }
 
 .form_control__label__first {
-    @apply text-app-blue font-light;
+    @apply font-light;
 }
 
 .form_control__label__second {
@@ -23,7 +23,7 @@
 }
 
 .form_control__button {
-    @apply w-full rounded-md bg-app-blue text-white border border-blue-900 px-4 py-2;
+    @apply w-full rounded-md bg-green-700 md:bg-app-blue text-white border border-blue-900 px-4 py-2;
 }
 
 .outline__button__black {

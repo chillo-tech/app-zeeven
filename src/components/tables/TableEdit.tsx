@@ -9,7 +9,7 @@ const schema = yup
     name: yup.string().required('Ce champ est requis'),
     type: yup.string().required('Ce champ est requis'),
     position: yup.string(),
-    number: yup.number(),
+    number: yup.number().typeError('Saisir un entier'),
     active: yup.bool(),
   })
   .required();

@@ -1,8 +1,9 @@
+import { ApplicationContext } from '@/context/ApplicationContext';
 import { ACCOUNT_CATEGORIESLINKS, ACCOUNT_PAGES_LINKS } from '@/utils';
 import { signOut, useSession } from 'next-auth/react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import React from 'react';
+import React, { useContext } from 'react';
 import { HiOutlineMenuAlt3 } from 'react-icons/hi';
 import { RiLogoutBoxRLine } from 'react-icons/ri';
 import { RxCross1 } from 'react-icons/rx';
@@ -13,6 +14,7 @@ function Header() {
   const router = useRouter();
   const [isOpen, setIsOpen] = React.useState(false);
   const toggle = () => setIsOpen(!isOpen);
+  const { state: { user } = { user: {} } } = useContext(ApplicationContext);
   return (
     <header className=" bg-white shadow-md">
       <div className="first">
@@ -20,7 +22,7 @@ function Header() {
           <Link href="/" className={`block text-2xl !font-extrabold text-app-blue md:text-4xl`}>
             ZEEVEN
           </Link>
-          <nav className='md:flex hidden'>
+          <nav className="hidden md:flex">
             <ul className="flex">
               <li>
                 <Link
@@ -32,7 +34,7 @@ function Header() {
               </li>
             </ul>
           </nav>
-          <ul className='md:flex flex hidden font-semibold text-app-blue'>
+          <ul className="flex hidden font-semibold text-app-blue md:flex">
             <li>
               <button type="button" className="ml-2 block rounded-lg bg-white px-2 uppercase">
                 {session?.user?.name?.substring(0, 2)}
@@ -56,13 +58,13 @@ function Header() {
 
           <button
             onClick={toggle}
-            className="bg-app-yellow text-app-brown flex items-center justify-center rounded-md font-semibold text-app-blue md:hidden"
+            className="text-app-brown flex items-center justify-center rounded-md bg-app-yellow font-semibold text-app-blue md:hidden"
           >
             <HiOutlineMenuAlt3 className="h-8 w-8" />
           </button>
         </div>
         <div className="second">
-          <nav className="container mx-auto flex justify-between flex-col md:flex-row">
+          <nav className="container mx-auto flex flex-col justify-between md:flex-row">
             <ul className="flex">
               {ACCOUNT_CATEGORIESLINKS.map((categoryLink, index) => (
                 <li key={`link-${index}`}>
@@ -78,6 +80,21 @@ function Header() {
               ))}
             </ul>
             <ul className="flex">
+              {user &&
+              Object.keys(user).length &&
+              user['authorities'] &&
+              user['authorities'][0]['authority'] === 'ROLE_ADMIN' ? (
+                <li>
+                  <Link
+                    className={`block px-5 py-3 text-center text-gray-500 ${
+                      router.pathname === '/me/administration' ? 'border-b-4 border-blue-900' : ''
+                    }`}
+                    href={'/me/administration'}
+                  >
+                    Administration
+                  </Link>
+                </li>
+              ) : null}
               {ACCOUNT_PAGES_LINKS.map((pageLink, index) => (
                 <li key={`link-${index}`}>
                   <Link

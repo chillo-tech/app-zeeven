@@ -51,6 +51,16 @@ function Forgoten() {
       />
 
       <section className="grid h-screen w-full md:grid-cols-2">
+        <div className="hidden flex-col items-center justify-center bg-app-blue md:flex">
+          <div className="relative h-72 w-72 md:h-96 md:w-full">
+            <ImageDisplay
+              wrapperClasses="h-full relative border-8 border-app-blue overflow-hidden"
+              local={true}
+              imageClasses="object-contain shadow-md"
+              image={{ path: '/images/zeeven.png', title: 'Entammez vos échanges>avec ZEEVEN' }}
+            />
+          </div>
+        </div>
         <div
           className={classNames(
             'flex flex-col justify-center justify-between px-5 py-10 md:px-32',
@@ -150,16 +160,6 @@ function Forgoten() {
               Connectez vous
             </Link>
           </h2>
-        </div>
-        <div className="hidden flex-col items-center justify-center bg-app-blue md:flex">
-          <div className="relative h-72 w-72 md:h-96 md:w-full">
-            <ImageDisplay
-              wrapperClasses="h-full relative border-8 border-app-blue overflow-hidden"
-              local={true}
-              imageClasses="object-contain shadow-md"
-              image={{ path: '/images/zeeven.png', title: 'Entammez vos échanges>avec ZEEVEN' }}
-            />
-          </div>
         </div>
       </section>
     </>

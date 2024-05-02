@@ -3,9 +3,10 @@ import formStyles from '@/styles/Form.module.css';
 import { BACKEND_BASE_PATH, getHumanDate, slugify } from '@/utils';
 import classNames from 'classnames';
 import { useRouter } from 'next/router';
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import { useMutation } from 'react-query';
 import OutlineLink from '../shared/OutlineLink';
+import { ApplicationContext } from '@/context/ApplicationContext';
 
 function InvitationItem({ slug, invitation, handleItemEdit }: any) {
   const [showMessage, setShowMessage] = useState<any>(false);
@@ -13,7 +14,7 @@ function InvitationItem({ slug, invitation, handleItemEdit }: any) {
   const [messages, setMessages] = useState<any>();
   const [isError, setIsError] = useState(false);
   const router = useRouter();
-
+  const {state: {user}} = useContext(ApplicationContext);
   const deleteMutation = useMutation({
     mutationFn: ({ eventId, invitationId }: any) =>
       deleteItem(`${BACKEND_BASE_PATH}/event/${eventId}/invitation/${invitationId}`),
@@ -76,13 +77,19 @@ function InvitationItem({ slug, invitation, handleItemEdit }: any) {
             </div>
           </article>
           <div className="actions mt-2 flex flex justify-end gap-3">
-            <OutlineLink
-              button={true}
-              icon={false}
-              action={update}
-              label="Parametrer"
-              classes="justify-center bg-white px-8 hover:text-white hover:bg-app-blue"
-            />
+          {user &&
+              Object.keys(user).length &&
+              user['authorities'] &&
+              user['authorities'][0]['authority'] === 'ROLE_ADMIN' ? (
+                <OutlineLink
+                button={true}
+                icon={false}
+                action={update}
+                label="Parametrer"
+                classes="justify-center bg-white px-8 hover:text-white hover:bg-app-blue"
+              />
+              ) : null}
+           
 
             <OutlineLink
               button={true}

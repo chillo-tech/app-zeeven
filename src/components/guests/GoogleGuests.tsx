@@ -60,7 +60,6 @@ function GoogleGuests({ reset, handleSubmit, showSeparator }: any) {
         personFields: 'names,emailAddresses,phoneNumbers',
       });
     } catch (err) {
-      console.log({error});
       return;
     }
     const connections = response.result.connections;
@@ -83,7 +82,6 @@ function GoogleGuests({ reset, handleSubmit, showSeparator }: any) {
         readMask: 'names,emailAddresses,phoneNumbers',
       });
     } catch (error) {
-      console.log({error});
       return;
     }
     const otherContacts = response.result.otherContacts;

@@ -211,9 +211,9 @@ const ProfileEdit = ({ endpoint, redirectUrl, data, method, buttonLabel = 'Enreg
 
                     {COUNTRIES.sort((countryA: any, countryB: any) =>
                       countryA.label.localeCompare(countryB.label)
-                    ).map((country: any) => (
+                    ).map((country: any, index:number) => (
                       <option
-                        key={country.code}
+                        key={`cn-${index}-${country.code}`}
                         data-countrycode={country.code}
                         value={country.value}
                       >

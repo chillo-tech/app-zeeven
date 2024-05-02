@@ -85,7 +85,6 @@ const SondagePage = () => {
         path: `/api/backoffice/survey/${id}`,
         fields: SONDAGE,
       });
-      console.log('sondage', sondage);
       if (sondage.slug !== slug) {
         throw new Error('Not found');
       }

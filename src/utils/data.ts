@@ -60,7 +60,7 @@ const PROFILE_CATEGORIES: any = [
 const EVENT_PROFILE_CATEGORIES = {
   contact: true,
   guest: false,
-  nvitation: false,
+  invitation: false,
   schedule: false,
   table: false,
 };
@@ -359,7 +359,26 @@ const CONNAISSANCE_WEBINAIRE_CHOIX = [
   },
 ] as const;
 
+const ACCOUNT_PARAMETERS = [
+  {
+    key: 'credits',
+    label: 'Recharger le crédit',
+    url: '/2-tarifs',
+  },
+  {
+    key: 'roles',
+    label: 'Attribuer des droits',
+    url: '/me/contacts',
+  }
+];
+
+const ROLES = [
+  { value: 'ADMIN', label: 'Administrateur'},
+  { value: 'CUSTOMER', label: 'Client'},
+];
+
 export {
+  ACCOUNT_PARAMETERS,
   ACCOUNT_CATEGORIESLINKS,
   ACCOUNT_PAGES_LINKS,
   BACKEND_BASE_PATH,
@@ -400,6 +419,7 @@ export {
   USER_INFOS,
   WHITE_COLOR,
   WIFI_ENCODAGE,
+  ROLES,
   isUserInformation,
   isValidUrl,
   variableFieldType,

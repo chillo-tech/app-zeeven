@@ -30,7 +30,6 @@ async function handler(req: NextApiRequest, res: NextApiResponse<any>) {
         const { status, response } = error;
 
         if (status === 401 || (response && response.status && response.status === 401)) {
-          console.log('response', response)
           res.status(401).json({ message: 'Veuillez vous connecter' });
           return;
         }

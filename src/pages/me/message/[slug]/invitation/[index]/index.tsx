@@ -23,10 +23,10 @@ type InvitationParams = {
 
 const schema = yup
   .object({
-    qrCodeX: yup.number().required("Merci de saisir l'abscisse"),
-    qrCodeY: yup.number().required("Merci de saisir l'ordonnée"),
-    qrCodeWidth: yup.number().required('Merci de saisir largeur'),
-    qrCodeHeight: yup.number().required('Merci de saisir la hauteur'),
+    qrCodeX: yup.number().typeError('Saisir un entier').required("Merci de saisir l'abscisse"),
+    qrCodeY: yup.number().typeError('Saisir un entier').required("Merci de saisir l'ordonnée"),
+    qrCodeWidth: yup.number().typeError('Saisir un entier').required('Merci de saisir largeur'),
+    qrCodeHeight: yup.number().typeError('Saisir un entier').required('Merci de saisir la hauteur'),
   })
   .required();
 

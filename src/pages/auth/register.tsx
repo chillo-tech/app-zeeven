@@ -1,5 +1,6 @@
 import Message from '@/components/Message';
 import Metadata from '@/components/Metadata';
+import ImageDisplay from '@/components/image-display';
 import { add } from '@/services/crud';
 import formStyles from '@/styles/Form.module.css';
 import styles from '@/styles/SignIn.module.css';
@@ -7,6 +8,7 @@ import { COUNTRIES } from '@/utils';
 import { EMAIL_ERROR_MESSAGE, EMAIL_PATTERN, PHONE_ERROR_MESSAGE } from '@/utils/data';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { AxiosError } from 'axios';
+import classNames from 'classnames';
 import { GetServerSideProps } from 'next';
 import { unstable_getServerSession } from 'next-auth';
 import { Provider } from 'next-auth/providers';
@@ -88,155 +90,325 @@ export default function SignIn({
     mutation.mutate(data);
   };
   return (
-    <section className={styles.wrapper}>
-      <Metadata entry={{ title: 'Créez votre compte', description: 'Créez votre compte' }} />
+    <>
+      <Metadata
+        entry={{
+          title: 'Reinitialisez votre mot de passe',
+          description: 'Informez nos contacts de vos évènements',
+        }}
+      />
 
-      <nav className={`${styles.navigation}`}>
-        <Link href={'/'} className={styles.logo}>
-          ZEEVEN
-        </Link>
-      </nav>
-
-      {mutation.isSuccess ? (
-        <div className={styles.form__container}>
-          <article className={styles.inputs__container}>
-            <Message
-              type="loading"
-              firstMessage="Votre compte a bien été créé"
-              secondMessage="Vous avez reçu un code pour l'activer par mail"
-              actionLabel="Activer mon compte"
-              action={redirect}
+      <section className="grid h-screen w-full md:grid-cols-2">
+        <div className="hidden flex-col items-center justify-center bg-app-blue md:flex">
+          <div className="relative h-72 w-72 md:h-96 md:w-full">
+            <ImageDisplay
+              wrapperClasses="h-full relative border-8 border-app-blue overflow-hidden"
+              local={true}
+              imageClasses="object-contain shadow-md"
+              image={{ path: '/images/zeeven.png', title: 'Entammez vos échanges>avec ZEEVEN' }}
             />
-          </article>
+          </div>
         </div>
-      ) : null}
-      {mutation.isLoading ? (
-        <div className={styles.form__container}>
-          <article className={styles.inputs__container}>
-            <Message
-              type="loading"
-              firstMessage="Un instant"
-              secondMessage="Nous enregistrons votre demande"
-            />
-          </article>
-        </div>
-      ) : null}
-      {mutation.isIdle || mutation.isError ? (
-        <div className={styles.form__container}>
-          <h1 className={styles.form__title}>Créez votre compte</h1>
-          <article className={styles.inputs__container}>
-            {mutation.isError ? (
-              <h2 className={`text-center text-lg text-rose-500`}>{errorMessage}</h2>
+        <div
+          className={classNames(
+            'flex flex-col justify-center justify-between px-5 py-10 md:px-32',
+            'bg-app-blue text-white md:bg-white md:text-black'
+          )}
+        >
+          <span />
+          <>
+            {mutation.isSuccess ? (
+              <>
+              <Link href={'/'} className="text-4xl font-extrabold md:text-app-blue">
+                ZEEVEN
+              </Link>
+                  <Message
+                    type="loading"
+                    firstMessage="Votre compte a bien été créé"
+                    secondMessage="Vous avez reçu un code pour l'activer par mail"
+                    actionLabel="Activer mon compte"
+                    action={redirect}
+                  />
+                <span />
+              </>
             ) : null}
-            {Object.values(providers)
-              .filter((provider) => provider.name === 'Credentials')
-              .map((provider) => (
-                <form onSubmit={handleSubmit(onSubmit)} key={provider.name}>
-                  <input type="hidden" defaultValue={csrfToken} {...register('csrfToken')} />
-                  <div className={formStyles.form_control}>
-                    <label htmlFor="firstName" className={formStyles.form_control__label}>
-                      <span className={formStyles.form_control__label__first}>Votre prénom</span>
-                    </label>
-                    <input
-                      autoComplete="current-password"
-                      type="text"
-                      id="firstName"
-                      className={formStyles.form_control__input}
-                      {...register('firstName')}
-                      placeholder="Prénom"
-                    />
-                    <p className={formStyles.form_control__error}>{errors.firstName?.message}</p>
-                  </div>
-                  <div className={formStyles.form_control}>
-                    <label htmlFor="lastName" className={formStyles.form_control__label}>
-                      <span className={formStyles.form_control__label__first}>Votre nom</span>
-                    </label>
-                    <input
-                      autoComplete="current-password"
-                      type="text"
-                      id="lastName"
-                      className={formStyles.form_control__input}
-                      {...register('lastName')}
-                      placeholder="Nom"
-                    />
-                    <p className={formStyles.form_control__error}>{errors.lastName?.message}</p>
-                  </div>
-                  <div className={formStyles.form_control}>
-                    <label htmlFor="email" className={formStyles.form_control__label}>
-                      <span className={formStyles.form_control__label__first}>
-                        Votre adresse email.
-                      </span>
-                    </label>
-                    <input
-                      type="text"
-                      autoComplete="current-password"
-                      id="email"
-                      className={formStyles.form_control__input}
-                      {...register('email')}
-                      placeholder="Adresse email"
-                    />
-                    <p className={formStyles.form_control__error}>{errors.email?.message}</p>
-                  </div>
-                  <div className="text-md mb-0 mb-3">
-                    <label
-                      htmlFor="phone"
-                      className="text-md mb-2 flex w-full flex-col justify-between text-app-blue"
-                    >
-                      Votre téléphone
-                    </label>
-                    <div className="mt-1 flex flex-col md:flex-row">
-                      <select
-                        {...register('phoneIndex')}
-                        className="rounded-tl-lg rounded-tr-lg border-gray-300 shadow-sm md:w-1/3 md:rounded-bl-lg md:rounded-tr-none"
-                      >
-                        <option data-countrycode="FR" value="">
-                          Votre pays
-                        </option>
+            {mutation.isLoading ? (
+              <div className={styles.form__container}>
+                <article className={styles.inputs__container}>
+                  <Link href={'/'} className="text-4xl font-extrabold md:text-app-blue">
+                    ZEEVEN
+                  </Link>
+                  <Message
+                    type="loading"
+                    firstMessage="Un instant"
+                    secondMessage="Nous enregistrons votre demande"
+                  />
+                </article>
+              </div>
+            ) : null}
+            {mutation.isError ? (
+              <>
+                <div>
+                  <Link href={'/'} className="text-4xl font-extrabold md:text-app-blue">
+                    ZEEVEN
+                  </Link>
+                  <div className="text-2xl font-bold md:text-app-blue">Créez votre compte</div>
+                  <h2 className={`text-lg text-rose-500`}>{errorMessage}</h2>
+                </div>
+                <article>
+                  {Object.values(providers)
+                    .filter((provider) => provider.name === 'Credentials')
+                    .map((provider) => (
+                      <form onSubmit={handleSubmit(onSubmit)} key={provider.name}>
+                        <input type="hidden" defaultValue={csrfToken} {...register('csrfToken')} />
+                        <div className={formStyles.form_control}>
+                          <label htmlFor="firstName" className={formStyles.form_control__label}>
+                            <span className={formStyles.form_control__label__first}>
+                              Votre prénom
+                            </span>
+                          </label>
+                          <input
+                            autoComplete="current-password"
+                            type="text"
+                            id="firstName"
+                            className={formStyles.form_control__input}
+                            {...register('firstName')}
+                            placeholder="Prénom"
+                          />
+                          <p className={formStyles.form_control__error}>
+                            {errors.firstName?.message}
+                          </p>
+                        </div>
+                        <div className={formStyles.form_control}>
+                          <label htmlFor="lastName" className={formStyles.form_control__label}>
+                            <span className={formStyles.form_control__label__first}>Votre nom</span>
+                          </label>
+                          <input
+                            autoComplete="current-password"
+                            type="text"
+                            id="lastName"
+                            className={formStyles.form_control__input}
+                            {...register('lastName')}
+                            placeholder="Nom"
+                          />
+                          <p className={formStyles.form_control__error}>
+                            {errors.lastName?.message}
+                          </p>
+                        </div>
+                        <div className={formStyles.form_control}>
+                          <label htmlFor="email" className={formStyles.form_control__label}>
+                            <span className={formStyles.form_control__label__first}>
+                              Votre adresse email.
+                            </span>
+                          </label>
+                          <input
+                            type="text"
+                            autoComplete="current-password"
+                            id="email"
+                            className={formStyles.form_control__input}
+                            {...register('email')}
+                            placeholder="Adresse email"
+                          />
+                          <p className={formStyles.form_control__error}>{errors.email?.message}</p>
+                        </div>
+                        <div className="text-md mb-0 mb-3">
+                          <label htmlFor="email" className={formStyles.form_control__label}>
+                            <span className={formStyles.form_control__label__first}>
+                              Votre téléphone
+                            </span>
+                          </label>
+                          <div className="mt-1 flex flex-col md:flex-row">
+                            <select
+                              {...register('phoneIndex')}
+                              className={formStyles.form_control__input}
+                            >
+                              <option data-countrycode="FR" value="">
+                                Votre pays
+                              </option>
 
-                        {COUNTRIES.sort((countryA: any, countryB: any) =>
-                          countryA.label.localeCompare(countryB.label)
-                        ).map((country: any) => (
-                          <option
-                            key={country.code}
-                            data-countrycode={country.code}
-                            value={country.value}
-                          >
-                            {country.label}
-                          </option>
-                        ))}
-                      </select>
-                      <input
-                        placeholder="Votre téléphone"
-                        type="number"
-                        autoComplete="false"
-                        className="focus:ring-indigo-5000 rounded-bl-lg rounded-br-lg  border-gray-300 py-2 shadow-sm focus:border-indigo-500 md:w-2/3 md:rounded-bl-none md:rounded-br-lg md:rounded-tr-lg"
-                        {...register('phone')}
-                        id="phone"
-                      />
-                    </div>
-                    <p className="text-red-600">{errors?.phoneIndex?.message}</p>
-                    <p className="text-red-600">{errors?.phone?.message}</p>
-                  </div>
-                  <div className={formStyles.form_control}>
-                    <label htmlFor="password" className={formStyles.form_control__label}>
-                      <span className={formStyles.form_control__label__first}>
-                        Votre mot de passe
-                      </span>
-                    </label>
-                    <input
-                      autoComplete="current-password"
-                      type="password"
-                      id="password"
-                      className={formStyles.form_control__input}
-                      {...register('password')}
-                      placeholder="Mot de passe"
-                    />
-                    <p className={formStyles.form_control__error}>{errors.password?.message}</p>
-                  </div>
-                  <button className={formStyles.form_control__button}>Inscription</button>
-                </form>
-              ))}
-            {/*
+                              {COUNTRIES.sort((countryA: any, countryB: any) =>
+                                countryA.label.localeCompare(countryB.label)
+                              ).map((country: any) => (
+                                <option
+                                  key={country.code}
+                                  data-countrycode={country.code}
+                                  value={country.value}
+                                >
+                                  {country.label}
+                                </option>
+                              ))}
+                            </select>
+                            <input
+                              placeholder="Votre téléphone"
+                              type="number"
+                              autoComplete="false"
+                              className={formStyles.form_control__input}
+                              {...register('phone')}
+                              id="phone"
+                            />
+                          </div>
+                          <p className="text-red-600">{errors?.phoneIndex?.message}</p>
+                          <p className="text-red-600">{errors?.phone?.message}</p>
+                        </div>
+                        <div className={formStyles.form_control}>
+                          <label htmlFor="password" className={formStyles.form_control__label}>
+                            <span className={formStyles.form_control__label__first}>
+                              Votre mot de passe
+                            </span>
+                          </label>
+                          <input
+                            autoComplete="current-password"
+                            type="password"
+                            id="password"
+                            className={formStyles.form_control__input}
+                            {...register('password')}
+                            placeholder="Mot de passe"
+                          />
+                          <p className={formStyles.form_control__error}>
+                            {errors.password?.message}
+                          </p>
+                        </div>
+                        <button className={formStyles.form_control__button}>Inscription</button>
+                      </form>
+                    ))}
+                  {/*
+      <p className={styles.form__seperator}><span className="bg-white px-2">ou</span></p>
+      {Object.values(providers).filter(provider => provider.name !== "Credentials").map((provider) => (
+        <div key={provider.name}>
+          <button type="button" onClick={() => signIn(provider.id)} className={styles.form__oauthbutton}>
+            <span className="mr-2">Inscrivez vous avec <span className="lowercase">{provider.name}</span></span>   <FcGoogle size={20}/>
+          </button>
+        </div>
+      ))}
+    */}
+                </article>
+              </>
+            ) : null}
+            {mutation.isIdle ? (
+              <>
+                <div>
+                  <Link href={'/'} className="text-4xl font-extrabold md:text-app-blue">
+                    ZEEVEN
+                  </Link>
+                  <div className="text-2xl font-bold md:text-app-blue">Créez votre compte</div>
+                </div>
+                <article>
+                  {Object.values(providers)
+                    .filter((provider) => provider.name === 'Credentials')
+                    .map((provider) => (
+                      <form onSubmit={handleSubmit(onSubmit)} key={provider.name}>
+                        <input type="hidden" defaultValue={csrfToken} {...register('csrfToken')} />
+                        <div className={formStyles.form_control}>
+                          <label htmlFor="firstName" className={formStyles.form_control__label}>
+                            <span className={formStyles.form_control__label__first}>
+                              Votre prénom
+                            </span>
+                          </label>
+                          <input
+                            autoComplete="current-password"
+                            type="text"
+                            id="firstName"
+                            className={formStyles.form_control__input}
+                            {...register('firstName')}
+                            placeholder="Prénom"
+                          />
+                          <p className={formStyles.form_control__error}>
+                            {errors.firstName?.message}
+                          </p>
+                        </div>
+                        <div className={formStyles.form_control}>
+                          <label htmlFor="lastName" className={formStyles.form_control__label}>
+                            <span className={formStyles.form_control__label__first}>Votre nom</span>
+                          </label>
+                          <input
+                            autoComplete="current-password"
+                            type="text"
+                            id="lastName"
+                            className={formStyles.form_control__input}
+                            {...register('lastName')}
+                            placeholder="Nom"
+                          />
+                          <p className={formStyles.form_control__error}>
+                            {errors.lastName?.message}
+                          </p>
+                        </div>
+                        <div className={formStyles.form_control}>
+                          <label htmlFor="email" className={formStyles.form_control__label}>
+                            <span className={formStyles.form_control__label__first}>
+                              Votre adresse email.
+                            </span>
+                          </label>
+                          <input
+                            type="text"
+                            autoComplete="current-password"
+                            id="email"
+                            className={formStyles.form_control__input}
+                            {...register('email')}
+                            placeholder="Adresse email"
+                          />
+                          <p className={formStyles.form_control__error}>{errors.email?.message}</p>
+                        </div>
+                        <div className="text-md mb-0 mb-3">
+                          <label htmlFor="email" className={formStyles.form_control__label}>
+                            <span className={formStyles.form_control__label__first}>
+                              Votre téléphone
+                            </span>
+                          </label>
+                          <div className="mt-1 flex flex-col md:flex-row">
+                            <select
+                              {...register('phoneIndex')}
+                              className={formStyles.form_control__input}
+                            >
+                              <option data-countrycode="FR" value="">
+                                Votre pays
+                              </option>
+
+                              {COUNTRIES.sort((countryA: any, countryB: any) =>
+                                countryA.label.localeCompare(countryB.label)
+                              ).map((country: any) => (
+                                <option
+                                  key={country.code}
+                                  data-countrycode={country.code}
+                                  value={country.value}
+                                >
+                                  {country.label}
+                                </option>
+                              ))}
+                            </select>
+                            <input
+                              placeholder="Votre téléphone"
+                              type="number"
+                              autoComplete="false"
+                              className={formStyles.form_control__input}
+                              {...register('phone')}
+                              id="phone"
+                            />
+                          </div>
+                          <p className="text-red-600">{errors?.phoneIndex?.message}</p>
+                          <p className="text-red-600">{errors?.phone?.message}</p>
+                        </div>
+                        <div className={formStyles.form_control}>
+                          <label htmlFor="password" className={formStyles.form_control__label}>
+                            <span className={formStyles.form_control__label__first}>
+                              Votre mot de passe
+                            </span>
+                          </label>
+                          <input
+                            autoComplete="current-password"
+                            type="password"
+                            id="password"
+                            className={formStyles.form_control__input}
+                            {...register('password')}
+                            placeholder="Mot de passe"
+                          />
+                          <p className={formStyles.form_control__error}>
+                            {errors.password?.message}
+                          </p>
+                        </div>
+                        <button className={formStyles.form_control__button}>Inscription</button>
+                      </form>
+                    ))}
+                  {/*
             <p className={styles.form__seperator}><span className="bg-white px-2">ou</span></p>
             {Object.values(providers).filter(provider => provider.name !== "Credentials").map((provider) => (
               <div key={provider.name}>
@@ -246,16 +418,21 @@ export default function SignIn({
               </div>
             ))}
           */}
-          </article>
-          <h2 className={`${styles.form_control__label} pb-6 pt-2 text-center font-light`}>
-            Vous avez déjà un compte ?&nbsp;
-            <Link href={'/auth/signin'} className="underline">
-              Connexion
+                </article>
+              </>
+            ) : null}
+          </>
+          <h2
+            className={`${styles.form_control__label} border-t border-app-blue pb-6 pt-2 font-light`}
+          >
+            Vous avez déjà un compte ? &nbsp;
+            <Link href={'/auth/signin'} className="text-white underline md:text-app-blue">
+              Connectez vous
             </Link>
           </h2>
         </div>
-      ) : null}
-    </section>
+      </section>
+    </>
   );
 }
 

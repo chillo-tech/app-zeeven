@@ -10,7 +10,6 @@ function Actions({  handleItemEdit, data, state: { user } = { user: {} } }: any)
   const { mutate } = useMutation({
     mutationFn: ({event, params}: any) => patch(`${BACKEND_BASE_PATH}/event/${event}/params`, params),
     onError: (error: any) => {
-      console.log({ error });
       setIsError(true), handleError(error);
     },
     onSuccess: ({ data }: any) => {

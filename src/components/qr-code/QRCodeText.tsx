@@ -49,7 +49,6 @@ function QRCodeText({ type, params, placeholder }: any) {
   const { mutate, isIdle } = useMutation({
     mutationFn: ({ temp, data }: any) => add(`/api/backend/qr-code?simulate=${temp}`, data),
     onError: (error: any) => {
-      console.log({ error })
       setIsError(true), handleError(error);
     },
     onSuccess: ({ data }: any) => {

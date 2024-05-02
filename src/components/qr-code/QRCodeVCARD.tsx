@@ -57,7 +57,6 @@ function QRCodeVCARD({ type, params }: any) {
   const { mutate, isIdle } = useMutation({
     mutationFn: ({ temp, data }: any) => add(`/api/backend/qr-code?simulate=${temp}`, data),
     onError: (error: any) => {
-      console.log({ error });
       setIsError(true), handleError(error);
     },
     onSuccess: ({ data }: any) => {
@@ -86,7 +85,7 @@ function QRCodeVCARD({ type, params }: any) {
         job: yup.string(),
         street: yup.string(),
         city: yup.string(),
-        zipcode: yup.number(),
+        zipcode: yup.number().typeError('Saisir un entier'),
         state: yup.string(),
         country: yup.string(),
         website: yup.string(),
