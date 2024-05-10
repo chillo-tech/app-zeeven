@@ -3,6 +3,7 @@ import { slugify } from '@/utils';
 import Link from 'next/link';
 import { useContext } from 'react';
 import ImageDisplay from '../image-display';
+import Debug from '../shared/Debug';
 
 function Solutions() {
   const context = useContext(ApplicationContext);
@@ -40,18 +41,21 @@ function Solutions() {
                   {company && company.categories && company.categories[0].pages ? (
                     <ul className="flex flex-col justify-center gap-6 py-4 text-xl md:flex-row">
                       {company.categories[index].pages.map((page: any) => (
-                        <li key={`${page.page_id.id}-${page.page_id.label}`} className="flex-1">
+                        <li key={`${page.id}-${page.label}`} className="flex-1">
                           <Link
-                            href={getLink(`${page.page_id.id}-${page.page_id.label}`)}
+                            href={getLink(`${page.id}-${page.label}`)}
                             className="flex items-center justify-between rounded-md bg-white px-6 py-4 font-light text-black shadow-lg"
-                          >
-                            <span>{page.page_id.sublabel}</span>
-                            {page.page_id.images && (
+                          > 
+                            <span>{page.sublabel}</span>
+                            {(page.images && page.images.length) ? (
+                              <>
                               <ImageDisplay
                                 wrapperClasses="relative w-12 h-12 rounded-full overflow-hidden"
-                                image={page.page_id.images[0].directus_files_id}
+                                image={page.images[0].directus_files_id}
                               />
-                            )}
+                              
+                              </>
+                            ): null }
                           </Link>
                         </li>
                       ))}

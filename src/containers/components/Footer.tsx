@@ -1,4 +1,5 @@
 import RenderHtmlContent from '@/components/RenderHtmlContent';
+import Debug from '@/components/shared/Debug';
 import { ApplicationContext } from '@/context/ApplicationContext';
 import { fetchData } from '@/services';
 import { ENTREPRISE, slugify } from '@/utils';
@@ -25,7 +26,7 @@ function Footer() {
     enabled: !company,
     queryFn: () =>
       fetchData({
-        path: '/api/backoffice/company?filter[name][_eq]=Chillo.tech',
+        path: '/api/backoffice/entreprise',
         fields: ENTREPRISE,
       }),
     onSuccess: (data) => {
@@ -81,18 +82,18 @@ function Footer() {
                         <ul>
                           {company.categories[index].pages.map((page: any) => (
                             <li
-                              key={slugify(`${page.page_id.id}-${page.page_id.label}`)}
+                              key={slugify(`${page.id}-${page.label}`)}
                               className="mb-2"
                             >
                               <Link
                                 href={`/${
-                                  (slugify(page.page_id.sublabel).indexOf('qr-code') > -1 || slugify(page.page_id.sublabel).indexOf('qr-code') > -1)
+                                  (slugify(page.sublabel).indexOf('qr-code') > -1 || slugify(page.sublabel).indexOf('qr-code') > -1)
                                     ? 'qr-code'
                                     : `1-nos-solutions`
                                 }`}
                                 className="text-slate-300 hover:text-white"
                               >
-                                {page.page_id.sublabel}
+                                {page.sublabel}
                               </Link>
                             </li>
                           ))}

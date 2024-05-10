@@ -164,13 +164,13 @@ const ENTREPRISE = `
   menus.id,
   menus.status,
   menus.label,
-  categories.pages.page_id.id,
   categories.id,
   categories.label,
   categories.status,
-  categories.pages.page_id.label,
-  categories.pages.page_id.sublabel,
-  categories.pages.page_id.images.directus_files_id.*
+  categories.pages.id,
+  categories.pages.label,
+  categories.pages.sublabel,
+  categories.pages.images.directus_files_id.*
 `;
 
 const SONDAGE = `
